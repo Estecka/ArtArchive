@@ -18,12 +18,22 @@ class DBService {
 	public function query($sql, array $params = null)
 	{
 		if ($params == null){
-			return $this->pdo->query($sql);
+			$resp = $this->pdo->query($sql);
+			return self::preprocess($resp);
 		}
 		else {
 			$query = $this->pdo->prepare($sql);
-			return $query->execute($params);
+			$resp = $query->execute($params);
+			return self::preprocess($resp);
 		}
+	}
+
+	static private function preprocess($response){
+		$result = array();
+		while($row = $response->fetch())
+			$result[] = $row;
+		$response->closeCursor();
+		return $result;
 	}
 
 
