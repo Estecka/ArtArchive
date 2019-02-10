@@ -1,0 +1,9 @@
+# Prevent directory browsing
+Options All -Indexes
+
+# Protect htaccess
+<Files ~ "^.*\.([Hh][Tt][AaPp])">
+order allow,deny
+deny from all
+satisfy all
+</Files>
