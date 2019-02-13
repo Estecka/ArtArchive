@@ -1,4 +1,3 @@
-<?php include("shorthands.php") ?>
 <div>
 	<form action="" method="post">
 		<label for="slug">Slug</label> 

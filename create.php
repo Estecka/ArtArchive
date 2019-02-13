@@ -1,3 +1,7 @@
+<?php
+	require("shorthands.php");
+?>
+
 <!DOCTYPE html>
 <html>
 	<?php include ("templates/html-head.php") ?>
