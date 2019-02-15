@@ -7,3 +7,14 @@ order allow,deny
 deny from all
 satisfy all
 </Files>
+
+RewriteEngine on
+RewriteBase /
+
+# Only pass through this file once per user-request
+# If REDIRECT_STATUS is not empty, this url has already been rewritten.
+RewriteCond %{ENV:REDIRECT_STATUS} ^.
+RewriteRule ^ - [L]
+
+# Re-root the site into the "site" folder
+RewriteRule ^(.*)$ site/$1
