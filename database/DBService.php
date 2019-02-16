@@ -1,6 +1,6 @@
 <?php
-require("config.php");
-require("ArtworkDTO.php");
+require_once("config.php");
+require_once("ArtworkDTO.php");
 
 class DBService {
 	private $pdo;
