@@ -4,8 +4,13 @@ require("../ArtArchive.php");
 $artwork = ArtworkDTO::CreateFrom($_POST);
 $bdd = new DBService();
 
-// $response = $bdd->AddArtwork($artwork);
-
-header("Location: ./", false, 303);
-die();
+try {
+	$response = $bdd->AddArtwork($artwork);
+	header("Location: ./", false, 303);
+	exit;
+} catch (PDOException $e) {
+	print($e->getCode());
+	print("<br/>");
+	print($e->getMessage());
+}
 ?>
