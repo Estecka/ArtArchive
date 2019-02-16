@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2019 at 11:33 PM
+-- Generation Time: Feb 16, 2019 at 11:34 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -17,15 +17,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artworks`
+-- Table structure for table `tags`
 --
 
-CREATE TABLE `artworks` (
+CREATE TABLE `tags` (
   `id` int(11) NOT NULL,
   `slug` varchar(32) NOT NULL,
-  `title` varchar(32) DEFAULT NULL,
-  `date` date DEFAULT NULL,
-  `description` text
+  `name` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -33,9 +31,9 @@ CREATE TABLE `artworks` (
 --
 
 --
--- Indexes for table `artworks`
+-- Indexes for table `tags`
 --
-ALTER TABLE `artworks`
+ALTER TABLE `tags`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`);
 
@@ -44,7 +42,7 @@ ALTER TABLE `artworks`
 --
 
 --
--- AUTO_INCREMENT for table `artworks`
+-- AUTO_INCREMENT for table `tags`
 --
-ALTER TABLE `artworks`
+ALTER TABLE `tags`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
