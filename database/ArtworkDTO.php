@@ -8,6 +8,10 @@ class ArtworkDTO {
 	public $description;
 
 	static public function CreateFrom($object) : ArtworkDTO {
+		foreach($object as $key => $value)
+			if ($value !== 0 && empty($value))
+				$object[$key] = null;
+
 		$art = new ArtworkDTO();
 		$art->id	= value($object['id']);
 		$art->title	= value($object['title']);
