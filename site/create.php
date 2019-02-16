@@ -1,13 +1,9 @@
 <?php
-	require("../shorthands.php");
+require("../ArtArchive.php");
+
+$page = new PageBuilder();
+$page->title = "Submit";
+$page->StartPage();
+	include("../templates/artworkForm.php");
+$page->EndPage();
 ?>
-
-<!DOCTYPE html>
-<html>
-	<?php include ("../templates/html-head.php") ?>
-	<body>
-		<?php include("../templates/header.php") ?>
-
-		<?php include("../templates/artworkForm.php"); ?>
-	</body>
-</html>

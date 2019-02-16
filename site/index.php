@@ -1,19 +1,14 @@
-
 <?php
-	require("../database/DBService.php");
-	$bdd = new DBService();
+require("../Artarchive.php");
+$bdd = new DBService();
 
-	$artworks = $bdd->GetArtworks();
+$artworks = $bdd->GetArtworks();
+
+$page = new PageBuilder();
+$page->StartPage();
+
+	foreach($artworks as $art)
+		include("../templates/ArtCard.php");
+
+$page->EndPage();
 ?>
-<!DOCTYPE html>
-<html>
-	<?php include ("../templates/html-head.php") ?>
-	<body>
-		<?php include("../templates/header.php") ?>
-
-		<?php
-			foreach($artworks as $art)
-				include("../templates/ArtCard.php");
-		?>
-	</body>
-</html>
