@@ -1,5 +1,5 @@
 <div>
-	<form action="" method="post">
+	<form action="<?=value($action)?>" method="post">
 		<label for="slug">Slug</label> 
 		<input id="slug" name="slug" type="text" value="<?=value($_POST['slug'])?>"/>
 		
