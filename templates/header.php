@@ -3,7 +3,7 @@
 	<div class="shortcuts">
 		<a href="/">home</a>
 		 | 
-		<a href="/create.php">Submit</a>
+		<a href="/submit/art">Submit</a>
 	</div>
 <div>
 <hr/>
