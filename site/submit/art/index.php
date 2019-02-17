@@ -4,7 +4,9 @@ require("../../../ArtArchive.php");
 $page = new PageBuilder();
 $page->title = "Submit";
 $page->StartPage();
-	$action = "/submit/art/insert.php";
-	include(__ROOT__."/templates/artworkForm.php");
+
+	$art = ArtworkDTO::CreateFrom($_POST);
+	PageBuilder::ArtForm($art, "insert.php");
+	
 $page->EndPage();
 ?>

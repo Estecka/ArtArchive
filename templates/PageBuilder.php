@@ -24,5 +24,9 @@ class PageBuilder{
 		</html>
 	<?php
 	}
+
+	static public function ArtForm(ArtworkDTO $art, $action = null){
+		include(__ROOT__."/templates/artworkForm.php");
+	}
 }
 ?>
