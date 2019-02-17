@@ -46,6 +46,14 @@ class DBService {
 		return $this->query("SELECT * FROM artworks ORDER BY date DESC");
 	}
 
+	public function GetArtwork($slug)/*: ?ArtworkDTO*/ {
+		$query = $this->pdo->prepare("SELECT * FROM artworks WHERE slug = ? LIMIT 1");
+		$query->execute(array($slug));
+		$result = $query->fetch();
+		$query->closeCursor();
+		return $result ? ArtworkDTO::CreateFrom($result) : null;
+	}
+
 	public function AddArtwork(ArtworkDTO $art){
 		$query = $this->pdo->prepare("INSERT INTO artworks (slug, title, date, description) VALUES (?,?,?,?)");
 		$result = $query->execute(array(

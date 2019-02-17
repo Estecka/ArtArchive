@@ -1,6 +1,7 @@
+<?php
+$name = $art["title"] ?? $art["slug"]
+?>
 <div>
-	<h3><?=$art["title"]?></h3>
-	<?=$art["slug"]?>
-	<br/>
+	<a href="/view.php?art=<?=$art['slug']?>"><h3><?=$name?></h3></a>
 	<?=$art["date"]?>
 </div>
