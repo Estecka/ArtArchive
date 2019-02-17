@@ -1,0 +1,17 @@
+\ => \index.php
+\submit\art\ => \art\submit.php
+\submit\tag\ => \tag\submit.php
+\submit\file\ => \file\submit.php
+\submit\category\ => \category\submit.php
+
+\art\slug\ 	=> \art\index.php?art=slug
+\art\slug\edit\ => \art\edit.php?art=slug
+
+\tag\slug\ 	=> \tag\index.php?tag=slug
+\tag\slug\edit\ => \tag\edit.php?tag=slug
+
+\category\slug\		=> \category\index.php?cat=slug
+\category\slug\edit\	=> \category\edit.php?cat=slug
+
+\file\path\		=> \file\index.php?file=path
+\file\path\edit\	=> \file\edit.php?file=path
