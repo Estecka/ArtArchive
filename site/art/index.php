@@ -1,5 +1,5 @@
 <?php
-require("../ArtArchive.php");
+require("../../ArtArchive.php");
 
 $slug = value($_GET['art']);
 

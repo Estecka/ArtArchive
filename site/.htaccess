@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteBase /site/
+
+#if not an existing fie
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#redirect /art/(slug)/(etc) to /art/(etc)?art=(slug)
+RewriteRule ^art/([^/]*)/?(.*) art/$2?art=$1 [L,QSA]
