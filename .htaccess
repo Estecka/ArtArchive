@@ -11,10 +11,11 @@ satisfy all
 RewriteEngine on
 RewriteBase /
 
-# Only pass through this file once per user-request
-# If REDIRECT_STATUS is not empty, this url has already been rewritten.
-RewriteCond %{ENV:REDIRECT_STATUS} ^.
-RewriteRule ^ - [L]
+# If not a file, adds the trailing slash if missing
+# This rule is required to avoid unintended automatic 301 redirection from `folder` to `folder/`, which otherwise happen *after* the rewriting.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*[^/])$ $1/
 
-# Re-root the site into the "site" folder
+
+RewriteCond %{ENV:REDIRECT_STATUS} ^$
 RewriteRule ^(.*)$ site/$1
