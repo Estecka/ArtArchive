@@ -26,6 +26,10 @@ class ArtworkDTO {
 			&& $this->slug;
 	}
 
+	public function Name() : string{
+		return $this->title ?? $this->slug;
+	}
+
 }
 
 ?>
