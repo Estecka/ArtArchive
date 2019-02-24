@@ -8,7 +8,7 @@ $page = new PageBuilder();
 $page->StartPage();
 
 	foreach($artworks as $art)
-		include("../templates/ArtCard.php");
+		$page->ArtCard($art);
 
 $page->EndPage();
 ?>

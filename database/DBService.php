@@ -43,7 +43,10 @@ class DBService {
 
 	public function GetArtworks()
 	{
-		return $this->query("SELECT * FROM artworks ORDER BY date DESC");
+		$result =  $this->query("SELECT * FROM artworks ORDER BY date DESC");
+		foreach($result as $key=>$art)
+			$result[$key] = ArtworkDTO::CreateFrom($art);
+		return $result;
 	}
 
 	public function GetArtwork($slug)/*: ?ArtworkDTO*/ {

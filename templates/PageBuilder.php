@@ -28,5 +28,9 @@ class PageBuilder{
 	static public function ArtForm(ArtworkDTO $art, $action = null){
 		include(__ROOT__."/templates/artworkForm.php");
 	}
+
+	static public function ArtCard(ArtworkDTO $art){
+		include(__ROOT__."/templates/ArtCard.php");
+	}
 }
 ?>
