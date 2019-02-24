@@ -21,10 +21,14 @@ if ($slug == null){
 	print("400 - Wrong slug");
 	exit;
 } else {
+	$page = new PageBuilder();
 	$bdd = new DBService();
 	$result = $bdd->DeleteArtwork($slug);
-	if ($result)
-		header("Location:".URL::Home());
+	if ($result) {
+		$page->StartPage();
+		print("Artwork deleted");
+		$page->EndPage();
+	}
 	else {
 		http_response_code(404);
 		print (404);

@@ -12,11 +12,13 @@ $artwork = ArtworkDTO::CreateFrom($_POST);
 $bdd = new DBService();
 
 try {
-	$response = $bdd->UpdateArtwork($_GET["art"], $artwork);
+	$response = $bdd->UpdateArtwork($slug, $artwork);
 	if ($response)
-		print (200);
-	else
+		header("Location:".URL::Artwork($artwork->slug));
+	else {
+		http_response_code(404);
 		print (404);
+	}
 } catch (PDOException $e){
 	print($e->getCode());
 	print("<br/>");
