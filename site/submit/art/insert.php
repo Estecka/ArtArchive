@@ -6,7 +6,7 @@ $bdd = new DBService();
 
 try {
 	$response = $bdd->AddArtwork($artwork);
-	header("Location:../../../", false, 303);
+	header("Location:".URL::Home(), false, 303);
 	exit;
 } catch (PDOException $e) {
 	print($e->getCode());
