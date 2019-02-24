@@ -91,5 +91,11 @@ class DBService {
 		return true;
 	}
 
+	public function DeleteArtwork(string $slug) : bool {
+		$query = $this->pdo->prepare("DELETE FROM artworks WHERE slug = ?");
+		$query->execute(array($slug));
+		return $query->rowCount() > 0;
+	}
+
 }
 ?>
