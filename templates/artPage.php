@@ -1,6 +1,9 @@
-<?php
+<?php 
 /**@var $art ArtworkDTO */
-print("<h1>".$art->Name()."</h1>");
-print("$art->date<br/>");
-print("$art->description");
 ?>
+
+<a href="<?=URL::EditArt($art->slug)?>">Edit</a> | <a href="<?=URL::DeleteArt($art->slug)?>">Delete</a>
+<hr>
+<h1><?=$art->Name()?></h1>
+<?=$art->date?> <br/>
+<?=$art->description?>

@@ -18,5 +18,9 @@ class URL {
 	static public function SubmitArt() : string {
 		return "/site/submit/art/";
 	}
+
+	static public function DeleteArt(string $slug) : string {
+		return "/site/art/delete.php?art=$slug";
+	}
 }
 ?>
