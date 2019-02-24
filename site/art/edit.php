@@ -27,7 +27,7 @@ $page->StartPage();
 	if ($code != 200)
 		print("<h1>$code</h1>");
 	else {
-		PageBuilder::ArtForm($art);
+		PageBuilder::ArtForm($art, "update.php?art=$slug");
 	}
 $page->EndPage();
 

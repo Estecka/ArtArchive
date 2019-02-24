@@ -68,5 +68,28 @@ class DBService {
 		return $result;
 	}
 
+	public function UpdateArtwork(string $slug, ArtworkDTO $art) {
+		// Check the artwork exists
+		$query = $this->pdo->prepare("SELECT COUNT(*) FROM artworks WHERE slug = ?");
+		$query->execute(array($slug));
+
+		$count = $query->fetchColumn();
+		if ($count < 1)
+			return false;
+
+		// Perform the change
+		$query = $this->pdo->prepare(
+			"UPDATE artworks SET slug = ?, title = ?, date = ?, description = ? WHERE slug = ?"
+		);
+		$query->execute(array(
+			$art->slug,
+			$art->title,
+			$art->date,
+			$art->description,
+			$slug,
+		));
+		return true;
+	}
+
 }
 ?>
