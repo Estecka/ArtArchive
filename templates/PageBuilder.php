@@ -32,5 +32,9 @@ class PageBuilder{
 	static public function ArtCard(ArtworkDTO $art){
 		include(__ROOT__."/templates/ArtCard.php");
 	}
+
+	static public function ArtPage(ArtworkDTO $art){
+		include(__ROOT__."/templates/artPage.php");
+	}
 }
 ?>

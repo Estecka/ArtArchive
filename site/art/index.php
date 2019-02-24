@@ -27,9 +27,7 @@ $page->StartPage();
 	if ($code != 200)
 		print("<h1>$code</h1>");
 	else {
-		print("<h1>$name</h1>");
-		print("$art->date<br/>");
-		print("$art->description");
+		$page->ArtPage($art);
 	}
 $page->EndPage();
 ?>
