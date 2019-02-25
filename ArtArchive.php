@@ -22,5 +22,12 @@ class URL {
 	static public function DeleteArt(string $slug) : string {
 		return "/site/art/delete.php?art=$slug";
 	}
+
+	static public function TagsHome() : string {
+		return "/site/tags.php";
+	}
+	static public function Tag(string $slug) : string {
+		return "/site/tag/?tag=$slug";
+	}
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 require_once("config.php");
 require_once("ArtworkDTO.php");
+require_once("TagDTO.php");
 
 class DBService {
 	/** @var PDO **/
