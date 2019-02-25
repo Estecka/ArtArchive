@@ -25,15 +25,15 @@ class PageBuilder{
 	<?php
 	}
 
-	static public function ArtForm(ArtworkDTO $art, $action = null){
+	public function ArtForm(ArtworkDTO $art, $action = null){
 		include(__ROOT__."/templates/artworkForm.php");
 	}
 
-	static public function ArtCard(ArtworkDTO $art){
+	public function ArtCard(ArtworkDTO $art){
 		include(__ROOT__."/templates/ArtCard.php");
 	}
 
-	static public function ArtPage(ArtworkDTO $art){
+	public function ArtPage(ArtworkDTO $art){
 		include(__ROOT__."/templates/artPage.php");
 	}
 }

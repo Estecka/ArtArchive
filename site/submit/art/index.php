@@ -6,7 +6,7 @@ $page->title = "Submit";
 $page->StartPage();
 
 	$art = ArtworkDTO::CreateFrom($_POST);
-	PageBuilder::ArtForm($art, "insert.php");
+	$page->ArtForm($art, "insert.php");
 	
 $page->EndPage();
 ?>
