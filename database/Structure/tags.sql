@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2019 at 11:34 PM
+-- Generation Time: Feb 25, 2019 at 08:41 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -23,7 +23,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL,
   `slug` varchar(32) NOT NULL,
-  `name` varchar(32) DEFAULT NULL
+  `name` varchar(32) DEFAULT NULL,
+  `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
