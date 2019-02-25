@@ -46,5 +46,8 @@ class PageBuilder{
 	public function ArtPage(ArtworkDTO $art){
 		include(__ROOT__."/templates/artPage.php");
 	}
+	public function TagForm(TagDTO $tag, $action = null){
+		include(__ROOT__."/templates/tagForm.php");
+	}
 }
 ?>
