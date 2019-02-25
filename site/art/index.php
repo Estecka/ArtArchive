@@ -3,31 +3,24 @@ require("../../ArtArchive.php");
 
 $slug = value($_GET['art']);
 
-if (empty($slug))
-	http_response_code(400);
-else {
-	$bdd = new DBService();
-	/** @var ArtworkDTO **/
-	$art = $bdd->GetArtwork($slug);
-	
-	if ($art == null)
-		http_response_code(404);
+if (empty($slug)){
+	PageBuilder::ErrorDocument(400);
+	die;
+}
+$bdd = new DBService();
+/** @var ArtworkDTO **/
+$art = $bdd->GetArtwork($slug);
+
+if ($art == null){
+	PageBuilder::ErrorDocument(404);
+	die;
 }
 
-$code = http_response_code();
 $name = $art->title ?? $slug;
+
 $page = new PageBuilder();
-
-if ($code == 200)
-	$page->title = $name;
-else
-	$page->title = $code;
-
+$page->title = $name;
 $page->StartPage();
-	if ($code != 200)
-		print("<h1>$code</h1>");
-	else {
-		$page->ArtPage($art);
-	}
+	$page->ArtPage($art);
 $page->EndPage();
 ?>

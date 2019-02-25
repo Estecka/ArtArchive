@@ -3,8 +3,7 @@ require("../../ArtArchive.php");
 
 $slug = value($_GET['art']);
 if (empty($slug)) {
-	http_response_code(400);
-	print (400);
+	PageBuilder::ErrorDocument(400);
 	die;
 }
 
@@ -16,8 +15,8 @@ try {
 	if ($response)
 		header("Location:".URL::Artwork($artwork->slug));
 	else {
-		http_response_code(404);
-		print (404);
+		PageBuilder::ErrorDocument(404);
+		die;
 	}
 } catch (PDOException $e){
 	print($e->getCode());
