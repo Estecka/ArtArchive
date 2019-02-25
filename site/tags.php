@@ -6,6 +6,10 @@ $tags = $bdd->GetAllTags();
 
 $page = new PageBuilder();
 $page->StartPage();
+?>
+<a href="<?=URL::SubmitTag()?>">Create</a>
+<hr/>
+<?php
 
 	/** @var $tag TagDTO */
 	foreach($tags as $tag){

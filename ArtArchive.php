@@ -29,5 +29,11 @@ class URL {
 	static public function Tag(string $slug) : string {
 		return "/site/tag/?tag=$slug";
 	}
+	static public function EditTag(string $slug) : string {
+		return "/site/tag/edit.php?tag=$slug";
+	}
+	static public function SubmitTag() : string {
+		return "/site/submit/tag/";
+	}
 }
 ?>
