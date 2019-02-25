@@ -25,6 +25,16 @@ class PageBuilder{
 	<?php
 	}
 
+	static public function ErrorDocument(int $code, string $message = null){
+		http_response_code($code);
+		$page = new PageBuilder();
+		$page->title = $code;
+		$page->StartPage();
+			print("<h1>$code</h1>");
+			print($message);
+		$page->EndPage();
+	}
+
 	public function ArtForm(ArtworkDTO $art, $action = null){
 		include(__ROOT__."/templates/artworkForm.php");
 	}
