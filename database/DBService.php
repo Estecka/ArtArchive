@@ -100,6 +100,12 @@ class DBService {
 
 
 	/** REGION TAGS */
+	public function GetAllTags() : array {
+		$result =  $this->query("SELECT * FROM tags ORDER BY slug");
+		foreach($result as $key=>$tag)
+			$result[$key] = TagDTO::CreateFrom($tag);
+		return $result;
+	}
 	public function GetTag(string $slug) /*: TagDTO*/ {
 		$query = $this->pdo->prepare("SELECT * from tags WHERE slug = ?");
 		$query->execute(array($slug));
