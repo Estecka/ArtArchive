@@ -116,7 +116,7 @@ class DBService {
 		return $result ? TagDTO::CreateFrom($result) : null;
 	}
 	public function InsertTag(TagDTO $tag) {
-		$query = $this->pdo->prepare("INSERT INTO tags (slug, name, description) VALUES (:slug, :name, description)");
+		$query = $this->pdo->prepare("INSERT INTO tags (slug, name, description) VALUES (:slug, :name, :description)");
 		$query->execute(array(
 			":slug" => $tag->slug,
 			":name" => $tag->name,

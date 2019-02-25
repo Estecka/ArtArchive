@@ -6,7 +6,7 @@ $bdd = new DBService();
 
 try {
 	$response = $bdd->InsertTag($tag);
-	header("Location:".URL::Home(), false, 303);
+	header("Location:".URL::TagsHome(), false, 303);
 	exit;
 } catch (PDOException $e) {
 	print($e->getCode());
