@@ -3,32 +3,27 @@ require("../../ArtArchive.php");
 
 $slug = value($_GET['art']);
 
-if (empty($slug))
-	http_response_code(400);
-else {
-	$bdd = new DBService();
-	/** @var ArtworkDTO **/
-	$art = $bdd->GetArtwork($slug);
-	
-	if ($art == null)
-		http_response_code(404);
+if (empty($slug)){
+	PageBuilder::ErrorDocument(400);
+	die;
+}
+$bdd = new DBService();
+/** @var ArtworkDTO **/
+$art = $bdd->GetArtwork($slug);
+
+if ($art == null){
+	PageBuilder::ErrorDocument(404);
+	die;
 }
 
-$code = http_response_code();
-$name = $art->title ?? $slug;
+
+$name = $art->GetName();
+
 $page = new PageBuilder();
-
-if ($code == 200)
-	$page->title = $name;
-else
-	$page->title = $code;
-
+$page->title = "Edit : $name";
 $page->StartPage();
-	if ($code != 200)
-		print("<h1>$code</h1>");
-	else {
+		print("<h2>Submit artwork</h2>");
 		$page->ArtForm($art, "update.php?art=$slug");
-	}
 $page->EndPage();
 
 ?>
