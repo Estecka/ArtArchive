@@ -125,7 +125,7 @@ class DBService {
 	}
 	public function UpdateTag(string $slug, TagDTO $tag) {
 		// Check the tag exists
-		$query = $this->pdo->prepare("SELECT COUNT(*) FROM tag WHERE slug = ?");
+		$query = $this->pdo->prepare("SELECT COUNT(*) FROM tags WHERE slug = ?");
 		$query->execute(array($slug));
 
 		$count = $query->fetchColumn();

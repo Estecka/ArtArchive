@@ -7,11 +7,10 @@ if (empty($slug)){
 	PageBuilder::ErrorDocument(400);
 	die;
 }
-
 $bdd = new DBService();
-/** @var TagDTO **/
+/** @var ArtworkDTO **/
 $tag = $bdd->GetTag($slug);
-
+	
 if ($tag == null){
 	PageBuilder::ErrorDocument(404);
 	die;
@@ -20,16 +19,10 @@ if ($tag == null){
 $name = $tag->GetName();
 
 $page = new PageBuilder();
-$page->title = $name;
+$page->title = "Edit : $name";
 $page->StartPage();
-	print("<a href=\"edit.php?tag=$slug\">Edit</a>");
-	print("<h1>$name</h1>");
-	if ($slug != $name)
-		print("<h3>$slug</h3>");
-
-	if ($tag->description)
-		print($tag->description);
-	else
-		print("This tag has no description.");
+	print("<h2>Edit tag</h2>");
+	$page->TagForm($tag, "update.php?tag=$slug");
 $page->EndPage();
+
 ?>
