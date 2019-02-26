@@ -5,8 +5,8 @@
 		
 		<br/>
 		
-		<label for="title">Name</label> 
-		<input id="title" name="title" type="text" value="<?=$tag->name?>"/>
+		<label for="name">Name</label> 
+		<input id="name" name="name" type="text" value="<?=$tag->name?>"/>
 
 		<br/>
 		
