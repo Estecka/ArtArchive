@@ -99,6 +99,19 @@ class DBService {
 		return $query->rowCount() > 0;
 	}
 
+	public function GetTagsFromArtwork(int $artID) : array {
+		$query = $this->pdo->prepare(
+			"SELECT tags.* FROM tags 
+			JOIN `art-tag` ON tags.id = `art-tag`.tagId
+			WHERE `art-tag`.`artId` = ?"
+		);
+		$query->execute(array($artID));
+		$result = $query->fetchAll();
+		foreach($result as $key => $value)
+			$result[$key] = TagDTO::CreateFrom($value);
+		return $result;
+	}
+
 
 	/** REGION TAGS */
 	public function GetAllTags() : array {
