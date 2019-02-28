@@ -16,11 +16,13 @@ if ($art == null){
 	die;
 }
 
+$tags = $bdd->GetTagsFromArtwork($art->id);
+
 $name = $art->title ?? $slug;
 
 $page = new PageBuilder();
 $page->title = $name;
 $page->StartPage();
-	$page->ArtPage($art);
+	$page->ArtPage($art, $tags);
 $page->EndPage();
 ?>

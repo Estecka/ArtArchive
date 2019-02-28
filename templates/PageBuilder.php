@@ -43,7 +43,7 @@ class PageBuilder{
 		include(__ROOT__."/templates/ArtCard.php");
 	}
 
-	public function ArtPage(ArtworkDTO $art){
+	public function ArtPage(ArtworkDTO $art, array $tags = null){
 		include(__ROOT__."/templates/artPage.php");
 	}
 	public function TagForm(TagDTO $tag, $action = null){
