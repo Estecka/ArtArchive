@@ -1,3 +1,8 @@
+<?php
+/** @var $art ArtworkDTO */
+/** @var $tags TagDTO[]*/
+?>
+
 <div>
 	<form action="<?=value($action)?>" method="post">
 		<label for="slug">Slug</label> 

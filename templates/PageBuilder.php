@@ -35,7 +35,7 @@ class PageBuilder{
 		$page->EndPage();
 	}
 
-	public function ArtForm(ArtworkDTO $art, $action = null){
+	public function ArtForm(ArtworkDTO $art, array $tags, $action = null){
 		include(__ROOT__."/templates/artworkForm.php");
 	}
 

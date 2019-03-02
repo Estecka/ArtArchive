@@ -23,7 +23,8 @@ $page = new PageBuilder();
 $page->title = "Edit : $name";
 $page->StartPage();
 		print("<h2>Submit artwork</h2>");
-		$page->ArtForm($art, "update.php?art=$slug");
+		$tags = either($_POST['tags'], array());
+		$page->ArtForm($art, $tags, "update.php?art=$slug");
 $page->EndPage();
 
 ?>
