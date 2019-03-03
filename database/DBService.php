@@ -119,14 +119,15 @@ class DBService {
 	*/
 	public function GetArtformTags(int $artID) : array {
 		$query = $this->pdo->prepare(
-			"SELECT tags.*, art.tagged
+			"SELECT tags.*, art.enabled
 			FROM tags 
 			LEFT JOIN
 				(SELECT tagId, TRUE as enabled
 				FROM `art-tag`
 				WHERE artId = ?)
 				AS art
-			ON tags.id = art.tagId"
+			ON tags.id = art.tagId
+			ORDER BY tags.slug"
 		);
 		$query->execute(array($artID));
 		$result = $query->fetchAll();

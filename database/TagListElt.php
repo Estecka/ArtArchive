@@ -3,7 +3,7 @@ class TagListElt {
 	/** @var string */
 	public $slug;
 	/** @var bool */
-	public $tagged;
+	public $enabled;
 
 	static public function CreateFrom($object) : TagListElt {
 		$tag = new TagListElt();
