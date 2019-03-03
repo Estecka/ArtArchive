@@ -1,10 +1,15 @@
 <?php
 
 class ArtworkDTO {
+	/** @var int */
 	public $id;
+	/** @var string */
 	public $slug;
+	/** @var string */
 	public $title;
+	/** @var string */
 	public $date;
+	/** @var string */
 	public $description;
 
 	static public function CreateFrom($object) : ArtworkDTO {

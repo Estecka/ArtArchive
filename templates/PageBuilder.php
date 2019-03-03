@@ -35,6 +35,10 @@ class PageBuilder{
 		$page->EndPage();
 	}
 
+	/**
+	 * @param ArtWorkDTO $art
+	 * @param TagListelt[] $tags
+	 */
 	public function ArtForm(ArtworkDTO $art, array $tags, $action = null){
 		include(__ROOT__."/templates/artworkForm.php");
 	}

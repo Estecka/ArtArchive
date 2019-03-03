@@ -1,6 +1,8 @@
 <?php
 class TagListElt {
+	/** @var string */
 	public $slug;
+	/** @var bool */
 	public $tagged;
 
 	static public function CreateFrom($object) : TagListElt {

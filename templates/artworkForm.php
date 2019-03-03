@@ -1,6 +1,6 @@
 <?php
-/** @var $art ArtworkDTO */
-/** @var $tags TagDTO[]*/
+/** @var ArtworkDTO $art */
+/** @var TagListElt[] $tags*/
 ?>
 
 <div>
