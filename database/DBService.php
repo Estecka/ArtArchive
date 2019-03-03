@@ -2,6 +2,7 @@
 require_once("config.php");
 require_once("ArtworkDTO.php");
 require_once("TagDTO.php");
+require_once("TagListElt.php");
 
 class DBService {
 	/** @var PDO **/
@@ -109,6 +110,28 @@ class DBService {
 		$result = $query->fetchAll();
 		foreach($result as $key => $value)
 			$result[$key] = TagDTO::CreateFrom($value);
+		return $result;
+	}
+
+	/** 
+	 * Gets all available tags, along with whether they are assigned to the given Artwork
+	 * @return TagListElt[]
+	*/
+	public function GetArtformTags(int $artID) : array {
+		$query = $this->pdo->prepare(
+			"SELECT tags.*, art.tagged
+			FROM tags 
+			LEFT JOIN
+				(SELECT tagId, TRUE as enabled
+				FROM `art-tag`
+				WHERE artId = ?)
+				AS art
+			ON tags.id = art.tagId"
+		);
+		$query->execute(array($artID));
+		$result = $query->fetchAll();
+		foreach($result as $key=>$value)
+			$result[$key] = TagListElt::CreateFrom($value);
 		return $result;
 	}
 
