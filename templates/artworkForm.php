@@ -24,6 +24,25 @@
 		<textarea id="description" name="description"><?=$art->description?></textarea>
 
 		<br/>
+
+		<?php 
+		if ($tags) { ?>
+			<h4>Tags :</h4>
+			<div>
+				<?php 
+				foreach ($tags as $tag) {
+					$inputName = $tag->enabled ? "keep" : "add"; 
+					$inputName .= "[$tag->slug]";
+					?>
+					<input type="checkbox" id="<?=$inputName?>" name ="<?=$inputName?>" <?=$tag->enabled?"checked":null?>/>
+					<label for="<?=$inputName?>"><?=$tag->slug?></label>
+					<br/>
+
+				<?php
+				} ?>
+			</div>
+		<?php 
+		} ?>
 		
 		<input type="submit" value="Submit"/>
 	</form>
