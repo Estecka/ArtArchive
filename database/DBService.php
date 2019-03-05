@@ -19,6 +19,16 @@ class DBService {
 		);
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
+
+	public function StartTransaction(){
+		$this->pdo->beginTransaction();
+	}
+	public function commitTransaction(){
+		$this->pdo->commit();
+	}
+	public function Rollback(){
+		$this->pdo->rollBack()();
+	}
 	
 	public function query($sql, array $params = null)
 	{
