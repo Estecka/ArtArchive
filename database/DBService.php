@@ -29,6 +29,18 @@ class DBService {
 	public function Rollback(){
 		$this->pdo->rollBack()();
 	}
+
+	/** 
+	 * Prepares a bit of SQL query where each element of the array matches a parameter named after the array's key. 
+	 * In order to prevent SQL injection, make sure the array's keys do not originate from user input;
+	 * thus it is best used with non-associative arrays.
+	*/
+	static private function SQLArray(array $array) : string {
+		$params = array();
+		foreach($array as $key=>$value)
+			$params[] = ":$key";
+		return $params.implode(", ");
+	}
 	
 	public function query($sql, array $params = null)
 	{
