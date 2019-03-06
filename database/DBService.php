@@ -122,6 +122,42 @@ class DBService {
 		return $query->rowCount() > 0;
 	}
 
+	/** @param string[] $tags */
+	public function RemoveTagsFromArtwork(string $art, array $tags){
+		$params = $tags;
+		$params[':art'] = $art;
+		$tags = self::SQLArray($tags);
+
+		$query = $this->pdo->prepare(
+			"DELETE FROM `art-tag`
+			WHERE artId = (
+				SELECT id FROM artworks
+				WHERE slug = :art
+				LIMIT 1
+			) 
+			AND tagId IN (
+				SELECT id FROM tags
+				WHERE slug IN ($tags)
+			)"
+		);
+		$query->execute($params);
+		return $query->rowCount();
+	}
+	/** @param string[] tags */
+	public function AddTagsToArtwork(string $art, array $tags) {
+		$params = $tags;
+		$params[':art'] = $art;
+		$tags = self::SQLArray($tags);
+
+		$query = $this->pdo->prepare(
+			"INSERT IGNORE INTO `art-tag` (tagId, artId)
+				SELECT id, (SELECT id FROM `artworks` WHERE slug = :art LIMIT 1)
+				FROM `tags` 
+				WHERE slug IN ($tags)"
+		);
+		$query->execute($params);
+		return $query->rowCount();
+	}
 	public function GetTagsFromArtwork(int $artID) : array {
 		$query = $this->pdo->prepare(
 			"SELECT tags.* FROM tags 
