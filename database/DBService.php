@@ -122,11 +122,16 @@ class DBService {
 		return $query->rowCount() > 0;
 	}
 
-	/** @param string[] $tags */
-	public function RemoveTagsFromArtwork(string $art, array $tags){
+	/**
+	 * Remove the given tags from the given artwork. 
+	 * If `$preserve` is true, it will instead keep the provided tags and remove every other. 
+	 * @param string[] $tags 
+	*/
+	public function RemoveTagsFromArtwork(string $art, array $tags, bool $preserve = false){
 		$params = $tags;
 		$params[':art'] = $art;
 		$tags = self::SQLArray($tags);
+		$IN = $preserve ? "NOT IN" : "IN";
 
 		$query = $this->pdo->prepare(
 			"DELETE FROM `art-tag`
@@ -137,7 +142,7 @@ class DBService {
 			) 
 			AND tagId IN (
 				SELECT id FROM tags
-				WHERE slug IN ($tags)
+				WHERE slug $IN ($tags)
 			)"
 		);
 		$query->execute($params);
