@@ -140,28 +140,38 @@ class DBService {
 	 * @param string[] $tags 
 	*/
 	public function RemoveTagsFromArtwork(string $art, array $tags, bool $preserve = false){
+		if (!$tags && !$preserve)
+			return 0;
+
 		self::PrepareSQLArray($tags, $tags, $params);
 		$params[":art"] = $art;
-		$tags = $tags ?? "TRUE";
-		$IN = $preserve ? "NOT IN" : "IN";
-
-		$query = $this->pdo->prepare(
-			"DELETE FROM `art-tag`
+		
+		$query = 
+		"DELETE FROM `art-tag`
 			WHERE artId = (
 				SELECT id FROM artworks
 				WHERE slug = :art
 				LIMIT 1
-			) 
-			AND tagId IN (
+			)";
+		
+		if ($tags){
+			$IN = $preserve ? "NOT IN" : "IN";
+			$query .= 
+			"AND tagId IN (
 				SELECT id FROM tags
 				WHERE slug $IN ($tags)
-			)"
-		);
+			)";
+		}
+
+		$query = $this->pdo->prepare($query);
 		$query->execute($params);
 		return $query->rowCount();
 	}
 	/** @param string[] tags */
 	public function AddTagsToArtwork(string $art, array $tags) {
+		if (sizeof($tags) <= 0)
+			return 0;
+
 		self::PrepareSQLArray($tags, $tags, $params);
 		$params[":art"] = $art;
 		$tags = $tags ?? ("FALSE");
