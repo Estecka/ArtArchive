@@ -31,15 +31,27 @@ class DBService {
 	}
 
 	/** 
-	 * Prepares a bit of SQL query where each element of the array matches a parameter named after the array's key. 
-	 * In order to prevent SQL injection, make sure the array's keys do not originate from user input;
-	 * thus it is best used with non-associative arrays.
+	 * Formats an array to be used into a prepared SQL query. 
+	 * In order to prevent SQL injection, make sure the array's keys do not originate from user input; thus it is best used with non-associative arrays.
+	 * 
+	 * @param array $array 	The array that must be prepared.
+	 * @param string $sql 	Outputs the prepared SQL representation of the array. Will be null if $array is empty.
+	 * @param array $params	Outputs the array of parameters that must be bound to the prepared query. It will be similar to &array, but with ':' prepended to each key.
 	*/
-	static private function SQLArray(array $array) : string {
-		$params = array();
-		foreach($array as $key=>$value)
-			$params[] = ":$key";
-		return $params.implode(", ");
+	static private function PrepareSQLArray(array $array, &$sql, &$params) {
+		if (sizeof($array) <= 0)
+		{
+			$params = array();
+			$sql = null;
+		} 
+		else 
+		{
+			$params = array();
+			foreach($array as $key=>$value)
+				$params[":$key"] = $value;
+
+			$sql = implode(", ", array_keys($params));
+		}
 	}
 	
 	public function query($sql, array $params = null)
@@ -128,9 +140,9 @@ class DBService {
 	 * @param string[] $tags 
 	*/
 	public function RemoveTagsFromArtwork(string $art, array $tags, bool $preserve = false){
-		$params = $tags;
-		$params[':art'] = $art;
-		$tags = self::SQLArray($tags);
+		self::PrepareSQLArray($tags, $tags, $params);
+		$params[":art"] = $art;
+		$tags = $tags ?? "TRUE";
 		$IN = $preserve ? "NOT IN" : "IN";
 
 		$query = $this->pdo->prepare(
@@ -150,9 +162,9 @@ class DBService {
 	}
 	/** @param string[] tags */
 	public function AddTagsToArtwork(string $art, array $tags) {
-		$params = $tags;
-		$params[':art'] = $art;
-		$tags = self::SQLArray($tags);
+		self::PrepareSQLArray($tags, $tags, $params);
+		$params[":art"] = $art;
+		$tags = $tags ?? ("FALSE");
 
 		$query = $this->pdo->prepare(
 			"INSERT IGNORE INTO `art-tag` (tagId, artId)
