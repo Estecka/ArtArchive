@@ -23,11 +23,11 @@ class DBService {
 	public function StartTransaction(){
 		$this->pdo->beginTransaction();
 	}
-	public function commitTransaction(){
+	public function CommitTransaction(){
 		$this->pdo->commit();
 	}
 	public function Rollback(){
-		$this->pdo->rollBack()();
+		$this->pdo->rollBack();
 	}
 
 	/** 
