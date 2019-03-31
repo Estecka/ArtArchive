@@ -4,6 +4,7 @@ class TagDTO{
 	public $slug;
 	public $name;
 	public $description;
+	public $categoryId;
 
 	static public function CreateFrom(array $object) : TagDTO {
 		$tag = new TagDTO();
@@ -15,6 +16,7 @@ class TagDTO{
 		$tag->slug 	= value($object['slug']);
 		$tag->name 	= value($object['name']);
 		$tag->description = value($object['description']);
+		$tag->categoryId = value($object['categoryId']);
 		return $tag;
 	}
 

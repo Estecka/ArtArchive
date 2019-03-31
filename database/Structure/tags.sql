@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2019 at 08:41 PM
+-- Generation Time: Mar 31, 2019 at 01:54 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -24,7 +24,8 @@ CREATE TABLE `tags` (
   `id` int(11) NOT NULL,
   `slug` varchar(32) NOT NULL,
   `name` varchar(32) DEFAULT NULL,
-  `description` text
+  `description` text,
+  `categoryId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -36,7 +37,8 @@ CREATE TABLE `tags` (
 --
 ALTER TABLE `tags`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `slug` (`slug`);
+  ADD UNIQUE KEY `slug` (`slug`),
+  ADD KEY `categoryId` (`categoryId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -47,3 +49,12 @@ ALTER TABLE `tags`
 --
 ALTER TABLE `tags`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tags`
+--
+ALTER TABLE `tags`
+  ADD CONSTRAINT `category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
