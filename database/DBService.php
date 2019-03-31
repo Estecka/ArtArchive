@@ -2,6 +2,7 @@
 require_once("config.php");
 require_once("ArtworkDTO.php");
 require_once("TagDTO.php");
+require_once("CategoryDTO.php");
 require_once("TagListElt.php");
 
 class DBService {
@@ -271,6 +272,20 @@ class DBService {
 		$query = $this->pdo->prepare("DELETE FROM tags WHERE slug = ?");
 		$query->execute(array($slug));
 		return $query->rowCount() > 0;
+	}
+
+	/** REGION CATEGORIES */
+	/**
+	 * Fetch a category by its slug.
+	 * @return CategoryDTO
+	*/
+	public function GetCategoryBySlug(string $slug){
+		$query = $this->pdo->prepare("SELECT * FROM categories WHERE slug = ?");
+		$query->execute(array($slug));
+		
+		$result = $query->fetch();
+		$query->closeCursor();
+		return $result ? CategoryDTO::CreateFrom($result) : null;
 	}
 }
 ?>

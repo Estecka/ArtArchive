@@ -9,6 +9,7 @@ class URL {
 		return "/site/";
 	}
 
+	/** REGION ARTWORKS */
 	static public function Artwork(string $slug) : string {
 		return "/site/art/?art=$slug";
 	}
@@ -23,6 +24,7 @@ class URL {
 		return "/site/art/delete.php?art=$slug";
 	}
 
+	/** REGION TAGS */
 	static public function TagsHome() : string {
 		return "/site/tags.php";
 	}
@@ -34,6 +36,11 @@ class URL {
 	}
 	static public function SubmitTag() : string {
 		return "/site/submit/tag/";
+	}
+
+	/** REGION CATEGORIES */
+	static public function Category(string $slug) : string {
+		return "/site/category/?category=$slug";
 	}
 }
 ?>
