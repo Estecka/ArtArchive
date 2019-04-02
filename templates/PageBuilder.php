@@ -53,5 +53,9 @@ class PageBuilder{
 	public function TagForm(TagDTO $tag, $action = null){
 		include(__ROOT__."/templates/tagForm.php");
 	}
+
+	public function CategoryForm(CategoryDTO $cat, $action = null){
+		include(__ROOT__."/templates/categoryForm.php");
+	}
 }
 ?>

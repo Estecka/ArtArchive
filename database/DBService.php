@@ -287,5 +287,33 @@ class DBService {
 		$query->closeCursor();
 		return $result ? CategoryDTO::CreateFrom($result) : null;
 	}
+	public function UpdateCategory(string $slug, CategoryDTO $cat) : bool {
+		// Check the tag exists
+		$query = $this->pdo->prepare("SELECT COUNT(*) FROM categories WHERE slug = ?");
+		$query->execute(array($slug));
+
+		$count = $query->fetchColumn();
+		$query->closeCursor();
+		if ($count < 1)
+			return false;
+
+		// Perform the change
+		$query = $this->pdo->prepare(
+			"UPDATE categories 
+			SET slug = :newSlug, 
+				name = :name, 
+				description = :description,
+				color = :color
+			WHERE slug = :oldSlug"
+		);
+		$query->execute(array(
+			":oldSlug" 	=> $slug,
+			":newSlug" 	=> $cat->slug,
+			":name" 	=> $cat->name,
+			":description" => $cat->description,
+			":color" => $cat->color,
+		));
+		return true;
+	}
 }
 ?>
