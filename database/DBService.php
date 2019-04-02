@@ -315,5 +315,10 @@ class DBService {
 		));
 		return true;
 	}
+	public function DeleteCategory(string $slug) : bool {
+		$query = $this->pdo->prepare("DELETE FROM categories WHERE slug = ?");
+		$query->execute(array($slug));
+		return $query->rowCount() > 0;
+	}
 }
 ?>
