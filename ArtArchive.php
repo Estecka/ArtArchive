@@ -42,5 +42,11 @@ class URL {
 	static public function Category(string $slug) : string {
 		return "/site/category/?category=$slug";
 	}
+	static public function EditCategory(string $slug) : string {
+		return "/site/category/edit?category=$slug";
+	}
+	static public function SubmitCategory() : string {
+		return "/site/submit/category/";
+	}
 }
 ?>
