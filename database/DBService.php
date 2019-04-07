@@ -287,6 +287,15 @@ class DBService {
 		$query->closeCursor();
 		return $result ? CategoryDTO::CreateFrom($result) : null;
 	}
+	public function InsertCategory(CategoryDTO $cat){
+		$query = $this->pdo->prepare("INSERT INTO categories (slug, name, description, color) VALUES (:slug, :name, :description, :color)");
+		$query->execute(array(
+			":slug" => $cat->slug,
+			":name" => $cat->name,
+			":description" => $cat->description,
+			":color" => $cat->color,
+		));
+	}
 	public function UpdateCategory(string $slug, CategoryDTO $cat) : bool {
 		// Check the tag exists
 		$query = $this->pdo->prepare("SELECT COUNT(*) FROM categories WHERE slug = ?");
