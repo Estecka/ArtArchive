@@ -276,6 +276,19 @@ class DBService {
 
 	/** REGION CATEGORIES */
 	/**
+	 * Fetch all available categories. Returns an associative array using the categories IDs as keys, and sorted by their `order` property.
+	 * @return CategorytDTO[]
+	 */
+	public function GetAllCategories() : array {
+		$result = $this->query("SELECT * FROM categories ORDER BY `order`, `id`");
+		$r = array();
+		foreach($result as $key=>$cat){
+			$cat = CategoryDTO::CreateFrom($cat);
+			$r[$cat->id] = $cat;
+		}
+		return $r;
+	}
+	/**
 	 * Fetch a category by its slug.
 	 * @return CategoryDTO
 	*/

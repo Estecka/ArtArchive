@@ -1,6 +1,7 @@
 <?php
 class CategoryDTO {
 	public $id;
+	public $order;
 	public $slug;
 	public $name;
 	public $description;
@@ -13,6 +14,7 @@ class CategoryDTO {
 				$object[$key] = null;
 		
 		$cat->id 	= value($object['id']);
+		$cat->order	= value($object['order']);
 		$cat->slug 	= value($object['slug']);
 		$cat->name 	= value($object['name']);
 		$cat->description = value($object['description']);
