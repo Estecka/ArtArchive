@@ -7,6 +7,13 @@ class CategoryDTO {
 	public $description;
 	public $color;
 
+	static public function Empty() : CategoryDTO {
+		$cat = new CategoryDTO();
+		$cat->id = -1;
+		$cat->name = "Tags";
+		return $cat;
+	}
+
 	static public function CreateFrom(array $object) : CategoryDTO {
 		$cat = new CategoryDTO();
 		foreach($object as $key => $value)

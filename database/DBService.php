@@ -224,6 +224,9 @@ class DBService {
 
 
 	/** REGION TAGS */
+	/**
+	 * @return TagDTO[]
+	 */
 	public function GetAllTags() : array {
 		$result =  $this->query("SELECT * FROM tags ORDER BY slug");
 		foreach($result as $key=>$tag)
