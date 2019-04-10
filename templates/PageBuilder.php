@@ -47,7 +47,14 @@ class PageBuilder{
 		include(__ROOT__."/templates/ArtCard.php");
 	}
 
-	public function ArtPage(ArtworkDTO $art, array $tags = null){
+
+	/**
+	 * @param ArtDTO $art The artwork to be displayed
+	 * @param TagDTO[] $tags The tags that belong to this artwork.
+	 * @param CategoryDTO[] $cats a list of categories, containing at least those represented in the provided tags. (Except for null)
+	 */
+	public function ArtPage(ArtworkDTO $art, array $tags = null, array $cats = null){
+		$page = &$this;
 		include(__ROOT__."/templates/artPage.php");
 	}
 	public function TagForm(TagDTO $tag, $action = null){

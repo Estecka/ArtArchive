@@ -1,6 +1,10 @@
 <?php 
-/** @var $art ArtworkDTO */
-/** @var $tags TagDTO[] */
+/** 
+ * @var PageBuilder $this
+ * @var ArtworkDTO $art
+ * @var TagDTO[] $tags 
+ * @var CategoryDTO[] $cats
+*/
 ?>
 
 <a href="<?=URL::EditArt($art->slug)?>">Edit</a> | <a href="<?=URL::DeleteArt($art->slug)?>">Delete</a>
@@ -9,11 +13,9 @@
 <?=$art->date?> <br/>
 <?=$art->description?>
 
-<?php if ($tags != null) { ?>
-	<div>
-		<h4>Tags : </h4>
-		<?php foreach($tags as $tag){ ?>
-			<a href="<?=URL::Tag($tag->slug)?>"><?=$tag->slug?></a> <br/>
-		<?php } ?>
-	</div>
-<?php } ?>
+<?php
+if (!empty($tags)){
+	print("<h4>Tags : </h4>");
+	$this->TagList($tags, $cats);
+}
+?>
