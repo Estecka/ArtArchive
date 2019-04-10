@@ -54,6 +54,15 @@ class PageBuilder{
 		include(__ROOT__."/templates/tagForm.php");
 	}
 
+	/**
+	 * Presents the provided tags in a nice list, sorted by category.
+	 * @param TagDTO[] $tags The tags displayed in the list.
+	 * @param CategoryDTO[] $cats a list of categories containing at least those represented in the provided tags. (Except for null)
+	 */
+	public function TagList(array $tags, array $cats) {
+		include(__ROOT__."/templates/tagList.php");
+	}
+
 	public function CategoryForm(CategoryDTO $cat, $action = null){
 		include(__ROOT__."/templates/categoryForm.php");
 	}
