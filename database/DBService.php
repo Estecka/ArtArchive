@@ -242,11 +242,15 @@ class DBService {
 		return $result ? TagDTO::CreateFrom($result) : null;
 	}
 	public function InsertTag(TagDTO $tag) {
-		$query = $this->pdo->prepare("INSERT INTO tags (slug, name, description) VALUES (:slug, :name, :description)");
+		$query = $this->pdo->prepare(
+			"INSERT INTO tags (slug, name, description, categoryId) 
+			VALUES (:slug, :name, :description, :category)"
+		);
 		$query->execute(array(
 			":slug" => $tag->slug,
 			":name" => $tag->name,
 			":description" => $tag->description,
+			":category" => $tag->categoryId,
 		));
 	}
 	public function UpdateTag(string $slug, TagDTO $tag) {
@@ -261,13 +265,19 @@ class DBService {
 
 		// Perform the change
 		$query = $this->pdo->prepare(
-			"UPDATE tags SET slug =:newSlug, name = :name, description = :description WHERE slug = :oldSlug"
+			"UPDATE tags SET 
+				slug =:newSlug, 
+				name = :name, 
+				description = :description, 
+				categoryId = :category 
+			WHERE slug = :oldSlug"
 		);
 		$query->execute(array(
 			":oldSlug" 	=> $slug,
 			":newSlug" 	=> $tag->slug,
 			":name" 	=> $tag->name,
 			":description" => $tag->description,
+			":category" => $tag->categoryId,
 		));
 		return true;
 	}

@@ -36,7 +36,7 @@ $cats[null]->id = null;
 			$color = empty($cat->color) ? null : "style=\"color: $cat->color\"";
 			?>
 			<br/>
-			<input id ="<?=$id?>" name="category" type="radio" value="<?=$cat->slug?>" <?=$checked?>>
+			<input id ="<?=$id?>" name="categoryId" type="radio" value="<?=$cat->id?>" <?=$checked?>>
 			<label for="<?=$id?>" <?=$color?>><?=$cat->GetName()?></label>
 			<?php
 		}
