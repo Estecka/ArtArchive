@@ -38,8 +38,9 @@ class DBService {
 	 * @param array $array 	The array that must be prepared.
 	 * @param string $sql 	Outputs the prepared SQL representation of the array. Will be null if $array is empty.
 	 * @param array $params	Outputs the array of parameters that must be bound to the prepared query. It will be similar to &array, but with ':' prepended to each key.
+	 * @param string $prefix If this value is set paramater's name will be formated as ":prefix_key" instead of ":key". Use this if you need to bind multiple arrays with the same key names.
 	*/
-	static private function PrepareSQLArray(array $array, &$sql, &$params) {
+	static private function PrepareSQLArray(array $array, &$sql, &$params, string $prefix=null) {
 		if (sizeof($array) <= 0)
 		{
 			$params = array();
@@ -48,8 +49,10 @@ class DBService {
 		else 
 		{
 			$params = array();
-			foreach($array as $key=>$value)
-				$params[":$key"] = $value;
+			foreach($array as $key=>$value){
+				$name = $prefix ? ":$prefix"."_$key" : ":$key";
+				$params[$name] = $value;
+			}
 
 			$sql = implode(", ", array_keys($params));
 		}
@@ -354,6 +357,29 @@ class DBService {
 		$query = $this->pdo->prepare("DELETE FROM categories WHERE slug = ?");
 		$query->execute(array($slug));
 		return $query->rowCount() > 0;
+	}
+	/**
+	 * @param int[] $order An associative array taking categories' slug as keys, and their intended position as value. 
+	 */
+	public function ReorderCategories(array $order) {
+		self::PrepareSQLArray(array_keys($order), $slugs, $slugParam, "slug");
+		self::PrepareSQLArray(array_values($order), $orderSQL, $orderParam, "order");
+	
+		$WHEN_THEN_ = "";
+		for ($i=0; $i<sizeof($order); $i++)
+			$WHEN_THEN_ .= "WHEN :slug_$i THEN :order_$i\n";
+
+		$query =
+			"UPDATE `categories`
+			SET `order` = CASE `slug`
+				$WHEN_THEN_
+				ELSE `order`
+				END
+			WHERE `slug` IN ($slugs)";
+
+		$query = $this->pdo->prepare($query);
+		$query->execute($slugParam + $orderParam);
+
 	}
 }
 ?>

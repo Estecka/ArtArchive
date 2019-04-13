@@ -14,7 +14,7 @@ $page->StartPage();
 	print("<h2>Categories order</h2>");
 
 	?>
-	<form method="post" action="reorder.php"> 
+	<form method="post" action="reordercats.php"> 
 		<?php
 		$i = 0;
 		foreach($cats as $cat){
