@@ -57,7 +57,12 @@ class PageBuilder{
 		$page = &$this;
 		include(__ROOT__."/templates/artPage.php");
 	}
-	public function TagForm(TagDTO $tag, $action = null){
+	/**
+	 * @param TagDTO $tag The tag to populate the form with
+	 * @param CategoryDTO[] $cats A list of all available categories.
+	 * @param string $action The action to be taken when submitting the form.
+	 */
+	public function TagForm(TagDTO $tag, array $cats, $action = null){
 		include(__ROOT__."/templates/tagForm.php");
 	}
 

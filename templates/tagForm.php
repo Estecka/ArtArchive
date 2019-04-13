@@ -1,3 +1,16 @@
+<?php
+/**
+ * @var TagDTO $tag
+ * @var CategoryDTO[] $cats
+ * @var string $action
+ */
+
+$cats = array(null => new CategoryDTO()) + $cats;
+$cats[null]->name = "None";
+$cats[null]->id = null;
+
+?>
+
 <div>
 	<form action="<?=value($action)?>" method="post">
 		<label for="slug">Slug</label> 
@@ -12,6 +25,22 @@
 		
 		<label for="description">Descriptions</label> <br/>
 		<textarea id="description" name="description"><?=$tag->description?></textarea>
+
+		<br/>
+
+		Category :
+		<?php
+		foreach($cats as $cat){
+			$checked = ($cat->id == $tag->categoryId) ? "checked" : null;
+			$id = "category[$cat->slug]";
+			$color = empty($cat->color) ? null : "style=\"color: $cat->color\"";
+			?>
+			<br/>
+			<input id ="<?=$id?>" name="category" type="radio" value="<?=$cat->slug?>" <?=$checked?>>
+			<label for="<?=$id?>" <?=$color?>><?=$cat->GetName()?></label>
+			<?php
+		}
+		?>
 
 		<br/>
 		
