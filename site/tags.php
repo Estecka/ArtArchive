@@ -16,6 +16,8 @@ $page->StartPage();
 <a href="<?=URL::SubmitTag()?>">Create Tag</a>
  | 
 <a href="<?=URL::SubmitCategory()?>">Create Category</a>
+ | 
+<a href="<?=URL::OrderCategory()?>">Reorder Category</a>
 <hr/>
 <?php
 

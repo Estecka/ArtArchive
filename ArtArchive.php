@@ -39,6 +39,9 @@ class URL {
 	}
 
 	/** REGION CATEGORIES */
+	static public function OrderCategory() : string {
+		return "/site/categories.php";
+	}
 	static public function Category(string $slug) : string {
 		return "/site/category/?category=$slug";
 	}
