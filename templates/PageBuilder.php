@@ -70,8 +70,9 @@ class PageBuilder{
 	 * Presents the provided tags in a nice list, sorted by category.
 	 * @param TagDTO[] $tags The tags displayed in the list.
 	 * @param CategoryDTO[] $cats a list of categories containing at least those represented in the provided tags. (Except for null)
+	 * @param bool $showEmptyCats Whether empty categories should be listed.
 	 */
-	public function TagList(array $tags, array $cats) {
+	public function TagList(array $tags, array $cats, bool $showEmptyCats = false) {
 		include(__ROOT__."/templates/tagList.php");
 	}
 

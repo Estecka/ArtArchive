@@ -21,7 +21,7 @@ $page->StartPage();
 <hr/>
 <?php
 
-$page->TagList($tags, $cats);
+$page->TagList($tags, $cats, true);
 
 $page->EndPage();
 ?>

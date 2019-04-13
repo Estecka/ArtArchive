@@ -16,6 +16,6 @@
 <?php
 if (!empty($tags)){
 	print("<h4>Tags : </h4>");
-	$this->TagList($tags, $cats);
+	$this->TagList($tags, $cats, false);
 }
 ?>

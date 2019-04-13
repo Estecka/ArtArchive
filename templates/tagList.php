@@ -2,6 +2,7 @@
 /**
  * @var TagDTO[] $tags
  * @var CategoryDTO[] $cats
+ * @var bool $showEmptyCats
  */
 
 $cats[null] = CategoryDTO::Empty();
@@ -15,6 +16,10 @@ foreach($tags as $tag)
 
 
 foreach($cats as $cat) {
+	$empty = empty($cat->tags);
+	if ($empty && !$showEmptyCats)
+		continue;
+
 	$h3 = $cat->GetName();
 	if ($cat->slug != null){
 		$url = URL::Category($cat->slug);
@@ -22,7 +27,7 @@ foreach($cats as $cat) {
 	}
 	print("<h3>$h3</h3>");
 
-	if(empty($cat->tags))
+	if($empty)
 		print("This category is empty");
 	else
 	foreach($cat->tags as $tag) {
