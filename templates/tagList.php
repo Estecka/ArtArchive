@@ -15,7 +15,12 @@ foreach($tags as $tag)
 
 
 foreach($cats as $cat) if(!empty($cat->tags))  {
-	print("<h3>".$cat->GetName()."</h3>");
+	$h3 = $cat->GetName();
+	if ($cat->slug != null){
+		$url = URL::Category($cat->slug);
+		$h3 = "<a href=\"$url\">$h3</a>";
+	}
+	print("<h3>$h3</h3>");
 	foreach($cat->tags as $tag) {
 		$style = empty($cat->color) ? null : "style ='color: $cat->color'";
 		?>

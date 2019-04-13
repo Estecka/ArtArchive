@@ -13,7 +13,9 @@ $cats = $bdd->GetAllCategories();
 $page = new PageBuilder();
 $page->StartPage();
 ?>
-<a href="<?=URL::SubmitTag()?>">Create</a>
+<a href="<?=URL::SubmitTag()?>">Create Tag</a>
+ | 
+<a href="<?=URL::SubmitCategory()?>">Create Category</a>
 <hr/>
 <?php
 
