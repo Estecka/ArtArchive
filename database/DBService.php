@@ -225,6 +225,37 @@ class DBService {
 		return $result;
 	}
 
+	/** REGION FILES */
+	/**
+	 * Get the URL of all files associated to a given artwork, rooted to the `/storage/` folder
+	 * @param int $id The id of the artwork to fetch files from.
+	 * @return string[]
+	 */
+	public function GetFiles(int $id) : array {
+		$query = $this->pdo->prepare(
+			"SELECT `file` FROM `art-file`
+			WHERE `artworkId` = :id
+			ORDER BY `order` ASC"
+		);
+		$query->execute(array(":id" => $id));
+		$result = $query->fetchAll();
+		return $result;
+	}
+	/**
+	 * Disassociate all files from an artwork.
+	 * @param string $slug The artwork's slug
+	 */
+	public function ClearFiles(string $slug) : void {
+		$query = $this->pdo->prepare(
+			"DELETE FROM `art-file`
+			WHERE artworkId = (
+				SELECT id FROM artworks
+				WHERE slug = :slug
+				LIMIT 1
+			)"
+		);
+		$query->execute(array(":slug" => $slug));
+	}
 
 	/** REGION TAGS */
 	/**
