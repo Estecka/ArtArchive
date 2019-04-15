@@ -275,6 +275,27 @@ class DBService {
 		);
 		$query->execute(array(":slug" => $slug));
 	}
+	/**
+	 * @param string $slug The artwork's slug
+	 * @param string[] $files The urls to the file, starting from below the `/storage/` folder
+	 */
+	public function SetFiles(string $slug, array $files) : void {
+		self::PrepareSQLArray($files, $fileSQL, $params);
+		$paramNames = array_keys($params);
+
+		$VALUES = "VALUES\n";
+		for ($i=0; $i<sizeof($files); $i++){
+			$VALUES .= "(@id, $i, ".$paramNames[$i].")";
+		}
+
+		$query = $this->pdo->prepare(
+			"SET @id = (SELECT id from `artworks` WHERE slug = :slug LIMIT 1);\n".
+			"DELETE FROM `art-file`
+			WHERE artworkId = @id;\n".
+			"INSERT INTO `art-file` (artworkId, order, file) $VALUES;"
+		);
+		$query->execute(array(":slug" => $slug));
+	}
 
 	/** REGION TAGS */
 	/**
