@@ -31,7 +31,7 @@
 		<br/>
 
 		<h4><label for="files">Files :</label></h4>
-		<textarea id="files" name="description"><?=$filesText?></textarea>
+		<textarea id="files" name="files"><?=$filesText?></textarea>
 
 		<br/>
 

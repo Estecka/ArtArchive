@@ -10,6 +10,8 @@ if (empty($slug)) {
 $artwork = ArtworkDTO::CreateFrom($_POST);
 $keep = isset($_POST["keep"]) ? array_keys($_POST["keep"]) : array();
 $add =  isset($_POST["add"])  ? array_keys($_POST["add"])  : false;
+$files= isset($_POST["files"])? explode("\n", $_POST["files"]) : null;
+
 $bdd = new DBService();
 
 try {
@@ -22,6 +24,7 @@ try {
 	}
 	else {
 		$slug = $artwork->slug;
+		$bdd->SetFiles($slug, $files);
 		$bdd->RemoveTagsFromArtwork($slug, $keep, true);
 		if ($add)
 			$bdd->AddTagsToArtwork($slug, $add, true);

@@ -98,7 +98,7 @@ class DBService {
 		return $result ? ArtworkDTO::CreateFrom($result) : null;
 	}
 
-	public function AddArtwork(ArtworkDTO $art){
+	public function AddArtwork(ArtworkDTO $art) : bool {
 		$query = $this->pdo->prepare("INSERT INTO artworks (slug, title, date, description) VALUES (?,?,?,?)");
 		$result = $query->execute(array(
 			$art->slug,
@@ -109,6 +109,11 @@ class DBService {
 		return $result;
 	}
 
+	/**
+	 * @param string $slug
+	 * @param ArtworkDTO $art
+	 * @return bool false if the Artwork doesn't exist.
+	 */
 	public function UpdateArtwork(string $slug, ArtworkDTO $art) {
 		// Check the artwork exists
 		$query = $this->pdo->prepare("SELECT COUNT(*) FROM artworks WHERE slug = ?");
@@ -245,7 +250,7 @@ class DBService {
 	 * Disassociate all files from an artwork.
 	 * @param string $slug The artwork's slug
 	 */
-	public function ClearFiles(string $slug) : void {
+	public function ClearFiles(string $slug) {
 		$query = $this->pdo->prepare(
 			"DELETE FROM `art-file`
 			WHERE artworkId = (
@@ -260,41 +265,47 @@ class DBService {
 	 * @param string $slug The artwork's slug
 	 * @param string[] $files The urls to the file, starting from below the `/storage/` folder
 	 */
-	public function AddFiles(string $slug, array $files) : void {
+	public function AddFiles(string $slug, array $files) {
 		self::PrepareSQLArray($files, $fileSQL, $params);
 		$paramNames = array_keys($params);
 
-		$VALUES = "VALUES\n";
+		$VALUES = array();
 		for ($i=0; $i<sizeof($files); $i++){
-			$VALUES .= "(@id, $i, ".$paramNames[$i].")";
+			$VALUES[] = "\t(@id, $i, ".$paramNames[$i].")";
 		}
+		$VALUES = implode(", \n", $VALUES);
+		$VALUES = "VALUES\n".$VALUES;
 
 		$query = $this->pdo->prepare(
 			"SET @id = (SELECT id from `artworks` WHERE slug = :slug LIMIT 1);\n".
-			"INSERT INTO `art-file` (artworkId, order, url) $VALUES;"
+			"INSERT INTO `art-file` (`artworkId`, `order`, `url`) $VALUES;"
 		);
-		$query->execute(array(":slug" => $slug));
+		$params[":slug"] = $slug;
+		$query->execute($params);
 	}
 	/**
 	 * @param string $slug The artwork's slug
 	 * @param string[] $files The urls to the file, starting from below the `/storage/` folder
 	 */
-	public function SetFiles(string $slug, array $files) : void {
+	public function SetFiles(string $slug, array $files) {
 		self::PrepareSQLArray($files, $fileSQL, $params);
 		$paramNames = array_keys($params);
 
-		$VALUES = "VALUES\n";
+		$VALUES = array();
 		for ($i=0; $i<sizeof($files); $i++){
-			$VALUES .= "(@id, $i, ".$paramNames[$i].")";
+			$VALUES[] = "\t(@id, $i, ".$paramNames[$i].")";
 		}
+		$VALUES = implode(", \n", $VALUES);
+		$VALUES = "VALUES\n".$VALUES;
 
 		$query = $this->pdo->prepare(
 			"SET @id = (SELECT id from `artworks` WHERE slug = :slug LIMIT 1);\n".
 			"DELETE FROM `art-file`
 			WHERE artworkId = @id;\n".
-			"INSERT INTO `art-file` (artworkId, order, url) $VALUES;"
+			"INSERT INTO `art-file` (`artworkId`, `order`, `url`) \n$VALUES;"
 		);
-		$query->execute(array(":slug" => $slug));
+		$params[":slug"] = $slug;
+		$query->execute($params);
 	}
 
 	/** REGION TAGS */
