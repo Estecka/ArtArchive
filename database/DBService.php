@@ -233,6 +233,30 @@ class DBService {
 			$result[$key] = TagListElt::CreateFrom($value);
 		return $result;
 	}
+	/** 
+	 * Gets all available tags, along with whether they are assigned to the given Artwork. 
+	 * Each tagDTO object is assigned an additional `enabled` property telling whether they are
+	 * @param int $artID
+	 * @return TagDTO[]
+	*/
+	public function GetAllTagsByArtwork(int $artID) : array {
+		$query = $this->pdo->prepare(
+			"SELECT tags.*, assigned.enabled FROM tags
+			LEFT JOIN 
+				(SELECT tagId, TRUE as `enabled` FROM `art-tag`
+				WHERE artId = ?) 
+				as `assigned`
+			ON tags.id = assigned.tagId
+			ORDER BY tags.slug ASC;"
+		);
+		$query->execute(array($artID));
+		$result = $query->fetchAll();
+		foreach($result as $key=>$value){
+			$result[$key] = TagDTO::CreateFrom($value);
+			$result[$key]->enabled = (bool)$value["enabled"];
+		}
+		return $result;
+	}
 
 	/** REGION FILES */
 	/**
