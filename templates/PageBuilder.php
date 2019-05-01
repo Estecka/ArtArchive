@@ -53,8 +53,9 @@ class PageBuilder{
 	 * @param ArtDTO $art The artwork to be displayed
 	 * @param TagDTO[] $tags The tags that belong to this artwork.
 	 * @param CategoryDTO[] $cats a list of categories, containing at least those represented in the provided tags. (Except for null)
+	 * @param string[] $files The url to the files to be displayed
 	 */
-	public function ArtPage(ArtworkDTO $art, array $tags = null, array $cats = null){
+	public function ArtPage(ArtworkDTO $art, array $tags = null, array $cats = null, array $files = null){
 		$page = &$this;
 		include(__ROOT__."/templates/artPage.php");
 	}
