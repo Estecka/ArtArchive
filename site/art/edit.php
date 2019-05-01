@@ -15,6 +15,7 @@ if ($art == null){
 	PageBuilder::ErrorDocument(404);
 	die;
 }
+$files = $bdd->GetFiles($art->id);
 
 
 $name = $art->GetName();
@@ -24,7 +25,7 @@ $page = new PageBuilder();
 $page->title = "Edit : $name";
 $page->StartPage();
 		print("<h2>Submit artwork</h2>");
-		$page->ArtForm($art, $tags, "update.php?art=$slug");
+		$page->ArtForm($art, $tags, $files, "update.php?art=$slug");
 $page->EndPage();
 
 ?>

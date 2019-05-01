@@ -1,6 +1,11 @@
 <?php
-/** @var ArtworkDTO $art */
-/** @var TagListElt[] $tags*/
+/** 
+ * @var ArtworkDTO $art 
+ * @var TagListElt[] $tags
+ * @var string[] $files
+ */
+
+ $filesText = $files ? implode("\n", $files) : null;
 ?>
 
 <div>
@@ -22,6 +27,11 @@
 		
 		<label for="description">Descriptions</label> <br/>
 		<textarea id="description" name="description"><?=$art->description?></textarea>
+
+		<br/>
+
+		<h4><label for="files">Files :</label></h4>
+		<textarea id="files" name="description"><?=$filesText?></textarea>
 
 		<br/>
 

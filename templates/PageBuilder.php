@@ -38,8 +38,9 @@ class PageBuilder{
 	/**
 	 * @param ArtWorkDTO $art
 	 * @param TagListelt[] $tags
+	 * @param string[] $files
 	 */
-	public function ArtForm(ArtworkDTO $art, array $tags, $action = null){
+	public function ArtForm(ArtworkDTO $art, array $tags, array $files, $action = null){
 		include(__ROOT__."/templates/artworkForm.php");
 	}
 

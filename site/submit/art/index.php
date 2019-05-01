@@ -10,7 +10,7 @@ $page->title = "Submit";
 $page->StartPage();
 
 	$art = ArtworkDTO::CreateFrom($_POST);
-	$page->ArtForm($art, $tags, "insert.php");
+	$page->ArtForm($art, $tags, array(), "insert.php");
 	
 $page->EndPage();
 ?>
