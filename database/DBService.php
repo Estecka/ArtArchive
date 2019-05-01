@@ -233,7 +233,7 @@ class DBService {
 	 */
 	public function GetFiles(int $id) : array {
 		$query = $this->pdo->prepare(
-			"SELECT `file` FROM `art-file`
+			"SELECT `url` FROM `art-file`
 			WHERE `artworkId` = :id
 			ORDER BY `order` ASC"
 		);
@@ -271,7 +271,7 @@ class DBService {
 
 		$query = $this->pdo->prepare(
 			"SET @id = (SELECT id from `artworks` WHERE slug = :slug LIMIT 1);\n".
-			"INSERT INTO `art-file` (artworkId, order, file) $VALUES;"
+			"INSERT INTO `art-file` (artworkId, order, url) $VALUES;"
 		);
 		$query->execute(array(":slug" => $slug));
 	}
@@ -292,7 +292,7 @@ class DBService {
 			"SET @id = (SELECT id from `artworks` WHERE slug = :slug LIMIT 1);\n".
 			"DELETE FROM `art-file`
 			WHERE artworkId = @id;\n".
-			"INSERT INTO `art-file` (artworkId, order, file) $VALUES;"
+			"INSERT INTO `art-file` (artworkId, order, url) $VALUES;"
 		);
 		$query->execute(array(":slug" => $slug));
 	}

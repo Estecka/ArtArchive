@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2019 at 07:46 PM
+-- Generation Time: May 01, 2019 at 01:24 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -22,8 +22,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `art-file` (
   `artworkId` int(11) NOT NULL,
-  `file` varchar(512) NOT NULL,
-  `order` int(11) NOT NULL
+  `order` int(11) NOT NULL,
+  `url` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
