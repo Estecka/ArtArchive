@@ -176,7 +176,11 @@ class DBService {
 		$query->execute($params);
 		return $query->rowCount();
 	}
-	/** @param string[] tags */
+	/** 
+	 * @param string $art The slug of the arwork
+	 * @param string[] tags An array of the tags' slugs
+	 * @return int The amount of tags succesfully added. Failures may be due to tags already existing for this artworks.
+	 */
 	public function AddTagsToArtwork(string $art, array $tags) {
 		if (sizeof($tags) <= 0)
 			return 0;
