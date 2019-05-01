@@ -234,11 +234,11 @@ class DBService {
 	public function GetFiles(int $id) : array {
 		$query = $this->pdo->prepare(
 			"SELECT `url` FROM `art-file`
-			WHERE `artworkId` = :id
+			WHERE `artworkId` = ?
 			ORDER BY `order` ASC"
 		);
-		$query->execute(array(":id" => $id));
-		$result = $query->fetchAll();
+		$query->execute(array($id));
+		$result = $query->fetchAll(PDO::FETCH_COLUMN);
 		return $result;
 	}
 	/**
