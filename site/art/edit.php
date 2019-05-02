@@ -16,16 +16,17 @@ if ($art == null){
 	die;
 }
 $files = $bdd->GetFiles($art->id);
+$tags  = $bdd->GetAllTagsByArtwork($art->id);
+$cats  = $bdd->GetAllCategories();
 
 
 $name = $art->GetName();
-$tags = $bdd -> GetArtformTags($art->id);
 
 $page = new PageBuilder();
 $page->title = "Edit : $name";
 $page->StartPage();
 		print("<h2>Submit artwork</h2>");
-		$page->ArtForm($art, $tags, $files, "update.php?art=$slug");
+		$page->ArtForm($art, $tags, $cats, $files, "update.php?art=$slug");
 $page->EndPage();
 
 ?>

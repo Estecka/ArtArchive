@@ -37,10 +37,11 @@ class PageBuilder{
 
 	/**
 	 * @param ArtWorkDTO $art
-	 * @param TagListelt[] $tags
-	 * @param string[] $files
+	 * @param TagDTO[] $tags List of all available tags. Each tag should provide an additional `enabled`  property.
+	 * @param CategoryDTO[] $cats List of all available categories.
+	 * @param string[] $files The urls this artwork's files.
 	 */
-	public function ArtForm(ArtworkDTO $art, array $tags, array $files, $action = null){
+	public function ArtForm(ArtworkDTO $art, array $tags, array $cats, array $files, $action = null){
 		include(__ROOT__."/templates/artworkForm.php");
 	}
 
