@@ -11,6 +11,25 @@ $artwork = ArtworkDTO::CreateFrom($_POST);
 $keep = isset($_POST["keep"]) ? array_keys($_POST["keep"]) : array();
 $add =  isset($_POST["add"])  ? array_keys($_POST["add"])  : false;
 $files= isset($_POST["files"])? explode("\n", $_POST["files"]) : null;
+$create = either($_POST["create"], array());
+if (isset($_POST["createNULL"]))
+	$create[null] = $_POST["createNULL"];
+
+foreach($create as $cat=>$tags){
+	if (!empty($tags)){
+		$tags = explode("\n", $tags);
+		foreach($tags as $key=>$tag){
+			$tags[$key] = $tag = trim($tag);
+			if (!empty($tag))
+				$add[] = $tag;
+		}
+	}
+
+	if ($tags)
+		$create[$cat] = $tags;
+	else
+		unset($create[$cat]);
+}
 
 $bdd = new DBService();
 
@@ -26,6 +45,9 @@ try {
 		$slug = $artwork->slug;
 		$bdd->SetFiles($slug, $files);
 		$bdd->RemoveTagsFromArtwork($slug, $keep, true);
+		foreach($create as $cat=>$tags){
+			$bdd->InsertTagsBulk($cat, $tags);
+		}
 		if ($add)
 			$bdd->AddTagsToArtwork($slug, $add, true);
 		$bdd->CommitTransaction();

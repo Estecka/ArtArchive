@@ -354,6 +354,28 @@ class DBService {
 
 		return $result ? TagDTO::CreateFrom($result) : null;
 	}
+	/**
+	 * Inserts a bulk of tags into a given category.
+	 * @param string $category The slug of the category
+	 * @param string[] $tags The slugs of the tags to insert. Already existing slugs will be ignored.
+	 */
+	public function InsertTagsBulk(string $category, array $tags) {
+		self::PrepareSQLArray($tags, $sql, $params);
+
+		$VALUES = array();
+		foreach($params as $key=>$value){
+			$VALUES[] = "($key, @id)";
+		}
+		$VALUES = implode(", \n", $VALUES);
+		$VALUES = "VALUES\n".$VALUES;
+
+		$query = 
+			"SET @id = (SELECT id FROM `categories` WHERE slug=:category LIMIT 1);\n".
+			"INSERT IGNORE INTO `tags` (slug, categoryId) $VALUES;";
+		$query = $this->pdo->prepare($query);
+		$params[":category"] = $category;
+		$query->execute($params);
+	}
 	public function InsertTag(TagDTO $tag) {
 		$query = $this->pdo->prepare(
 			"INSERT INTO tags (slug, name, description, categoryId) 

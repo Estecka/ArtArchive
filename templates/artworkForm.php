@@ -51,7 +51,12 @@ foreach($tags as $tag){
 		foreach($cats as $cat){
 			$name = $cat->GetName();
 			$style = $cat->color ? "style=\"color: $cat->color\"" : null;
-			print("<h5 $style>♦ $name<h5>");
+			$createId = empty($cat->slug) ? "createNULL" : "create[$cat->slug]"
+			?>
+			<h5 <?=$style?>>♦ <?=$name?></h5>
+			<textarea id="<?=$createId?>" name="<?=$createId?>" placeholder="Add new tags to this category. &#10;One slug per line."></textarea>
+			<br/>
+			<?php
 			if (empty($cat->tags))
 				print("This category has not tags :(");
 			else
