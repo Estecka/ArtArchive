@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2019 at 01:54 PM
+-- Generation Time: May 05, 2019 at 05:26 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL,
-  `slug` varchar(32) NOT NULL,
+  `slug` varchar(32) CHARACTER SET ascii NOT NULL,
   `name` varchar(32) DEFAULT NULL,
   `description` text,
   `categoryId` int(11) DEFAULT NULL

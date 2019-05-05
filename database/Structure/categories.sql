@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2019 at 03:53 PM
+-- Generation Time: May 05, 2019 at 05:26 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `order` int(11) NOT NULL DEFAULT '0',
-  `slug` varchar(16) NOT NULL,
+  `slug` varchar(16) CHARACTER SET ascii NOT NULL,
   `name` varchar(32) DEFAULT NULL,
   `color` varchar(7) DEFAULT NULL,
   `description` text
