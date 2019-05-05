@@ -2,16 +2,16 @@
 require("../Artarchive.php");
 $bdd = new DBService();
 
-$tags = either($_GET["tags"], false);
+$tags = value($_GET["tags"]);
 $page = either($_GET["page"], 0);
 
-if ($tags){
-	var_dump($tags);
+var_dump($tags);
+if ($tags !== false){
 	$tags = explode(" ", $tags);
 	var_dump($tags);
+	$arts = $bdd->GetArtworksByTags($tags, 100);
 }
 
-$bdd->GetArtworksByTags($tags, 100);
 
 
 $page = new PageBuilder();
@@ -23,5 +23,14 @@ $page->StartPage();
 		<input type="submit"/>
 	</form>
 	<?php
+	if (isset($arts)){
+		print("<h2>Results : </h2>");
+		if (sizeof($arts) <= 0)
+			print("This search did not yield any results. :(");
+		else
+		foreach($arts as $art){
+			$page->ArtCard($art);
+		}
+	}
 $page->EndPage();
 ?>

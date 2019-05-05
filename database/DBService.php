@@ -116,14 +116,22 @@ class DBService {
 				."	ON `tag$i`.artId = `artworks`.id \n";
 		}
 
-		$query = "SELECT `artworks`* FROM `artworks` $INNER_JOIN_tags LIMIT :offet, :amount;";
+		$query = "SELECT `artworks`.* FROM `artworks` $INNER_JOIN_tags LIMIT :offset, :amount;";
 		$params[":amount"] = $amount;
 		$params[":offset"] = $page * $amount;
 
 		var_dump($query);
 		var_dump($params);
+		
+		$query = $this->pdo->prepare($query);
+		foreach($params as $key=>$value)
+			$query->bindValue($key, $value, PDO::PARAM_INT);
+		$query->execute();
 
-		return $query;
+		$result = $query->fetchAll();
+		foreach($result as $key=>$art)
+			$result[$key] = ArtworkDTO::CreateFrom($art);
+		return $result;
 	}
 
 	public function AddArtwork(ArtworkDTO $art) : bool {
