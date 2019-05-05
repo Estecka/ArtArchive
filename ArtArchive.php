@@ -23,6 +23,15 @@ class URL {
 	static public function DeleteArt(string $slug) : string {
 		return "/site/art/delete.php?art=$slug";
 	}
+	static public function Search(string $tags = null, int $page = 0) : string {
+		$url = "/site/search.php";
+		if ($tags){
+			$url .= "?tags=$tags";
+			if ($page)
+				$url .= "&page=$page";
+		}
+		return $url;
+	}
 
 	/** REGION TAGS */
 	static public function TagsHome() : string {
