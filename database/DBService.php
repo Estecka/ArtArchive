@@ -97,6 +97,34 @@ class DBService {
 		$query->closeCursor();
 		return $result ? ArtworkDTO::CreateFrom($result) : null;
 	}
+	/**
+	 * Seeks artworks that are assigned all of the provided tags.
+	 * @param int[] $tags The Id of the required tags
+	 * @param int $amount
+	 * @param int $page
+	 */
+	public function GetArtworksByTags(array $tags, int $amount, int $page = 0){
+		self::PrepareSQLArray($tags, $sql, $params);
+		$paramNames = array_keys($params);
+
+		$INNER_JOIN_tags = "\n";
+		for ($i=0; $i<sizeof($tags); $i++){
+			$tag = $paramNames[$i];
+			$INNER_JOIN_tags .= 
+				"INNER JOIN \n"
+				."	(SELECT artId FROM `art-tag` WHERE `art-tag`.`tagId`=$tag) as `tag$i` \n"
+				."	ON `tag$i`.artId = `artworks`.id \n";
+		}
+
+		$query = "SELECT `artworks`* FROM `artworks` $INNER_JOIN_tags LIMIT :offet, :amount;";
+		$params[":amount"] = $amount;
+		$params[":offset"] = $page * $amount;
+
+		var_dump($query);
+		var_dump($params);
+
+		return $query;
+	}
 
 	public function AddArtwork(ArtworkDTO $art) : bool {
 		$query = $this->pdo->prepare("INSERT INTO artworks (slug, title, date, description) VALUES (?,?,?,?)");
