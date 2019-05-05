@@ -119,9 +119,6 @@ class DBService {
 		$query = "SELECT `artworks`.* FROM `artworks` $INNER_JOIN_tags LIMIT :offset, :amount;";
 		$params[":amount"] = $amount;
 		$params[":offset"] = $page * $amount;
-
-		var_dump($query);
-		var_dump($params);
 		
 		$query = $this->pdo->prepare($query);
 		foreach($params as $key=>$value)
@@ -389,6 +386,28 @@ class DBService {
 		$query->closeCursor();
 
 		return $result ? TagDTO::CreateFrom($result) : null;
+	}
+	/**
+	 * Returns the Id of the given tags.
+	 * @param string[] $tags
+	 * @return int[] An associative array wit slugs as key and ids as value. Non-existing tags will still have an entry with `null` as value.
+	 */
+	public function TagSlugsToID(array $tags) : array {
+		self::PrepareSQLArray($tags, $tagsSQL, $params);
+
+		$query = "SELECT id, slug FROM tags WHERE slug IN ($tagsSQL);";
+		$query = $this->pdo->prepare($query);
+		$query->execute($params);
+
+		$response = $query->fetchAll();
+
+		$result = array();
+		foreach($tags as $tag)
+			$result[strtolower($tag)] = null;
+		foreach($response as $tag)
+			$result[strtolower($tag["slug"])] = $tag["id"];
+
+		return $result;
 	}
 	/**
 	 * Inserts a bulk of tags into a given category.

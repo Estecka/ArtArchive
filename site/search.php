@@ -5,11 +5,20 @@ $bdd = new DBService();
 $tags = value($_GET["tags"]);
 $page = either($_GET["page"], 0);
 
-var_dump($tags);
 if ($tags !== false){
 	$tags = explode(" ", $tags);
-	var_dump($tags);
-	$arts = $bdd->GetArtworksByTags($tags, 100);
+
+	$searchIds = $bdd->TagSlugsToID($tags);
+	$invalidSlugs = array();
+	$validIds = array();
+	foreach($searchIds as $slug=>$id)
+		if ($id == null)
+			$invalidSlugs[] = $slug;
+		else
+			$validIds[] = $id;
+
+
+	$arts = $bdd->GetArtworksByTags($validIds, 100);
 }
 
 
@@ -24,6 +33,9 @@ $page->StartPage();
 	</form>
 	<?php
 	if (isset($arts)){
+		if (!empty($invalidSlugs))
+			print("The following tags do not exist and were ignored : \n".implode(", ", $invalidSlugs));
+
 		print("<h2>Results : </h2>");
 		if (sizeof($arts) <= 0)
 			print("This search did not yield any results. :(");
