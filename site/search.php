@@ -50,14 +50,11 @@ $page = new PageBuilder();
 $page->title = "Search";
 $page->StartPage();
 	?>
-	<form method="GET">
-		<input type="text" placeholder="tags" name="tags" value="<?=$_GET["tags"]?>"/>
-		<input type="submit"/>
-	</form>
 	<form method="POST">
 		<?php
 		$page->TagSelectionForm($allTags, $allCats, false);
 		?>
+		<input type="reset"/>
 		<input type="submit"/>
 	</form>
 	<?php
