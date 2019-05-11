@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2019 at 05:28 PM
+-- Generation Time: May 11, 2019 at 09:23 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -27,6 +27,18 @@ CREATE TABLE `artworks` (
   `date` date DEFAULT NULL,
   `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Triggers `artworks`
+--
+DELIMITER $$
+CREATE TRIGGER `artworks_CHECK_slug_INSERT` BEFORE INSERT ON `artworks` FOR EACH ROW CALL Check_Slug(new.slug)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `artworks_CHECK_slug_UPDATE` BEFORE UPDATE ON `artworks` FOR EACH ROW CALL Check_Slug(new.slug)
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
