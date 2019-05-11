@@ -42,6 +42,7 @@ class PageBuilder{
 	 * @param string[] $files The urls this artwork's files.
 	 */
 	public function ArtForm(ArtworkDTO $art, array $tags, array $cats, array $files, $action = null){
+		$page = &$this;
 		include(__ROOT__."/templates/artworkForm.php");
 	}
 
@@ -67,6 +68,14 @@ class PageBuilder{
 	 */
 	public function TagForm(TagDTO $tag, array $cats, $action = null){
 		include(__ROOT__."/templates/tagForm.php");
+	}
+
+	/**
+	 * @param TagDTO[] $tags
+	 * @param CategoryDTO[] $cats
+	 */
+	public function TagSelectionForm(array $tags, array $cats){
+		include(__ROOT__."/templates/tagSelectionForm.php");
 	}
 
 	/**
