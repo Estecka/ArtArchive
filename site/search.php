@@ -1,6 +1,20 @@
 <?php
 require("../Artarchive.php");
 
+if ($_POST){
+	$tags = array();
+	if (isset($_POST["add"]))
+		foreach($_POST["add"] as $key=>$value)
+			$tags[] = $key;
+	if (isset($_POST["keep"]))
+		foreach($_POST["keep"] as $key=>$value)
+			$tags[] = $key;
+
+	$tags = implode("+", $tags);
+	header("Location:".URL::Search($tags), false, 303);
+	exit;
+}
+
 $bdd = new DBService();
 $allTags = $bdd->GetAllTags();
 $allCats = $bdd->GetAllCategories();
