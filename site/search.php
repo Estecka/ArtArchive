@@ -43,7 +43,7 @@ if ($tags !== null){
 }
 
 foreach($allTags as $key=>$tag)
-	$allTags[$key]->enabled = either($enabledTags[$tag->slug], false);
+	$allTags[$key]->enabled = either($enabledTags[strtolower($tag->slug)], false);
 
 
 $page = new PageBuilder();
