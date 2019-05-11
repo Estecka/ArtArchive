@@ -2,6 +2,7 @@
 /**
  * @var TagDTO[] $tags Each tag is provided with an additional property `enabled`.
  * @var CategoryDTO[] $cats
+ * @var bool $allowInserts
  */
 
 $cats[null] = CategoryDTO::Empty();
@@ -17,12 +18,15 @@ foreach($tags as $tag){
 foreach($cats as $cat){
 	$name = $cat->GetName();
 	$style = $cat->color ? "style=\"color: $cat->color\"" : null;
-	$createId = empty($cat->slug) ? "createNULL" : "create[$cat->slug]"
-	?>
-	<h5 <?=$style?>>♦ <?=$name?></h5>
-	<textarea id="<?=$createId?>" name="<?=$createId?>" placeholder="Add new tags to this category. &#10;One slug per line."></textarea>
-	<br/>
-	<?php
+	$createId = empty($cat->slug) ? "createNULL" : "create[$cat->slug]";
+
+	print("<h5 $style>♦ $name</h5>");
+	if ($allowInserts) {
+		?>
+		<textarea id="<?=$createId?>" name="<?=$createId?>" placeholder="Add new tags to this category. &#10;One slug per line."></textarea>
+		<br/>
+		<?php
+	}
 	if (empty($cat->tags))
 		print("This category has not tags :(");
 	else

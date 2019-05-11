@@ -73,8 +73,9 @@ class PageBuilder{
 	/**
 	 * @param TagDTO[] $tags
 	 * @param CategoryDTO[] $cats
+	 * @param bool $allowInserts If true, the user will be able to freely enter any tags into the categories of this form.
 	 */
-	public function TagSelectionForm(array $tags, array $cats){
+	public function TagSelectionForm(array $tags, array $cats, bool $allowInserts){
 		include(__ROOT__."/templates/tagSelectionForm.php");
 	}
 

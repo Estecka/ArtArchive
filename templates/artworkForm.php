@@ -39,7 +39,7 @@
 
 		<h4>Tags :<h4>
 		<?php
-		$page->TagSelectionForm($tags, $cats);
+		$page->TagSelectionForm($tags, $cats, true);
 		?>
 
 		<br/>
