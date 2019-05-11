@@ -2,10 +2,10 @@
 require("../Artarchive.php");
 $bdd = new DBService();
 
-$tags = value($_GET["tags"]);
+$tags = either($_GET["tags"], null);
 $page = either($_GET["page"], 0);
 
-if ($tags !== false){
+if ($tags !== null){
 	$tags = explode(" ", $tags);
 
 	$searchIds = $bdd->TagSlugsToID($tags);
