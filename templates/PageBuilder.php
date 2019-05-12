@@ -36,6 +36,16 @@ class PageBuilder{
 	}
 
 	/**
+	 * @param string $urlFormat Url where %d represents the page number. E.g: "http://url?page=%d"
+	 * @param int $currentPage Zero-based index of the current page
+	 * @param int $pageAmount
+	 * @param int $maxRange How many links to the nearby pages should be displayed.
+	 */
+	public function PageList(string $urlFormat, int $currentPage, int $pageAmount, int $maxRange = 11){
+		include(__ROOT__."/templates/pageList.php");
+	}
+
+	/**
 	 * @param ArtWorkDTO $art
 	 * @param TagDTO[] $tags List of all available tags. Each tag should provide an additional `enabled`  property.
 	 * @param CategoryDTO[] $cats List of all available categories.

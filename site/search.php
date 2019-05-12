@@ -40,7 +40,7 @@ if ($tags !== null){
 
 
 	$arts = $bdd->GetArtworksByTags($validIds, 10, $pageNo, $total);
-	var_dump($total);
+	$pageAmount = ceil($total * 0.1);
 }
 
 foreach($allTags as $key=>$tag)
