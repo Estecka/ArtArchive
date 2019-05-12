@@ -82,9 +82,16 @@ class DBService {
 
 
 	/** REGION ARTWORKS */
-	public function GetArtworks()
+	public function GetArtworks(int $amount, int $page, int &$total = null)
 	{
-		$result =  $this->query("SELECT * FROM artworks ORDER BY date DESC");
+		$total = $this->pdo->query("SELECT count(id) FROM artworks;")->fetchColumn();
+
+		$query = $this->pdo->prepare("SELECT * FROM artworks ORDER BY date DESC LIMIT :offset, :amount");
+		$query->bindValue(":offset", $amount*$page, PDO::PARAM_INT);
+		$query->bindValue(":amount", $amount,       PDO::PARAM_INT);
+		$query->execute();
+		$result = $query->fetchAll();
+
 		foreach($result as $key=>$art)
 			$result[$key] = ArtworkDTO::CreateFrom($art);
 		return $result;
