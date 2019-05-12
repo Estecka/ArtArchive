@@ -3,7 +3,7 @@ require("../../../ArtArchive.php");
 
 $artwork = ArtworkDTO::CreateFrom($_POST);
 $files = isset($_POST["files"]) ? explode("\n", $_POST["files"]) : array();
-$tags =  isset($_POST["add"])  ? array_keys($_POST["add"])  : false;
+$add =  isset($_POST["add"])  ? array_keys($_POST["add"])  : false;
 $create = either($_POST["create"], array());
 if (isset($_POST["createNULL"]))
 	$create[null] = $_POST["createNULL"];
@@ -27,19 +27,25 @@ foreach($create as $cat=>$tags){
 $bdd = new DBService();
 
 try {
+	$bdd->StartTransaction();
 	$response = $bdd->AddArtwork($artwork);
 	if (!$response){
+		$bdd->Rollback();
 		PageBuilder::ErrorDocument(500, "Unknown database error");
+		die;
 	} else {
 		$bdd->AddFiles($artwork->slug, $files);
 		foreach($create as $cat=>$tags){
 			$bdd->InsertTagsBulk($cat, $tags);
 		}
-		$bdd->AddTagsToArtwork($artwork->slug, $tags);
+		if ($add)
+			$bdd->AddTagsToArtwork($artwork->slug, $add);
+		$bdd->CommitTransaction();
 		header("Location:".URL::Artwork($artwork->slug), false, 303);
 		exit;
 	}
 } catch (PDOException $e) {
+	$bdd->Rollback();
 	print($e->getCode());
 	print("<br/>");
 	print($e->getMessage());

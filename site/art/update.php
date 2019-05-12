@@ -38,7 +38,7 @@ try {
 	$response = $bdd->UpdateArtwork($slug, $artwork);
 	if (!$response) {
 		$bdd->Rollback();
-		PageBuilder::ErrorDocument(404);
+		PageBuilder::ErrorDocument(404, "Artwork not found");
 		die;
 	}
 	else {
@@ -51,8 +51,8 @@ try {
 		if ($add)
 			$bdd->AddTagsToArtwork($slug, $add, true);
 		$bdd->CommitTransaction();
+		header("Location:".URL::Artwork($artwork->slug));
 	}
-	header("Location:".URL::Artwork($artwork->slug));
 } catch (PDOException $e){
 	print($e->getCode());
 	print("<br/>");
