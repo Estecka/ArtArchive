@@ -20,7 +20,7 @@ $allTags = $bdd->GetAllTags();
 $allCats = $bdd->GetAllCategories();
 
 $tags = either($_GET["tags"], null);
-$page = either($_GET["page"], 0);
+$pageNo = either($_GET["page"], 0);
 $enabledTags = array();
 
 if ($tags !== null){
@@ -39,7 +39,8 @@ if ($tags !== null){
 	}
 
 
-	$arts = $bdd->GetArtworksByTags($validIds, 100);
+	$arts = $bdd->GetArtworksByTags($validIds, 10, $pageNo, $total);
+	var_dump($total);
 }
 
 foreach($allTags as $key=>$tag)

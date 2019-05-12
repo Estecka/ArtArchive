@@ -102,8 +102,12 @@ class DBService {
 	 * @param int[] $tags The Id of the required tags
 	 * @param int $amount
 	 * @param int $page
+	 * @param int $total Outputs the total number of results.
+	 * @return ArtworkDTO[]
 	 */
-	public function GetArtworksByTags(array $tags, int $amount, int $page = 0){
+	public function GetArtworksByTags(array $tags, int $amount, int $page, int &$total = null){
+		
+		// #1 Save all matching artworks id into a temporary table
 		self::PrepareSQLArray($tags, $sql, $params);
 		$paramNames = array_keys($params);
 
@@ -112,17 +116,28 @@ class DBService {
 			$tag = $paramNames[$i];
 			$INNER_JOIN_tags .= 
 				"INNER JOIN \n"
-				."	(SELECT artId FROM `art-tag` WHERE `art-tag`.`tagId`=$tag) as `tag$i` \n"
-				."	ON `tag$i`.artId = `artworks`.id \n";
+				."	(SELECT artId as id FROM `art-tag` WHERE tagId = $tag) as `arts$i` \n"
+				."	ON `arts$i`.id = `artworks`.id \n";
 		}
 
-		$query = "SELECT `artworks`.* FROM `artworks` $INNER_JOIN_tags LIMIT :offset, :amount;";
-		$params[":amount"] = $amount;
-		$params[":offset"] = $page * $amount;
-		
+		$query = 
+			"CREATE TEMPORARY TABLE `foundArts` \n"
+			."SELECT `artworks`.id FROM `artworks` \n"
+			."$INNER_JOIN_tags;";
 		$query = $this->pdo->prepare($query);
-		foreach($params as $key=>$value)
-			$query->bindValue($key, $value, PDO::PARAM_INT);
+		$query->execute($params);
+
+		// #2 Count them.
+		$total = $this->pdo->query("SELECT count(id) FROM `foundArts`")->fetchColumn();
+
+		// #3 Return a limited set of result.
+		$query = $this->pdo->prepare(
+			"SELECT `artworks`.* FROM `artworks` 
+			INNER JOIN `foundArts` ON `foundArts`.id = `artworks`.id
+			LIMIT :offset, :amount;"
+		);
+		$query->bindValue(":offset", $amount*$page, PDO::PARAM_INT);
+		$query->bindValue(":amount", $amount,       PDO::PARAM_INT);
 		$query->execute();
 
 		$result = $query->fetchAll();
