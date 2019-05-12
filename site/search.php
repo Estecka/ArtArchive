@@ -40,7 +40,7 @@ if ($tags !== null){
 
 
 	$arts = $bdd->GetArtworksByTags($validIds, 10, $pageNo, $total);
-	$pageAmount = ceil($total * 0.1);
+	$pageAmount = (int)ceil($total * 0.1);
 }
 
 foreach($allTags as $key=>$tag)
@@ -70,6 +70,7 @@ $page->StartPage();
 		foreach($arts as $art){
 			$page->ArtCard($art);
 		}
+		$page->PageList(URL::Search($_GET["tags"], "%d"), $pageNo, $pageAmount, 11);
 	}
 $page->EndPage();
 ?>

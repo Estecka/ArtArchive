@@ -23,7 +23,7 @@ class URL {
 	static public function DeleteArt(string $slug) : string {
 		return "/site/art/delete.php?art=$slug";
 	}
-	static public function Search(string $tags = null, int $page = 0) : string {
+	static public function Search(string $tags = null, $page = 0) : string {
 		$url = "/site/search.php";
 		if ($tags){
 			$url .= "?tags=$tags";
