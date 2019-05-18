@@ -81,6 +81,63 @@ class DBService {
 
 
 
+	/** REGION SITE */
+	/**
+	 * @param string[] $settings An associative array with setting names as key, filled with default values.
+	 * @return string[] Array of setting values with setting names as key.
+	 */
+	public function GetSettings(array $settings = null) : array {
+		if ($settings == null)
+		{
+			$query = $this->pdo->query("SELECT * FROM `settings`;");
+			$settings = $query->fetchAll();
+		}
+		else 
+		{
+			self::PrepareSQLArray(array_keys($settings), $names, $params);
+			$query = $this->pdo->prepare("SELECT `name`, `value` FROM `settings` WHERE `name` IN ($names);");
+			$query->execute($params);
+			$result = $query->fetchAll();
+			foreach($result as $entry)
+				$settings[$entry['name']] = $entry['value'];
+		}
+
+		return $settings;
+	}
+	/**
+	 * @param mixed[] $settings An associative array of setting values with setting names as key.
+	 */
+	public function SetSettings(array $settings) {
+		if (sizeof($settings) <= 0)
+			return;
+
+		$names  = array_keys  ($settings);
+		$values = array_values($settings);
+		self::PrepareSQLArray($names,  $namesql, $nameParams,  "key"  );
+		self::PrepareSQLArray($values, $valusql, $valueParams, "value");
+
+		$params = array_merge($nameParams, $valueParams);
+		$nameParams  = array_keys($nameParams );
+		$valueParams = array_keys($valueParams);
+
+		$VALUES = array();
+		for ($i=0; $i < sizeof($valueParams); $i++) {
+			$key   = $nameParams [$i];
+			$value = $valueParams[$i];
+			$VALUES []= "($key, $value)";
+		}
+		$VALUES = "VALUES \n".implode(", \n", $VALUES);
+
+		$query = 
+			"INSERT INTO `settings` (`name`, `value`) $VALUES 
+			ON DUPLICATE KEY UPDATE 
+				`value` = VALUES (`value`)";
+
+		$query = $this->pdo->prepare($query);
+		$query->execute($params);
+	}
+
+
 	/** REGION ARTWORKS */
 	public function GetArtworks(int $amount, int $page, int &$total = null)
 	{
