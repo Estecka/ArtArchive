@@ -1,6 +1,6 @@
 <?php
 require("../Artarchive.php");
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 /** 
  * @var TagDTO[] $tags

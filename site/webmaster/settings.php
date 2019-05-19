@@ -1,7 +1,7 @@
 <?php
 require("../../ArtArchive.php");
 
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 if (!empty($_POST)) {
 	try {

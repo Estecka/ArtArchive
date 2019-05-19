@@ -1,6 +1,6 @@
 <?php
 require("../Artarchive.php");
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 $pageNo = either($_GET["page"], 0);
 $artworks = $bdd->GetArtworks(10, $pageNo, $total);

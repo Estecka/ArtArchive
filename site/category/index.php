@@ -8,7 +8,7 @@ if (empty($slug)){
 	die;
 }
 
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 /** @var CategoryDTO */
 $cat = $bdd->GetCategoryBySlug($slug);
 

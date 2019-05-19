@@ -8,7 +8,7 @@ if (empty($slug)) {
 }
 
 $cat = CategoryDTO::CreateFrom($_POST);
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 try {
 	$response = $bdd->UpdateCategory($slug, $cat);

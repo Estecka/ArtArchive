@@ -22,7 +22,7 @@ if ($slug == null){
 	exit;
 } else {
 	$page = new PageBuilder();
-	$bdd = new DBService();
+	$bdd = &ArtArchive::$database;
 	$result = $bdd->DeleteArtwork($slug);
 	if ($result) {
 		$page->StartPage();

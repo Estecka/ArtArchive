@@ -1,6 +1,6 @@
 <?php
 require("../Artarchive.php");
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 if (sizeof($_POST) <= 0) {
 	PageBuilder::ErrorDocument(400, "No data");

@@ -31,7 +31,7 @@ foreach($create as $cat=>$tags){
 		unset($create[$cat]);
 }
 
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 try {
 	$bdd->StartTransaction();

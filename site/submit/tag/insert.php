@@ -2,7 +2,7 @@
 require("../../../ArtArchive.php");
 
 $tag = TagDTO::CreateFrom($_POST);
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 try {
 	$response = $bdd->InsertTag($tag);

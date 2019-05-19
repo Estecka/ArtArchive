@@ -1,6 +1,6 @@
 <?php
 require_once("../Artarchive.php");
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 /**
  * @var CategoryDTO[] $cats

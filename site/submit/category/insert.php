@@ -2,7 +2,7 @@
 require("../../../ArtArchive.php");
 
 $cat = CategoryDTO::CreateFrom($_POST);
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 try {
 	$response = $bdd->InsertCategory($cat);

@@ -20,7 +20,7 @@ if ($slug == null){
 	die;
 } else {
 	$page = new PageBuilder();
-	$bdd = new DBService();
+	$bdd = &ArtArchive::$database;
 	$result = $bdd->DeleteCategory($slug);
 	if ($result) {
 		$page->StartPage();

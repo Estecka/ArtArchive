@@ -7,7 +7,7 @@ if (empty($slug)){
 	PageBuilder::ErrorDocument(400);
 	die;
 }
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 
 /** @var ArtworkDTO **/
 $art = $bdd->GetArtwork($slug);

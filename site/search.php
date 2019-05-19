@@ -15,7 +15,7 @@ if ($_POST){
 	exit;
 }
 
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 $allTags = $bdd->GetAllTags();
 $allCats = $bdd->GetAllCategories();
 

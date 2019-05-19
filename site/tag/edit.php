@@ -7,7 +7,7 @@ if (empty($slug)){
 	PageBuilder::ErrorDocument(400);
 	die;
 }
-$bdd = new DBService();
+$bdd = &ArtArchive::$database;
 $tag = $bdd->GetTag($slug);
 $cats = $bdd->GetAllCategories();
 	
