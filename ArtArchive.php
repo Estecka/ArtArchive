@@ -26,6 +26,9 @@ class URL {
 	static public function Home() : string {
 		return "/site/";
 	}
+	static public function SiteSettings() : string {
+		return "/site/webmaster/settings.php";
+	}
 
 	/** REGION ARTWORKS */
 	static public function Artwork(string $slug) : string {

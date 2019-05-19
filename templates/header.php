@@ -7,6 +7,8 @@
 		 | 
 		<a href=<?=URL::SubmitArt()?>>Submit</a>
 		 | 
+		<a href=<?=URL::SiteSettings()?>>Settings</a>
+		 | 
 		<a href="<?=URL::TagsHome()?>">Tags</a>
 	</div>
 <div>
