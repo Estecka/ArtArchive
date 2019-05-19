@@ -1,5 +1,5 @@
 <div class="header">
-	<h1>Shitty artdump</h1>
+	<h1><?=ArtArchive::GetSiteName()?></h1>
 	<div class="shortcuts">
 		<a href=<?=URL::Home()?>>home</a>
 		 | 

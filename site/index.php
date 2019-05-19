@@ -6,6 +6,7 @@ $pageNo = either($_GET["page"], 0);
 $artworks = $bdd->GetArtworks(10, $pageNo, $total);
 
 $page = new PageBuilder();
+$page->title = ArtArchive::GetSiteName();
 $page->StartPage();
 
 	foreach($artworks as $art)
