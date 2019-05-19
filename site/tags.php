@@ -11,6 +11,7 @@ $tags = $bdd->GetAllTags();
 $cats = $bdd->GetAllCategories();
 
 $page = new PageBuilder();
+$page->title = "Tags and Categories";
 $page->StartPage();
 ?>
 <a href="<?=URL::SubmitTag()?>">Create Tag</a>
