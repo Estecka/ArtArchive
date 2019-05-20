@@ -11,6 +11,9 @@ class ArtArchive {
 	/** @var DBService */
 	static $database;
 
+	/** @var bool */
+	static $isWebmaster;
+
 	static public function GetSiteName(){
 		return self::$settings["SiteName"];
 	}
@@ -20,6 +23,9 @@ ArtArchive::$database = new DBService();
 ArtArchive::$settings = ArtArchive::$database->GetSettings(
 	array(
 		"SiteName" => "MyArtDump",
+		"DummyLogin" => false,
 	)
 );
+
+ArtArchive::$isWebmaster = ArtArchive::$settings["DummyLogin"];
 ?>

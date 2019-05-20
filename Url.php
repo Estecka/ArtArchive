@@ -3,6 +3,9 @@ class URL {
 	static public function Home() : string {
 		return "/site/";
 	}
+	static public function Login() : string {
+		return "/site/login.php";
+	}
 	static public function SiteSettings() : string {
 		return "/site/webmaster/settings.php";
 	}
