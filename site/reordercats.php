@@ -1,5 +1,6 @@
 <?php
 require("../Artarchive.php");
+ArtArchive::RequireWebmaster();
 $bdd = &ArtArchive::$database;
 
 if (sizeof($_POST) <= 0) {
