@@ -24,10 +24,14 @@ $style = $cat->color ? "style=\"color : $cat->color\"" : null;
 $page = new PageBuilder();
 $page->title = "Category : ".$name;
 $page->StartPage();
-?>
-	<a href="edit.php?category=<?=$slug?>">Edit</a>
-	|
-	<a href="delete.php?category=<?=$slug?>">Delete</a>
+	if (ArtArchive::$isWebmaster) {
+		?>
+		<a href="edit.php?category=<?=$slug?>">Edit</a>
+		|
+		<a href="delete.php?category=<?=$slug?>">Delete</a>
+		<?php
+	}
+	?>
 	<h2 <?=$style?>><?=$name?></h2>
 	<?php
 	print($cat->description ?? "This category has no description.");

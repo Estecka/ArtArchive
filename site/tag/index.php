@@ -22,9 +22,12 @@ $name = $tag->GetName();
 $page = new PageBuilder();
 $page->title = $name;
 $page->StartPage();
-	print("<a href=\"edit.php?tag=$slug\">Edit</a>");
-	print (" | ");
-	print("<a href=\"delete.php?tag=$slug\">Delete</a>");
+	if (ArtArchive::$isWebmaster)
+	{
+		print("<a href=\"edit.php?tag=$slug\">Edit</a>");
+		print (" | ");
+		print("<a href=\"delete.php?tag=$slug\">Delete</a>");
+	}
 	print("<h1>$name</h1>");
 	if ($slug != $name)
 		print("<h3>$slug</h3>");

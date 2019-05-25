@@ -6,12 +6,15 @@
  * @var CategoryDTO[] $cats
  * @var string[] $files 
 */
-?>
 
-<a href="<?=URL::EditArt($art->slug)?>">Edit</a> | <a href="<?=URL::DeleteArt($art->slug)?>">Delete</a>
-<hr>
+if (ArtArchive::$isWebmaster) 
+{
+	?>
+	<a href="<?=URL::EditArt($art->slug)?>">Edit</a> | <a href="<?=URL::DeleteArt($art->slug)?>">Delete</a>
+	<hr>
+	<?php
+}
 
-<?php
 if (!$files){
 	print("There are no files attached to this artwork.");
 }
