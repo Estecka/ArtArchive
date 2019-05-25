@@ -4,6 +4,7 @@ require_once("shorthands.php");
 require_once("Url.php");
 require_once("database/DBService.php");
 require_once("templates/PageBuilder.php");
+require_once "auth/authenticator.php";
 
 class ArtArchive {
 	/** @var array */
@@ -14,9 +15,13 @@ class ArtArchive {
 	/** @var bool */
 	static $isWebmaster;
 
+	/** @var Authenticator */
+	static $authenticator;
+
 	static public function RequireWebmaster() {
-		if (!ArtArchive::$isWebmaster) {
-			PageBuilder::ErrorDocument(403);
+		if (!self::$isWebmaster) {
+			self::$authenticator->ForceLogin();
+			PageBuilder::ErrorDocument(401);
 			die;
 		}
 	}
@@ -27,12 +32,15 @@ class ArtArchive {
 }
 
 ArtArchive::$database = new DBService();
+ArtArchive::$authenticator = new Authenticator("Webmaster");
+ArtArchive::$isWebmaster = ArtArchive::$authenticator->CheckLogin();
+if (isset($_GET["login"]))
+	ArtArchive::RequireWebmaster();
+
+
 ArtArchive::$settings = ArtArchive::$database->GetSettings(
 	array(
 		"SiteName" => "MyArtDump",
-		"DummyLogin" => false,
 	)
 );
-
-ArtArchive::$isWebmaster = ArtArchive::$settings["DummyLogin"];
 ?>
