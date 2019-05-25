@@ -1,5 +1,6 @@
 <?php
 require("../../ArtArchive.php");
+ArtArchive::RequireWebmaster();
 
 $slug = value($_GET['art']);
 $confirmation = value($_POST['slug']);

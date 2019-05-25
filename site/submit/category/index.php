@@ -1,5 +1,6 @@
 <?php
 require("../../../ArtArchive.php");
+ArtArchive::RequireWebmaster();
 
 $page = new PageBuilder();
 $page->title = "Submit";

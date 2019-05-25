@@ -14,6 +14,13 @@ class ArtArchive {
 	/** @var bool */
 	static $isWebmaster;
 
+	static public function RequireWebmaster() {
+		if (!ArtArchive::$isWebmaster) {
+			PageBuilder::ErrorDocument(403);
+			die;
+		}
+	}
+
 	static public function GetSiteName(){
 		return self::$settings["SiteName"];
 	}

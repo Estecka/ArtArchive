@@ -1,5 +1,6 @@
 <?php
 require("../../../ArtArchive.php");
+ArtArchive::RequireWebmaster();
 
 $artwork = ArtworkDTO::CreateFrom($_POST);
 $files = isset($_POST["files"]) ? explode("\n", $_POST["files"]) : array();
