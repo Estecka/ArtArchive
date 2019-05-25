@@ -6,6 +6,14 @@
 		<a href=<?=URL::Search()?>>Search</a>
 		 | 
 		<a href="<?=URL::TagsHome()?>">Tags</a>
+		<?php
+		if (!ArtArchive::$isWebmaster){
+			?>
+			| 
+		   <a href="<?=URL::Login()?>">Login</a>
+			<?php
+		}
+		?>
 	</div>
 	<?php 
 	if (ArtArchive::$isWebmaster) {
@@ -22,8 +30,6 @@
 			<a href="<?=URL::SubmitCategory()?>">Create category</a>
 			| 
 			<a href="<?=URL::OrderCategory()?>">Reorder Category</a>
-			| 
-			<a href="<?=URL::Logout()?>">Logout</a>
 		</div>
 		<?php
 	}

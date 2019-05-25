@@ -4,10 +4,7 @@ class URL {
 		return "/site/";
 	}
 	static public function Login() : string {
-		return "/site/login.php";
-	}
-	static public function Logout() : string {
-		return "/site/login.php/?logout=true";
+		return URL::Home()."?login";
 	}
 	static public function SiteSettings() : string {
 		return "/site/webmaster/settings.php";
