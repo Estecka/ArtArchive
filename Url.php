@@ -13,6 +13,10 @@ class URL {
 		return "/site/webmaster/settings.php";
 	}
 
+	static public function Wizard() : string {
+		return "/site/webmaster/databasewizard/index.php";
+	}
+
 	/** REGION ARTWORKS */
 	static public function Artwork(string $slug) : string {
 		return "/site/art/?art=$slug";

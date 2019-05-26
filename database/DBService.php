@@ -6,10 +6,11 @@ require_once("CategoryDTO.php");
 require_once("TagListElt.php");
 
 class DBService {
+	/** @var int The version of the database php software. Not to be mistalen with the installed database structure version. */
 	static public $version = 1;
 
 	/** @var PDO **/
-	private $pdo;
+	public $pdo;
 
 	public function __construct() 
 	{
@@ -81,7 +82,18 @@ class DBService {
 		return $result;
 	}
 
-
+	/**
+	 * Checks the version of the installed database structure version, not to be mistaken with the database php software version.
+	 * Can be safely used to check whether the database has been set up.
+	 * @return float `false` if no version was found or the query failed. The version number otherwise.
+	 */
+	public function GetVersion(){
+		try {
+			return (float)$this->pdo->query("SELECT `value` FROM `settings` WHERE `name`='dbVersion';")->fetchColumn();
+		} catch (PDOException $e) {
+			return false;
+		}
+	}
 
 	/** REGION SITE */
 	/**

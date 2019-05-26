@@ -32,6 +32,16 @@ class ArtArchive {
 }
 
 ArtArchive::$database = new DBService();
+if (ArtArchive::$database->GetVersion() == 0){
+	http_response_code(503);
+	?>
+	<p>
+		The database has not been setup. Please consult <a href="<?=URL::Wizard()?>">~The Wizard~</a>.
+	</p>
+	<?php
+	die;
+}
+
 ArtArchive::$authenticator = new Authenticator("Webmaster");
 ArtArchive::$isWebmaster = ArtArchive::$authenticator->CheckLogin();
 if (isset($_GET["login"]))

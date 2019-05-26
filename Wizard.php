@@ -21,9 +21,5 @@ try {
 	die;
 }
 
-$installedVersion = 0;
-try {
-	$installedVersion = (float)$bdd->GetSettings(array("dbVersion" => 0))["dbVersion"];
-} catch (PDOException $e) {
-}
+$installedVersion = $bdd->GetVersion();
 ?>
