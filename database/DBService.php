@@ -137,6 +137,22 @@ class DBService {
 		$query->execute($params);
 	}
 
+	public function GetPage(string $name) : string {
+		$query = $this->pdo->prepare("SELECT `value` FROM `pages` WHERE `name` = ? LIMIT 1;");
+		$query->execute(array($name));
+
+		return $query->fetchColumn();
+	}
+	public function SetPage(string $name, string $value) : bool {
+		$query = $this->pdo->prepare("INSERT INTO `pages` VALUES (:n, :v) ON DUPLICATE KEY UPDATE `value` = :v;");
+		$r = $query->execute(array(
+			':n' => $name,
+			':v' => $value,
+		));
+
+		return (bool)$r;
+	}
+
 
 	/** REGION ARTWORKS */
 	public function GetArtworks(int $amount, int $page, int &$total = null)
