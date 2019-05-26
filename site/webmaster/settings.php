@@ -6,8 +6,12 @@ $bdd = &ArtArchive::$database;
 
 if (!empty($_POST)) {
 	try {
-		$bdd->SetSettings($_POST);
+		$bdd->StartTransaction();
+		$bdd->SetSettings($_POST['settings']);
+		$bdd->SetPage("about", $_POST['pages']['about']);
+		$bdd->CommitTransaction();
 	} catch (PDOException $e){
+		$bdd->Rollback();
 		echo $e->getCode();
 		echo "<br/>";
 		echo $e->getMessage();
@@ -21,6 +25,7 @@ $settings["SiteName"] = "MyArtDump";
 
 try {
 	$settings = $bdd->GetSettings($settings);
+	$about = $bdd->GetPage("about");
 } catch (PDOException $e) {
 	echo $e->getCode();
 	echo "<br/>";
@@ -37,9 +42,16 @@ $page->StartPage();
 
 	<form method="POST">
 		<label for="name">Site name</label>
-		<input id ="name" type="text" name="SiteName" placeholder="MyArtDump" value="<?=htmlspecialchars($settings["SiteName"])?>" />
+		<input id="name" type="text" name="settings[SiteName]" placeholder="MyArtDump" value="<?=htmlspecialchars($settings["SiteName"])?>" />
 
 		<br/>
+
+		<label for="about">About page</label>
+		<br/>
+		<textarea name="pages[about]" id ="about"><?=htmlspecialchars($about)?></textarea>
+
+		<br/>
+
 		<input type="submit"/>
 	</form>
 

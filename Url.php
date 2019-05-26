@@ -3,6 +3,9 @@ class URL {
 	static public function Home() : string {
 		return "/site/";
 	}
+	static public function About() : string {
+		return "/site/about.php";
+	}
 	static public function Login() : string {
 		return URL::Home()."?login";
 	}
