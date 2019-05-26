@@ -6,6 +6,8 @@ require_once("CategoryDTO.php");
 require_once("TagListElt.php");
 
 class DBService {
+	static public $version = 1;
+
 	/** @var PDO **/
 	private $pdo;
 
