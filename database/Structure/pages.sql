@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2019 at 10:01 AM
+-- Generation Time: May 26, 2019 at 11:06 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -17,12 +17,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `settings`
+-- Table structure for table `pages`
 --
 
-CREATE TABLE `settings` (
+CREATE TABLE `pages` (
   `name` varchar(32) COLLATE latin1_bin NOT NULL,
-  `value` varchar(64) COLLATE latin1_bin DEFAULT NULL
+  `value` text COLLATE latin1_bin
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
 --
@@ -30,7 +30,7 @@ CREATE TABLE `settings` (
 --
 
 --
--- Indexes for table `settings`
+-- Indexes for table `pages`
 --
-ALTER TABLE `settings`
+ALTER TABLE `pages`
   ADD PRIMARY KEY (`name`);
