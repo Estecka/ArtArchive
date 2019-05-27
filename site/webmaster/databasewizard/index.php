@@ -28,12 +28,12 @@ if ($installedVersion != 0){
 		<?php
 	}
 	?>
-	<br/><strong>Clean install is a destructive operation. Anything already stored in the database will be iremediably lost !</strong>
+	<br/><strong>Clean install is a destructive operation; if you are already storing anything in this database, it may become iremediably lost. Please check twice before proceeding.</strong>
 	<form method=GET action="install.php">
-		<input type=checkbox name=overwrite id=overwrite/>
-		<label for=overwrite>I understand</label>
+		<input type=submit value="Install"/>
 		<br/>
-		<input type=submit value="Perform a clean install."/>
+		<input type=checkbox name=overwrite id=overwrite/>
+		<label for=overwrite>And drop the database's content.</label>
 	</form>
 	<?php
 	print "</p>";

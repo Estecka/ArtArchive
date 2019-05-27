@@ -66,13 +66,17 @@ try {
 
 	if (!$overwrite) {
 		?>
-		<br/>If the error says the table or procedure already exists in the database, you may try again by overwritting
-		<br/><strong>This is a destructive operation; any data contained in these tables will be iremediably lost. Please check twice before proceeding.</strong>
+		<br/>If the error says the table or procedure already exists in the database, you may try overwriting it.
+		<br/><strong>This is a destructive operation; if you are already storing anything in this database, it may become iremediably lost. Please check twice before proceeding.</strong>
 		<form method=GET>
-			<input type=checkbox id=overwrite name=overwrite>
-			<label for=overwrite>I understand</label>
+			<input type=submit value="Retry"/>
 			<br/>
-			<input type=submit value="Drop and retry"/>
+			<input type=checkbox id=overwrite name=overwrite>
+			<label for=overwrite>And drop the following tables/procedures : </label>
+			<?php
+			foreach(array_merge($tables, $procedures) as $item)
+				echo "<br/>".$item;
+			?>
 		</form>
 		<?php
 	}
@@ -88,6 +92,6 @@ try {
 $bdd->CommitTransaction();
 
 echo "<br/><strong>Success !</strong>";
-echo "<br/><span title='note: keikaku means plan'>All according to keikaku</span>";
-echo "<br/>You are free to remove the the `databasewizard` folder from the website's structure, you won't need it anymore."
+echo "<br/><span title='tanslator's note: keikaku means plan'>All according to keikaku</span>";
+echo "<br/>You are free to remove the `databasewizard` folder from the website's structure, you won't need it anymore."
 ?>
