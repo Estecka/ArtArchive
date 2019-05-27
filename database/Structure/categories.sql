@@ -32,14 +32,10 @@ CREATE TABLE `categories` (
 --
 -- Triggers `categories`
 --
-DELIMITER $$
 CREATE TRIGGER `categories_CHECK_slug_INSERT` BEFORE INSERT ON `categories` FOR EACH ROW CALL Check_Slug(new.slug)
-$$
-DELIMITER ;
-DELIMITER $$
+;
 CREATE TRIGGER `categories_CHECK_slug_UPDATE` BEFORE UPDATE ON `categories` FOR EACH ROW CALL Check_Slug(new.slug)
-$$
-DELIMITER ;
+;
 
 --
 -- Indexes for dumped tables
