@@ -14,17 +14,17 @@ $cats[null]->id = null;
 <div>
 	<form action="<?=value($action)?>" method="post">
 		<label for="slug">Slug</label> 
-		<input id="slug" name="slug" type="text" value="<?=$tag->slug?>"/>
+		<input id="slug" name="slug" type="text" value="<?=htmlspecialchars($tag->slug)?>"/>
 		
 		<br/>
 		
 		<label for="name">Name</label> 
-		<input id="name" name="name" type="text" value="<?=$tag->name?>"/>
+		<input id="name" name="name" type="text" value="<?=htmlspecialchars($tag->name)?>"/>
 
 		<br/>
 		
 		<label for="description">Descriptions</label> <br/>
-		<textarea id="description" name="description"><?=$tag->description?></textarea>
+		<textarea id="description" name="description"><?=htmlspecialchars($tag->description)?></textarea>
 
 		<br/>
 

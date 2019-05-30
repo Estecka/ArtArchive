@@ -13,12 +13,12 @@
 <div>
 	<form action="<?=value($action)?>" method="post">
 		<label for="slug">Slug</label> 
-		<input id="slug" name="slug" type="text" value="<?=$art->slug?>"/>
+		<input id="slug" name="slug" type="text" value="<?=htmlspecialchars($art->slug)?>"/>
 		
 		<br/>
 		
 		<label for="title">Title</label> 
-		<input id="title" name="title" type="text" value="<?=$art->title?>"/>
+		<input id="title" name="title" type="text" value="<?=htmlspecialchars($art->title)?>"/>
 
 		<br/>
 
@@ -28,12 +28,12 @@
 		<br/>
 		
 		<label for="description">Descriptions</label> <br/>
-		<textarea id="description" name="description"><?=$art->description?></textarea>
+		<textarea id="description" name="description"><?=htmlspecialchars($art->description)?></textarea>
 
 		<br/>
 
 		<h4><label for="files">Files :</label></h4>
-		<textarea id="files" name="files"><?=$filesText?></textarea>
+		<textarea id="files" name="files"><?=htmlspecialchars($filesText)?></textarea>
 
 		<br/>
 
