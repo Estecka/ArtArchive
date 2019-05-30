@@ -1,6 +1,6 @@
 <?php
 require_once "auth/authenticator.php";
-require_once "database/DBService.php";
+require_once "database/DBStructure.php";
 
 $auth = new Authenticator("Wizard");
 if (!$auth->CheckLogin()){
@@ -8,18 +8,17 @@ if (!$auth->CheckLogin()){
 	die ("401");
 }
 
-try {
-	$bdd = new DBService();
-} catch (PDOException $e) {
+
+if (DBStructure::$error != null){
 	?>
 	<p>
 		Failed to connect to the database to database : 
-		<br/><?=$e->getCode()?>
-		<br/><?=$e->getMessage()?>
+		<br/><?=DBStructure::$error->getCode()?>
+		<br/><?=DBStructure::$error->getMessage()?>
 	</p>
 	<?php
 	die;
 }
 
-$installedVersion = $bdd->GetVersion();
+$installedVersion = DBStructure::GetVersion();
 ?>

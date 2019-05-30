@@ -1,23 +1,23 @@
 <?php
-require_once "../../../Wizard.php";
+require_once "Wizard.php";
 
 // Existing ersion found
 if ($installedVersion != 0){
 	print "<p>";
-	if ($installedVersion == DBService::$version) {
+	if ($installedVersion == DBStructure::$version) {
 		?>
 		The database seems to have already been set up.
 		<br/>
 		Do you want to perform a clean install anyway ?
 		<?php
 	}
-	else if ($installedVersion > DBService::$version){
+	else if ($installedVersion > DBStructure::$version){
 		?>
 		A more recent version of the database seems to be already set up.
 		<br/>Downgrade is not supported. Do you want to perform a clean install ?
 		<?php
 	}
-	else if  ($installedVersion < DBService::$version){
+	else if  ($installedVersion < DBStructure::$version){
 		?>
 		An older version of the database seem to be already set up.
 		<br/>
@@ -33,7 +33,11 @@ if ($installedVersion != 0){
 		<input type=submit value="Install"/>
 		<br/>
 		<input type=checkbox name=overwrite id=overwrite/>
-		<label for=overwrite>And drop the database's content.</label>
+		<label for=overwrite>And drop the following tables/procedures : </label>
+		<?php
+		foreach(array_merge(DBStructure::$procedures, DBStructure::$tables) as $item)
+			echo "<br/>".$item;
+		?>
 	</form>
 	<?php
 	print "</p>";

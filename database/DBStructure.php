@@ -4,7 +4,7 @@ require_once "config.php";
 class DBStructure {
 	/** @var PDO */
 	static $pdo;
-	static $error;
+	static $error = null;
 
 	/** @var int The version of the database php software. Not to be mistaken with the installed database structure version. */
 	static public $version = 1;
