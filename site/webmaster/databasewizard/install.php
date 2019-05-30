@@ -50,6 +50,8 @@ try {
 DBStructure::Commit();
 
 echo "<br/><strong>Success !</strong>";
-echo "<br/><span title='tanslator's note: keikaku means plan'>All according to keikaku</span>";
-echo "<br/>You are free to remove the `databasewizard` folder from the website's structure, you won't need it anymore."
+echo "<br/><span title=\"Tanslator's note: keikaku means plan\">All according to keikaku</span>";
+echo "<br/>";
+echo "<br/>Your gallery is now ready for use.";
+echo "<br/>You are free to remove the `\webmaster\databasewizard\` folder from the website's structure, you won't need it anymore."
 ?>

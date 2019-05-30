@@ -40,7 +40,7 @@ class DBStructure {
 		self::$pdo->commit();
 	}
 
-	public function GetVersion(){
+	static public function GetVersion(){
 		try {
 			return (float)self::$pdo->query("SELECT `value` FROM `settings` WHERE `name`='dbVersion';")->fetchColumn();
 		} catch (PDOException $e) {
@@ -66,13 +66,13 @@ class DBStructure {
 		self::$pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
 		foreach(self::$procedures as $item){
 			echo $item."<br/>";
-			$sql = get_sql($item);
+			$sql = self::get_sql($item);
 			self::$pdo->exec($sql);
 		}
 		echo "<h3>Installing tables...</h3>";
 		foreach(self::$tables as $item){
 			echo $item."<br/>";
-			$sql = get_sql($item);
+			$sql = self::get_sql($item);
 			self::$pdo->exec($sql);
 		}
 	}

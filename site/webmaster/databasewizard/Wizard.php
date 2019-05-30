@@ -1,6 +1,6 @@
 <?php
-require_once "auth/authenticator.php";
-require_once "database/DBStructure.php";
+require_once "../../../auth/authenticator.php";
+require_once "../../../database/DBStructure.php";
 
 $auth = new Authenticator("Wizard");
 if (!$auth->CheckLogin()){
