@@ -17,6 +17,10 @@ class URL {
 		return "/site/webmaster/databasewizard/index.php";
 	}
 
+	static public function SourceCode() : string {
+		return "https://github.com/Estecka/MyArtDump";
+	}
+
 	/** REGION ARTWORKS */
 	static public function Artwork(string $slug) : string {
 		return "/site/art/?art=$slug";

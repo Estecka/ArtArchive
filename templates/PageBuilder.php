@@ -19,7 +19,8 @@ class PageBuilder{
 	}
 
 	public function EndPage(){
-	?>
+		include ("footer.php");
+		?>
 		</body>
 		</html>
 	<?php
