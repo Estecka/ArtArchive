@@ -1,5 +1,5 @@
 ## Introduction
-**MyArtDump** is a single-user gallery for PHP and MySQL, inspired by [Danbooru](https://safebooru.donmai.us)'s tagging system.
+**ArtArchive** is a single-user gallery for PHP and MySQL, inspired by [Danbooru](https://safebooru.donmai.us)'s tagging system.
 
 Note that this software was primarily developed for my own personal usage. One feature that it will notably lack and that I don't plan on implementing yet is the ability to upload medias directly from the website's interface. All uploads shall be done via a FTP client.
 

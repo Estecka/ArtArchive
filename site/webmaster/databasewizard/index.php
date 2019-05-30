@@ -46,7 +46,7 @@ if ($installedVersion != 0){
 // No existing version found
 else {
 	?>
-	This Wizard will setup the database for use with MyArtDump.
+	This Wizard will setup the database for use with ArtArchive.
 	<br/>Proceed ?
 	<form action="install.php">
 		<input type=submit value="Yes please,"/>

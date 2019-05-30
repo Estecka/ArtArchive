@@ -52,7 +52,7 @@ if (isset($_GET["login"]))
 
 ArtArchive::$settings = ArtArchive::$database->GetSettings(
 	array(
-		"SiteName" => "MyArtDump",
+		"SiteName" => "ArtArchive",
 	)
 );
 ?>

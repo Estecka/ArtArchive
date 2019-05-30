@@ -21,7 +21,7 @@ if (!empty($_POST)) {
 
 
 $settings = array();
-$settings["SiteName"] = "MyArtDump";
+$settings["SiteName"] = "ArtArchive";
 
 try {
 	$settings = $bdd->GetSettings($settings);
@@ -42,7 +42,7 @@ $page->StartPage();
 
 	<form method="POST">
 		<label for="name">Site name</label>
-		<input id="name" type="text" name="settings[SiteName]" placeholder="MyArtDump" value="<?=htmlspecialchars($settings["SiteName"])?>" />
+		<input id="name" type="text" name="settings[SiteName]" placeholder="ArtArchive" value="<?=htmlspecialchars($settings["SiteName"])?>" />
 
 		<br/>
 
