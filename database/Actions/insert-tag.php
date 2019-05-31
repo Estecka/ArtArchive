@@ -1,7 +1,4 @@
 <?php
-require("../../../ArtArchive.php");
-ArtArchive::RequireWebmaster();
-
 $tag = TagDTO::CreateFrom($_POST);
 $bdd = &ArtArchive::$database;
 

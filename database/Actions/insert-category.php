@@ -1,7 +1,4 @@
 <?php
-require("../../../ArtArchive.php");
-ArtArchive::RequireWebmaster();
-
 $cat = CategoryDTO::CreateFrom($_POST);
 $bdd = &ArtArchive::$database;
 

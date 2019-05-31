@@ -2,6 +2,12 @@
 require("../../../ArtArchive.php");
 ArtArchive::RequireWebmaster();
 
+if (!empty($_POST)){
+	include __ROOT__."/database/Actions/insert-artwork.php";
+	exit;
+}
+
+
 $bdd = &ArtArchive::$database;
 
 $tags = $bdd->GetAllTagsByArtwork(-1);
@@ -12,7 +18,7 @@ $page->title = "Submit";
 $page->StartPage();
 
 	$art = ArtworkDTO::CreateFrom($_POST);
-	$page->ArtForm($art, $tags, $cats, array(), "insert.php");
+	$page->ArtForm($art, $tags, $cats, array());
 	
 $page->EndPage();
 ?>

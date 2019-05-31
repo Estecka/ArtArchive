@@ -2,6 +2,11 @@
 require("../../ArtArchive.php");
 ArtArchive::RequireWebmaster();
 
+if (!empty($_POST)){
+	include __ROOT__."/database/Actions/update-tag.php";
+	exit;
+}
+
 $slug = value($_GET['tag']);
 
 if (empty($slug)){
@@ -23,7 +28,7 @@ $page = new PageBuilder();
 $page->title = "Edit : $name";
 $page->StartPage();
 	print("<h2>Edit tag</h2>");
-	$page->TagForm($tag, $cats, "update.php?tag=$slug");
+	$page->TagForm($tag, $cats);
 $page->EndPage();
 
 ?>

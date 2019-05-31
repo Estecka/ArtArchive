@@ -1,7 +1,4 @@
 <?php
-require("../../ArtArchive.php");
-ArtArchive::RequireWebmaster();
-
 $slug = value($_GET['category']);
 if (empty($slug)) {
 	PageBuilder::ErrorDocument(400);

@@ -2,6 +2,11 @@
 require("../../ArtArchive.php");
 ArtArchive::RequireWebmaster();
 
+if (!empty($_POST)){
+	include __ROOT__."/database/Actions/update-category.php";
+	exit;
+}
+
 $slug = value($_GET['category']);
 
 if (empty($slug)){
@@ -23,7 +28,7 @@ $page = new PageBuilder();
 $page->title = "Edit Category : $name";
 $page->StartPage();
 	print("<h2>Edit Category</h2>");
-	$page->CategoryForm($cat, "update.php?category=$slug");
+	$page->CategoryForm($cat);
 $page->EndPage();
 
 ?>
