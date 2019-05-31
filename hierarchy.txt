@@ -7,9 +7,12 @@
 
 \art\{slug}
 \art\{slug}\edit
+\art\{slug}\delete
 
 \tag\{slug}
 \tag\{slug}\edit
+\tag\{slug}\delete
 
 \category\{slug}
 \category\{slug}\edit
+\category\{slug}\delete
