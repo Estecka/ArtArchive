@@ -1,42 +1,42 @@
 <?php
 class URL {
 	static public function Home() : string {
-		return "/site/";
+		return "/";
 	}
 	static public function About() : string {
-		return "/site/about.php";
+		return "/about.php";
 	}
 	static public function Login() : string {
 		return URL::Home()."?login";
 	}
 	static public function SiteSettings() : string {
-		return "/site/webmaster/settings.php";
+		return "/webmaster/settings.php";
 	}
 
 	static public function Wizard() : string {
-		return "/site/webmaster/databasewizard/index.php";
+		return "/webmaster/databasewizard/index.php";
 	}
 
 	static public function SourceCode() : string {
-		return "https://github.com/Estecka/ArtArchive";
+		return "/https://github.com/Estecka/ArtArchive";
 	}
 
 	/** REGION ARTWORKS */
 	static public function Artwork(string $slug) : string {
-		return "/site/art/?art=$slug";
+		return "/art/?art=$slug";
 	}
 	static public function EditArt(string $slug) : string {
-		return "/site/art/edit.php?art=$slug";
+		return "/art/edit.php?art=$slug";
 	}
 	static public function SubmitArt() : string {
-		return "/site/submit/art/";
+		return "/submit/art/";
 	}
 
 	static public function DeleteArt(string $slug) : string {
-		return "/site/art/delete.php?art=$slug";
+		return "/art/delete.php?art=$slug";
 	}
 	static public function Search(string $tags = null, $page = 0) : string {
-		$url = "/site/search.php";
+		$url = "search.php";
 		if ($tags){
 			$url .= "?tags=$tags";
 			if ($page)
@@ -47,30 +47,30 @@ class URL {
 
 	/** REGION TAGS */
 	static public function TagsHome() : string {
-		return "/site/tags.php";
+		return "/tags.php";
 	}
 	static public function Tag(string $slug) : string {
-		return "/site/tag/?tag=$slug";
+		return "/tag/?tag=$slug";
 	}
 	static public function EditTag(string $slug) : string {
-		return "/site/tag/edit.php?tag=$slug";
+		return "/tag/edit.php?tag=$slug";
 	}
 	static public function SubmitTag() : string {
-		return "/site/submit/tag/";
+		return "/submit/tag/";
 	}
 
 	/** REGION CATEGORIES */
 	static public function OrderCategory() : string {
-		return "/site/categories.php";
+		return "/categories.php";
 	}
 	static public function Category(string $slug) : string {
-		return "/site/category/?category=$slug";
+		return "/category/?category=$slug";
 	}
 	static public function EditCategory(string $slug) : string {
-		return "/site/category/edit?category=$slug";
+		return "/category/edit?category=$slug";
 	}
 	static public function SubmitCategory() : string {
-		return "/site/submit/category/";
+		return "/submit/category/";
 	}
 }
 ?>
