@@ -12,9 +12,10 @@ RewriteEngine on
 RewriteBase /
 
 # Explixitely redirect any URL starting with site
+RewriteCond %{ENV:REDIRECT_STATUS} ^$
 RewriteCond %{REQUEST_URI} ^/site/
-RewriteRule ^site/(.*)$ /$1 [R=303]
+RewriteRule ^site/(.*)$ /$1 [L,R=303]
 
 # Itnernally rebase all urls to the /site/folder
-RewriteCond %{REQUEST_URI} !^/site/
-RewriteRule ^(.*)$ site/$1 [END]
+RewriteCond %{ENV:REDIRECT_STATUS} ^$
+RewriteRule ^(.*)$ site/$1 [L]
