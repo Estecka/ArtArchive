@@ -103,5 +103,16 @@ class PageBuilder{
 	public function CategoryForm(CategoryDTO $cat, $action = null){
 		include(__ROOT__."/templates/categoryForm.php");
 	}
+
+	/** REGION MEDIA */
+	public function Media (string $path) {
+		if (preg_match("#^https?://.+#", $path))
+			$url = $path;
+		else
+			$url = URL::Media($path);
+		
+		$name = $path;
+		include(__ROOT__."/templates/media/default.php");
+	}
 }
 ?>

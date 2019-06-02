@@ -45,6 +45,10 @@ class URL {
 		return $url;
 	}
 
+	static public function Media(string $path) : string {
+		return "/storage/$path";
+	}
+
 	/** REGION TAGS */
 	static public function TagsHome() : string {
 		return "/tags.php";

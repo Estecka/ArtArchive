@@ -15,11 +15,11 @@ if (ArtArchive::$isWebmaster)
 	<?php
 }
 
-if (!$files){
-	print("There are no files attached to this artwork.");
-}
-else{
-	print(implode("<br/>", $files));
+if (empty($files))
+	print "There are no files attached to this artwork.";
+else foreach($files as $path){
+	$this->Media($path);
+	print "<br/>";
 }
 ?>
 
