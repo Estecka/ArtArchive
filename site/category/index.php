@@ -24,11 +24,12 @@ $style = $cat->color ? "style=\"color : $cat->color\"" : null;
 $page = new PageBuilder();
 $page->title = "Category : ".$name;
 $page->StartPage();
-	if (ArtArchive::$isWebmaster) {
+	if (ArtArchive::$isWebmaster)
+	{
 		?>
-		<a href="edit.php?category=<?=$slug?>">Edit</a>
-		|
-		<a href="delete.php?category=<?=$slug?>">Delete</a>
+		<a href="<?=URL::EditCategory($slug)?>">Edit</a>
+		 |
+		<a href="<?=URL::DeleteCategory($slug)?>">Delete</a>
 		<?php
 	}
 	?>

@@ -36,7 +36,7 @@ class URL {
 		return "/art/$slug/delete.php";
 	}
 	static public function Search(string $tags = null, $page = 0) : string {
-		$url = "search.php";
+		$url = "/search.php";
 		if ($tags){
 			$url .= "?tags=$tags";
 			if ($page)

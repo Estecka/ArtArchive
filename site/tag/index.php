@@ -24,9 +24,11 @@ $page->title = $name;
 $page->StartPage();
 	if (ArtArchive::$isWebmaster)
 	{
-		print("<a href=\"edit.php?tag=$slug\">Edit</a>");
-		print (" | ");
-		print("<a href=\"delete.php?tag=$slug\">Delete</a>");
+		?>
+		<a href="<?=URL::EditTag($slug)?>">Edit</a>
+		 | 
+		<a href="<?=URL::DeleteTag($slug)?>">Delete</a>
+		<?php
 	}
 	print("<h1>$name</h1>");
 	if ($slug != $name)
