@@ -126,6 +126,13 @@ class PageBuilder{
 			case "bmp" : 
 				include(__ROOT__."/templates/media/image.php"); 
 				break;
+			
+			case "mp3":
+			case "wav":
+			case "ogg":
+			case "m4a":
+				include(__ROOT__."/templates/media/audio.php");
+				break;
 		}
 	}
 }
