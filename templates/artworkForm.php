@@ -8,6 +8,13 @@
  */
 
  $filesText = $files ? implode("\n", $files) : null;
+$filesHint = 
+	"Insert one media per line. It can be an absolute URL, or relative to the /storage/ folder. \n"
+	."E.g: \n\n"
+	."dankmeme.jpg \n"
+	."subfolder/dankermeme.mp3 \n"
+	."http://mydomain/storage/dankerstmeme.pdf"
+	;
 ?>
 
 <div>
@@ -28,12 +35,12 @@
 		<br/>
 		
 		<label for="description">Descriptions</label> <br/>
-		<textarea id="description" name="description"><?=htmlspecialchars($art->description)?></textarea>
+		<textarea id="description" name="description" placeholder="Supports any html formatting"><?=htmlspecialchars($art->description)?></textarea>
 
 		<br/>
 
 		<h4><label for="files">Files :</label></h4>
-		<textarea id="files" name="files"><?=htmlspecialchars($filesText)?></textarea>
+		<textarea id="files" name="files" placeholder="<?=$filesHint?>"><?=htmlspecialchars($filesText)?></textarea>
 
 		<br/>
 
