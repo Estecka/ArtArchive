@@ -133,6 +133,14 @@ class PageBuilder{
 			case "m4a":
 				include(__ROOT__."/templates/media/audio.php");
 				break;
+			
+			case "txt":
+			case "pdf":
+			case "html":
+			case "htm":
+				include(__ROOT__."/templates/media/iframe.php");
+				break;
+
 		}
 	}
 }
