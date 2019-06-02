@@ -1,0 +1,6 @@
+div.inlineCategory {
+	display: inline-block;
+	vertical-align: top;
+	min-width: 100px;
+	margin: 5px;
+}

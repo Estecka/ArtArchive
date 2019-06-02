@@ -5,15 +5,26 @@ class PageBuilder{
 	public $title = "ArtDump";
 	public $charset = "windows-1252";
 
+	public $stylesheets = array(
+		"/css/layout.css",
+	);
+
 	public function StartPage(){ 
 		?>
 		<!DOCTYPE html>
 		<html>
+		<head>
+			<title><?= $this->title ?></title>
+			<meta charset="<?=$this->charset?>"/>
+			<?php
+			foreach($this->stylesheets as $uri){
+				?>
+				<link rel=stylesheet type=text/css href="<?=$uri?>"/>
+				<?php
+			}
+			?>
+		</head>
 		<body>
-			<head>
-				<title><?= $this->title ?></title>
-				<meta charset=" <?=$this->charset?> "/>
-			</head>
 			<?php
 			include("header.php");
 	}

@@ -25,7 +25,7 @@ foreach($cats as $cat) {
 		$h3 = "<a href=\"$url\">$h3</a>";
 	}
 	?>
-	<div style="display:inline-block; vertical-align:top; min-width:100px;">
+	<div class="inlineCategory">
 		<h3><?=$h3?></h3>
 		<?php
 		if($isempty)
