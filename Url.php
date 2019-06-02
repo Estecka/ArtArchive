@@ -23,17 +23,17 @@ class URL {
 
 	/** REGION ARTWORKS */
 	static public function Artwork(string $slug) : string {
-		return "/art/?art=$slug";
+		return "/art/$slug/";
 	}
 	static public function EditArt(string $slug) : string {
-		return "/art/edit.php?art=$slug";
+		return "/art/$slug/edit.php";
 	}
 	static public function SubmitArt() : string {
 		return "/submit/art/";
 	}
 
 	static public function DeleteArt(string $slug) : string {
-		return "/art/delete.php?art=$slug";
+		return "/art/$slug/delete.php";
 	}
 	static public function Search(string $tags = null, $page = 0) : string {
 		$url = "search.php";
@@ -50,10 +50,13 @@ class URL {
 		return "/tags.php";
 	}
 	static public function Tag(string $slug) : string {
-		return "/tag/?tag=$slug";
+		return "/tag/$slug/";
 	}
 	static public function EditTag(string $slug) : string {
-		return "/tag/edit.php?tag=$slug";
+		return "/tag/$slug/edit.php";
+	}
+	static public function DeleteTag(string $slug) : string {
+		return "/tag/$slug/delete.php";
 	}
 	static public function SubmitTag() : string {
 		return "/submit/tag/";
@@ -64,10 +67,13 @@ class URL {
 		return "/categories.php";
 	}
 	static public function Category(string $slug) : string {
-		return "/category/?category=$slug";
+		return "/category/$slug/";
 	}
 	static public function EditCategory(string $slug) : string {
-		return "/category/edit?category=$slug";
+		return "/category/$slug/edit.php";
+	}
+	static public function DeleteCategory(string $slug) : string {
+		return "/category/$slug/delete.php";
 	}
 	static public function SubmitCategory() : string {
 		return "/submit/category/";
