@@ -26,7 +26,7 @@ foreach($cats as $cat) {
 	}
 	?>
 	<div class="inlineCategory">
-		<h3><?=$h3?></h3>
+		<h3 class="categoryName"><?=$h3?></h3>
 		<?php
 		if($isempty)
 			print("This category is empty");

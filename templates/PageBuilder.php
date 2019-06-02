@@ -7,6 +7,7 @@ class PageBuilder{
 
 	public $stylesheets = array(
 		"/css/layout.css",
+		"/css/colors.css",
 	);
 
 	public function StartPage(){ 

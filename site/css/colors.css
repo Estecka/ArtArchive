@@ -1,0 +1,10 @@
+hr	{
+	border-color: #06f;
+	border-style: solid;
+	border-bottom-style: none;
+	border-width: 3px;
+}
+
+h3.categoryName {
+	color: black;
+}
