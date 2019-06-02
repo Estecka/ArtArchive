@@ -22,9 +22,12 @@ Not required, but could come handy in a pinch:
 - Attach multiple files to a single artwork.
 - Manage numerous tags, separate tags into categories.
 - Description page for each and every tag and category
+- Multimedia artworks :
+  - image
+  - audio
+  - documents (txt, pdf, html)
 
 #### Planned features :
-- Multimedia artworks (audio, video, text, pdf,..)
 - Subscription via RSS feed
 - Disqus comments
 
