@@ -112,7 +112,21 @@ class PageBuilder{
 			$url = URL::Media($path);
 		
 		$name = $path;
-		include(__ROOT__."/templates/media/default.php");
+		$type = pathinfo($path, PATHINFO_EXTENSION);
+		$type = trim($type); // removes \n. There WILL be new lines
+
+		switch ($type) {
+			default :
+				include(__ROOT__."/templates/media/default.php");
+				break;
+
+			case "jpeg" : 
+			case "jpg" : 
+			case "png" : 
+			case "bmp" : 
+				include(__ROOT__."/templates/media/image.php"); 
+				break;
+		}
 	}
 }
 ?>
