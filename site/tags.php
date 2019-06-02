@@ -14,7 +14,7 @@ $page = new PageBuilder();
 $page->title = "Tags and Categories";
 $page->StartPage();
 
-$page->TagList($tags, $cats, true);
+$page->TagTable($tags, $cats);
 
 $page->EndPage();
 ?>
