@@ -4,3 +4,22 @@ div.inlineCategory {
 	min-width: 100px;
 	margin: 5px;
 }
+
+div.flex {
+	display: flex;
+	flex-direction: row;
+}
+div.margin {
+	width: 150px;
+	height: 100%;
+}
+
+div.artwork {
+	width: 100%;
+}
+div.artwork h2 {
+	text-align: center;
+}
+div.media {
+	text-align: center;
+}

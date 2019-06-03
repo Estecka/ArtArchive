@@ -15,21 +15,30 @@ if (ArtArchive::$isWebmaster)
 	<?php
 }
 
-if (empty($files))
-	print "There are no files attached to this artwork.";
-else foreach($files as $path){
-	$this->Media($path);
-	print "<br/>";
-}
 ?>
-
-<h2><?=$art->GetName()?></h2>
-<?=$art->date?> <br/>
-<?=$art->description?>
-
-<?php
-if (!empty($tags)){
-	print("<h4>Tags : </h4>");
-	$this->TagList($tags, $cats, false);
-}
-?>
+<div class="flex">
+	<div class="margin">
+		<?php
+		if (!empty($tags)){
+			print("<h4>Tags : </h4>");
+			$this->TagList($tags, $cats, false);
+		}
+		?>
+	</div>
+	<div class="artwork">
+		<h2><?=$art->GetName()?></h2>
+		<div class="media">
+			<?php
+			if (empty($files))
+				print "There are no files attached to this artwork.";
+			else foreach($files as $path){
+				$this->Media($path);
+				print "<br/>";
+			}
+			?>
+		</div>
+		<hr>
+		<?=$art->date?> <br/>
+		<?=$art->description?>
+	</div>
+</div>
