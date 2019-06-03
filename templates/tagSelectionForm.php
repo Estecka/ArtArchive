@@ -15,15 +15,17 @@ foreach($tags as $tag){
 	$cats[$tag->categoryId]->tags[] = $tag;
 }
 
+print "<div>";
 foreach($cats as $cat){
+	?><div class="inlineCategory"><?php
 	$name = $cat->GetName();
 	$style = $cat->color ? "style=\"color: $cat->color\"" : null;
 	$createId = empty($cat->slug) ? "createNULL" : "create[$cat->slug]";
 
-	print("<h5 $style>♦ $name</h5>");
+	print("<h4 $style>$name</h4>");
 	if ($allowInserts) {
 		?>
-		<textarea id="<?=$createId?>" name="<?=$createId?>" placeholder="Add new tags to this category. &#10;One slug per line."></textarea>
+		<textarea id="<?=$createId?>" name="<?=$createId?>" placeholder="Create new tags here, &#10;one slug per line."></textarea>
 		<br/>
 		<?php
 	}
@@ -39,5 +41,7 @@ foreach($cats as $cat){
 		<br/>
 		<?php
 	}
+	?></div><?php
 }
+print "</div>"
 ?>
