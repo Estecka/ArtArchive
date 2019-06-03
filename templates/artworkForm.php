@@ -44,7 +44,7 @@ $filesHint =
 
 		<br/>
 
-		<h4>Tags :<h4>
+		<h4>Tags :</h4>
 		<?php
 		$page->TagSelectionForm($tags, $cats, true);
 		?>
