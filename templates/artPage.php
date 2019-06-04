@@ -16,8 +16,8 @@ if (ArtArchive::$isWebmaster)
 }
 
 ?>
-<div class="flex">
-	<div class="margin">
+<div class="row">
+	<div class="column margin">
 		<?php
 		if (!empty($tags)){
 			print("<h4>Tags : </h4>");
@@ -25,9 +25,9 @@ if (ArtArchive::$isWebmaster)
 		}
 		?>
 	</div>
-	<div class="artwork">
-		<h2><?=$art->GetName()?></h2>
+	<div class="column artwork">
 		<div class="media">
+			<h2><?=$art->GetName()?></h2>
 			<?php
 			if (empty($files))
 				print "There are no files attached to this artwork.";
@@ -38,7 +38,10 @@ if (ArtArchive::$isWebmaster)
 			?>
 		</div>
 		<hr>
-		<?=$art->date?> <br/>
-		<?=$art->description?>
+		<div class="description">
+			<h2><?=$art->GetName()?></h2>
+			<?=$art->date?> <br/>
+			<?=$art->description?>
+		</div>
 	</div>
 </div>

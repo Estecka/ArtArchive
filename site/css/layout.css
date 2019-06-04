@@ -5,20 +5,19 @@ div.inlineCategory {
 	margin: 5px;
 }
 
-div.flex {
-	display: flex;
-	flex-direction: row;
-}
-div.margin {
-	width: 150px;
-	height: 100%;
-}
-
-div.artwork {
+div.row {
+	display: table-row;
 	width: 100%;
 }
-div.artwork h2 {
-	text-align: center;
+div.column {
+	display: table-cell;
+}
+
+div.margin {
+	width: 150px;
+}
+div.artwork {
+	width: 100%;
 }
 div.media {
 	text-align: center;
