@@ -11,3 +11,25 @@ hr	{
 h3.categoryName {
 	color: black;
 }
+
+div.artwork .description {
+	border-radius: 5px;
+	padding: 20px;
+	padding-top:0;
+	margin-bottom: 10px;
+
+	border-style: inset;
+	border-width: 1px;
+
+	border-color: #ccc;
+	background-color: #f4f4f4;
+}
+.description hr {
+	border-style: inset;
+	border-color: #f4f4f4;
+	border-width: 1px;
+}
+.description p {
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	text-align: justify;
+}

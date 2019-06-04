@@ -40,8 +40,11 @@ if (ArtArchive::$isWebmaster)
 		<hr>
 		<div class="description">
 			<h2><?=$art->GetName()?></h2>
+			<hr/>
 			<?=$art->date?> <br/>
-			<?=$art->description?>
+			<p>
+				<?=str_replace("\n", "<br/>", $art->description)?>
+			<p>
 		</div>
 	</div>
 </div>
