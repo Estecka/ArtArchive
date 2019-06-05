@@ -13,6 +13,7 @@ $pageMax = min($pageMax, $pageAmount-1);
 $pageMin = $pageMax - $maxRange;
 $pageMin = max(0, $pageMin);
 
+print "<div class=\"pageList\">";
 if ($currentPage > 0){
 	$url = sprintf($urlFormat, $currentPage-1);
 	?>
@@ -45,4 +46,5 @@ if ($currentPage < ($pageAmount-1)){
 	| <a href="<?=$url?>">>> Next</a>
 	<?php
 }
+print "</div>";
 ?>
