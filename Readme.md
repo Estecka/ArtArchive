@@ -32,7 +32,7 @@ Not required, but could come handy in a pinch:
 - Disqus comments
 
 ## Installation
-- Download and unzip the software archive into some folder.
+- [Download](https://github.com/Estecka/ArtArchive/releases/tag/0.1.0) and unzip the software archive into some folder.
 - Open [`database\config.php`](database/config.php) in a text editor, and fill in your database information.
 - Open [`auth\config.php`](auth/config.php) in a text editor, and fill in the credentials you want to use for admin rights.
 - Upload the whole folder onto your website via FTP.
