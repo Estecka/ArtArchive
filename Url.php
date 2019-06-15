@@ -7,7 +7,7 @@ class URL {
 		return "/about.php";
 	}
 	static public function Login() : string {
-		return URL::Home()."?login";
+		return "?login";
 	}
 	static public function SiteSettings() : string {
 		return "/webmaster/settings.php";
