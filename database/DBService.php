@@ -14,13 +14,19 @@ class DBService {
 
 	public function __construct() 
 	{
-		$this->pdo = new PDO(
-			'mysql:host='.BDDHOST
-				.';dbname='.BDDNAME
-				.';charset=utf8',
-			BDDID, 
-			BDDPWD
-		);
+		try {
+			$this->pdo = new PDO(
+				'mysql:host='.BDDHOST
+					.';dbname='.BDDNAME
+					.';charset=utf8',
+				BDDID, 
+				BDDPWD
+			);
+		} catch (PDOException $e) {
+			http_response_code(500);
+			echo "Couldn't connect to the database : <br/>".$e->getMessage();
+			die;
+		}
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 
