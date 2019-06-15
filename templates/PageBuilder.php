@@ -51,11 +51,12 @@ class PageBuilder{
 	/**
 	 * @param string $urlFormat Url where %d represents the page number. E.g: "http://url?page=%d"
 	 * @param int $currentPage Zero-based index of the current page
-	 * @param int $pageAmount
-	 * @param int $maxRange How many links to the nearby pages should be displayed.
+	 * @param int $pageAmount The total amount of page, from start to end.
+	 * @param int $maxRange How many links to nearby pages should be displayed.
 	 */
 	public function PageList(string $urlFormat, int $currentPage, int $pageAmount, int $maxRange = 11){
-		include(__ROOT__."/templates/pageList.php");
+		if ($pageAmount > 1)
+			include(__ROOT__."/templates/pageList.php");
 	}
 
 	/**
