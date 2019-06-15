@@ -4,6 +4,7 @@ $bdd = &ArtArchive::$database;
 
 $pageNo = either($_GET["page"], 0);
 $artworks = $bdd->GetArtworks(10, $pageNo, $total);
+$artworks = $bdd->GetThumbnails($artworks);
 
 $page = new PageBuilder();
 $page->title = ArtArchive::GetSiteName();

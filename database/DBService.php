@@ -478,6 +478,73 @@ class DBService {
 		$query->execute($params);
 	}
 
+	/**
+	 * Attach to the provided artworks a link to their thumbnails. 
+	 * Artworks will be returned with an additional `thumbnail` property.
+	 * @var ArtworkDTO[] $artworks
+	 * @return ArtworkDTO[]
+	 */
+	public function GetThumbnails(array $artworks) : array {
+		$extensions = array(
+			"png",
+			"jpg",
+			"jpeg",
+			"bmp",
+			"gif"
+		);
+
+		$artIds = array();
+		foreach($artworks as $art)
+			$artIds[] = $art->id;
+		
+		$thumbs = $this->GetMainFiles($artIds, $extensions);
+		foreach($artworks as $key=>$art)
+			$artworks[$key]->thumbnail = value($thumbs[$art->id]);
+
+		return $artworks;
+	}
+
+	/**
+	 * For each artworks, return the first file to meet any of the given extensions.
+	 * @param int[] $artIds
+	 * @param string[] $extensions
+	 * @return string[] Associative array that associates artwork Ids with file pathes.
+	 */
+	public function GetMainFiles(array $artIds, array $extensions) : array {
+		
+		// [[:space:]] is the metacaracter \s (whitespace) for sql regex
+		// \\\\. <- escaped caracters needs to be escaped twice in sql regex
+		$extensions = implode("|", $extensions);
+		$regex = "\\.($extensions)[[:space:]]*$";
+
+		self::PrepareSQLArray($artIds, $artSQL, $params);
+		$params[':regex'] = $regex;
+		
+		$query = 
+			"SELECT artworkId, MIN(`order`) as `order` FROM `art-file`
+			WHERE artworkID IN ($artSQL)
+				AND url REGEXP :regex
+			GROUP BY artworkId"
+			;
+		$query = 
+			"SELECT ids.*, files.url 
+				FROM ($query) as ids
+			INNER JOIN `art-file` as files
+				ON ids.artworkId = files.artworkId
+				AND ids.`order` = files.`order`"
+			;
+
+		$query = $this->pdo->prepare($query);
+		$query->execute($params);
+
+		$result = $query->fetchAll();
+		$return = array();
+		foreach($result as $entry)
+			$return[$entry['artworkId']] = $entry['url'];
+		
+		return $return;
+	}
+
 	/** REGION TAGS */
 	/**
 	 * @return TagDTO[]

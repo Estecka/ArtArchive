@@ -40,6 +40,7 @@ if ($tags !== null){
 
 
 	$arts = $bdd->GetArtworksByTags($validIds, 10, $pageNo, $total);
+	$arts = $bdd->GetThumbnails($arts);
 	$pageAmount = (int)ceil($total * 0.1);
 }
 
