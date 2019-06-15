@@ -1,5 +1,5 @@
 <?php
-require_once(__ROOT__."\database\ArtworkDTO.php");
+require_once(__ROOT__."/database/ArtworkDTO.php");
 
 class PageBuilder{
 	public $title = "ArtDump";
