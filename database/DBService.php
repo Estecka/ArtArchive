@@ -192,6 +192,7 @@ class DBService {
 		return $result ? ArtworkDTO::CreateFrom($result) : null;
 	}
 	/**
+	 * OBSOLETE Use `SearchArtworks` instead. 
 	 * Seeks artworks that are assigned all of the provided tags.
 	 * @param int[] $tags The Id of the required tags
 	 * @param int $amount
@@ -238,6 +239,67 @@ class DBService {
 		foreach($result as $key=>$art)
 			$result[$key] = ArtworkDTO::CreateFrom($art);
 		return $result;
+	}
+	/**
+	 * An improved and hopefully more performant version of `GetArtworksByTag`.
+	 * Seeks artworks that are assigned all of the desired tags, and none of the blacklisted ones.
+	 * @param int[] $required The Id of the required tags
+	 * @param int[] $blacklist The Id of the blacklisted tags
+	 * @param int $amount The maximum amount of result to return
+	 * @param int $page
+	 * @param int $total Outputs the total number of results.
+	 * @return ArtworkDTO[]
+	 */
+	public function SearchArtworks(array $required, int $amount, int $page, int &$total = null, array $blacklist = null){
+		$required = array_unique($required);
+		if (empty($blacklist))
+			$blacklist = array(-1);
+		if (empty($required))
+			$required = array(-1);
+
+		// #1 Determine artwork ids to exclude.
+		self::PrepareSQLArray($blacklist, $BLACKLIST, $BL_params, "black");
+		$BLACKLIST = "SELECT artId FROM `art-tag` WHERE tagId IN ($BLACKLIST)";
+		
+		// #2 Save results into a temporary table
+		self::PrepareSQLArray($required, $REQUIRED, $WL_params, "white");
+		$query = 
+			"CREATE TEMPORARY TABLE `foundArts`
+				SELECT artId, COUNT(tagId) as score FROM `art-tag` 
+				WHERE artId NOT IN ($BLACKLIST)
+				AND tagId IN ($REQUIRED)
+				GROUP BY artId
+				HAVING score = :score"
+			;
+
+		$params = array_merge($WL_params, $BL_params);
+		$params[':score'] = sizeof($required);
+		$query = $this->pdo->prepare($query);
+		$query->execute($params);
+		$query->closeCursor();
+	
+		// #3 Count the results
+		$query = $this->pdo->query("SELECT count(artId) FROM `foundArts`");
+		$total = $query->fetchColumn();
+		$query->closeCursor();
+
+		// #4 Get the artworks
+		$query = 
+			"SELECT `artworks`.* FROM `artworks` 
+			INNER JOIN `foundArts` ON `foundArts`.artId = `artworks`.id
+			LIMIT :offset, :amount;"
+			;
+
+		$query = $this->pdo->prepare($query);
+		$query->bindValue(":offset", $amount*$page, PDO::PARAM_INT);
+		$query->bindValue(":amount", $amount,       PDO::PARAM_INT);
+		$query->execute();
+
+		$result = $query->fetchAll();
+		foreach($result as $key=>$art)
+			$result[$key] = ArtworkDTO::CreateFrom($art);
+		return $result;
+
 	}
 
 	public function AddArtwork(ArtworkDTO $art) : bool {
