@@ -35,12 +35,22 @@ $filesHint =
 		<br/>
 		
 		<label for="description">Descriptions</label> <br/>
-		<textarea id="description" name="description" placeholder="Supports any html formatting"><?=htmlspecialchars($art->description)?></textarea>
+		<textarea 
+			id="description" 
+			name="description" 
+			placeholder="Supports any html formatting"
+			rows=15
+		><?=htmlspecialchars($art->description)?></textarea>
 
 		<br/>
 
 		<h4><label for="files">Files :</label></h4>
-		<textarea id="files" name="files" placeholder="<?=$filesHint?>"><?=htmlspecialchars($filesText)?></textarea>
+		<textarea 
+			id="files" 
+			name="files" 
+			placeholder="<?=$filesHint?>"
+			rows=5
+		><?=htmlspecialchars($filesText)?></textarea>
 
 		<br/>
 

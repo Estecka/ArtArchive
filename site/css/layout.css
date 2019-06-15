@@ -1,3 +1,8 @@
+textarea {
+	width: 100%;
+	resize: vertical;
+}
+
 div.inlineCategory {
 	display: inline-block;
 	vertical-align: top;

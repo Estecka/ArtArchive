@@ -25,7 +25,12 @@ foreach($cats as $cat){
 	print("<h4 $style>$name</h4>");
 	if ($allowInserts) {
 		?>
-		<textarea id="<?=$createId?>" name="<?=$createId?>" placeholder="Create new tags here, &#10;one slug per line."></textarea>
+		<textarea 
+			id="<?=$createId?>" 
+			name="<?=$createId?>" 
+			placeholder="Create new tags here, &#10;one slug per line."
+			rows=1
+		></textarea>
 		<br/>
 		<?php
 	}
