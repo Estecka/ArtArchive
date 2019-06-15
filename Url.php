@@ -18,7 +18,7 @@ class URL {
 	}
 
 	static public function SourceCode() : string {
-		return "/https://github.com/Estecka/ArtArchive";
+		return "https://github.com/Estecka/ArtArchive";
 	}
 
 	/** REGION ARTWORKS */
