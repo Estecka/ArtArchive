@@ -1,5 +1,5 @@
 <?php
-require("../Artarchive.php");
+require("../ArtArchive.php");
 
 if ($_POST){
 	$tags = array();

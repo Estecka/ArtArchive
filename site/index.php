@@ -1,5 +1,5 @@
 <?php
-require("../Artarchive.php");
+require("../ArtArchive.php");
 $bdd = &ArtArchive::$database;
 
 $pageNo = either($_GET["page"], 0);

@@ -1,5 +1,5 @@
 <?php
-require_once("../Artarchive.php");
+require_once("../ArtArchive.php");
 ArtArchive::RequireWebmaster();
 $bdd = &ArtArchive::$database;
 
