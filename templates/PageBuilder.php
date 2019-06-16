@@ -127,10 +127,7 @@ class PageBuilder{
 
 	/** REGION MEDIA */
 	public function Media (string $path) {
-		if (preg_match("#^https?://.+#", $path))
-			$url = $path;
-		else
-			$url = URL::Media($path);
+		$url = URL::Media($path);
 		
 		$name = $path;
 		$type = pathinfo($path, PATHINFO_EXTENSION);

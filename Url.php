@@ -46,7 +46,10 @@ class URL {
 	}
 
 	static public function Media(string $path) : string {
-		return "/storage/$path";
+		if (preg_match("#^https?://.+#", $path))
+			return $path;
+		else
+			return "/storage/$path";
 	}
 
 	/** REGION TAGS */
