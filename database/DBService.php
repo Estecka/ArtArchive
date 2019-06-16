@@ -88,6 +88,14 @@ class DBService {
 		return $result;
 	}
 
+	static public function CheckSlug(string $slug, bool $throw) : bool {
+		$r = preg_match("#^[A-Za-z0-9_\-]+$#", $slug);
+		if (!$r && $throw)
+			throw new PDOException("slug contains unauthorized caracters", 4500);
+		else
+			return $r;
+	}
+
 	/**
 	 * Checks the version of the installed database structure version, not to be mistaken with the database php software version.
 	 * Can be safely used to check whether the database has been set up.
@@ -309,6 +317,7 @@ class DBService {
 	}
 
 	public function AddArtwork(ArtworkDTO $art) : bool {
+		self::CheckSlug($art->slug, true);
 		$query = $this->pdo->prepare("INSERT INTO artworks (slug, title, date, description) VALUES (?,?,?,?)");
 		$result = $query->execute(array(
 			$art->slug,
@@ -334,6 +343,7 @@ class DBService {
 			return false;
 
 		// Perform the change
+		self::CheckSlug($art->slug, true);
 		$query = $this->pdo->prepare(
 			"UPDATE artworks SET slug = ?, title = ?, date = ?, description = ? WHERE slug = ?"
 		);
@@ -659,6 +669,9 @@ class DBService {
 	 * @param string[] $tags The slugs of the tags to insert. Already existing slugs will be ignored.
 	 */
 	public function InsertTagsBulk(string $category, array $tags) {
+		foreach($tags as $tag)
+			self::CheckSlug($tag, true);
+
 		self::PrepareSQLArray($tags, $sql, $params);
 
 		$VALUES = array();
@@ -676,6 +689,7 @@ class DBService {
 		$query->execute($params);
 	}
 	public function InsertTag(TagDTO $tag) {
+		self::CheckSlug($tag->slug, true);
 		$query = $this->pdo->prepare(
 			"INSERT INTO tags (slug, name, description, categoryId) 
 			VALUES (:slug, :name, :description, :category)"
@@ -698,6 +712,7 @@ class DBService {
 			return false;
 
 		// Perform the change
+		self::CheckSlug($tag->slug, true);
 		$query = $this->pdo->prepare(
 			"UPDATE tags SET 
 				slug =:newSlug, 
@@ -748,6 +763,7 @@ class DBService {
 		return $result ? CategoryDTO::CreateFrom($result) : null;
 	}
 	public function InsertCategory(CategoryDTO $cat){
+		self::CheckSlug($cat->slug, true);
 		$query = $this->pdo->prepare("INSERT INTO categories (slug, name, description, color) VALUES (:slug, :name, :description, :color)");
 		$query->execute(array(
 			":slug" => $cat->slug,
@@ -767,6 +783,7 @@ class DBService {
 			return false;
 
 		// Perform the change
+		self::CheckSlug($cat->slug, true);
 		$query = $this->pdo->prepare(
 			"UPDATE categories 
 			SET slug = :newSlug, 
