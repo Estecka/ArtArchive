@@ -31,10 +31,10 @@ CREATE TABLE `tags` (
 --
 -- Triggers `tags`
 --
-CREATE TRIGGER `tags_CHECK_slug_INSERT` BEFORE INSERT ON `tags` FOR EACH ROW CALL Check_Slug(new.slug)
-;
-CREATE TRIGGER `tags_CHECK_slug_UPDATE` BEFORE UPDATE ON `tags` FOR EACH ROW CALL Check_Slug(new.slug)
-;
+-- CREATE TRIGGER `tags_CHECK_slug_INSERT` BEFORE INSERT ON `tags` FOR EACH ROW CALL Check_Slug(new.slug)
+-- ;
+-- CREATE TRIGGER `tags_CHECK_slug_UPDATE` BEFORE UPDATE ON `tags` FOR EACH ROW CALL Check_Slug(new.slug)
+-- ;
 
 --
 -- Indexes for dumped tables

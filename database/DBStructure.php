@@ -12,7 +12,7 @@ class DBStructure {
 	
 	
 	static $procedures = array(
-		"Check_Slug",
+		// "Check_Slug",
 	);
 	static $tables = array(
 		"artworks",
