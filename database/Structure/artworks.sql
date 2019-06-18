@@ -31,10 +31,10 @@ CREATE TABLE `artworks` (
 --
 -- Triggers `artworks`
 --
-CREATE TRIGGER `artworks_CHECK_slug_INSERT` BEFORE INSERT ON `artworks` FOR EACH ROW CALL Check_Slug(new.slug)
-;
-CREATE TRIGGER `artworks_CHECK_slug_UPDATE` BEFORE UPDATE ON `artworks` FOR EACH ROW CALL Check_Slug(new.slug)
-;
+-- CREATE TRIGGER `artworks_CHECK_slug_INSERT` BEFORE INSERT ON `artworks` FOR EACH ROW CALL Check_Slug(new.slug)
+-- ;
+-- CREATE TRIGGER `artworks_CHECK_slug_UPDATE` BEFORE UPDATE ON `artworks` FOR EACH ROW CALL Check_Slug(new.slug)
+-- ;
 
 --
 -- Indexes for dumped tables
