@@ -207,6 +207,8 @@ class DBService {
 	}
 	/**
 	 * OBSOLETE Use `SearchArtworks` instead. 
+	 * This method require excessive privileges ("CREATE TEMPORARY TABLE")
+	 * This method will be removed.
 	 * Seeks artworks that are assigned all of the provided tags.
 	 * @param int[] $tags The Id of the required tags
 	 * @param int $amount
@@ -275,36 +277,40 @@ class DBService {
 		self::PrepareSQLArray($blacklist, $BLACKLIST, $BL_params, "black");
 		$BLACKLIST = "SELECT artId FROM `art-tag` WHERE tagId IN ($BLACKLIST)";
 		
-		// #2 Save results into a temporary table
+		// #2 Find the list (by id) of all matching artworks
 		self::PrepareSQLArray($required, $REQUIRED, $WL_params, "white");
 		$query = 
-			"CREATE TEMPORARY TABLE `foundArts`
-				SELECT artId, COUNT(tagId) as score FROM `art-tag` 
+			"SELECT DISTINCT(artId) FROM `art-tag` 
 				WHERE artId NOT IN ($BLACKLIST)
 				AND tagId IN ($REQUIRED)
-				GROUP BY artId
-				HAVING score = :score"
+			GROUP BY artId
+			HAVING COUNT(tagId) = :score"
 			;
 
 		$params = array_merge($WL_params, $BL_params);
 		$params[':score'] = sizeof($required);
 		$query = $this->pdo->prepare($query);
 		$query->execute($params);
+		$results = $query->fetchAll(PDO::FETCH_COLUMN);
 		$query->closeCursor();
 	
 		// #3 Count the results
-		$query = $this->pdo->query("SELECT count(artId) FROM `foundArts`");
-		$total = $query->fetchColumn();
-		$query->closeCursor();
+		$total = sizeof($results);
+
+		if (sizeof($results) <= 0)
+			return array();
 
 		// #4 Get the artworks
+		self::PrepareSQLArray($results, $RESULTS, $resultParams);
 		$query = 
-			"SELECT `artworks`.* FROM `artworks` 
-			INNER JOIN `foundArts` ON `foundArts`.artId = `artworks`.id
+			"SELECT * FROM `artworks` 
+			WHERE id IN ($RESULTS)
 			LIMIT :offset, :amount;"
 			;
 
 		$query = $this->pdo->prepare($query);
+		foreach($resultParams as $key=>$value)
+				$query->bindValue($key,  $value, PDO::PARAM_INT);
 		$query->bindValue(":offset", $amount*$page, PDO::PARAM_INT);
 		$query->bindValue(":amount", $amount,       PDO::PARAM_INT);
 		$query->execute();
