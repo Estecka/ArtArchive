@@ -305,6 +305,7 @@ class DBService {
 		$query = 
 			"SELECT * FROM `artworks` 
 			WHERE id IN ($RESULTS)
+			ORDER BY `date` DESC
 			LIMIT :offset, :amount;"
 			;
 
