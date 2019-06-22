@@ -836,5 +836,39 @@ class DBService {
 		$query->execute($slugParam + $orderParam);
 
 	}
+
+	/** REGION Cleaning */
+	/**
+	 * Dissociate all tags from the given category.
+	 * @var int $id The id of the category to clean.
+	 * @return int The number of affected tags.
+	 */
+	public function DissociateCategory(int $id) : int {
+		$query = "UPDATE `tags` SET categoryId = NULL WHERE categoryId = $id";
+		$count = $this->pdo->exec($query);
+		return $count;
+	}
+
+	/**
+	 * Dissociate all tags from the given artwork.
+	 * @var int $id The id of the artwork to clean
+	 * @return int The number of affected tags;
+	 */
+	public function DissociateArtwork(int $id) : int {
+		$query = "DELETE FROM `art-tag` WHERE artId = $id";
+		$count = $this->pdo->exec($query);
+		return $count;
+	}
+
+	/**
+	 * Dissociate all artworks from the given tag.
+	 * @var int $id the Id of the tag to dissociate.
+	 * @return int The number of affected artworks.
+	 */
+	public function DissociateTag(int $id) : int {
+		$query = "DELETE FROM `art-tag` WHERE tagId = $id";
+		$count = $this->pdo->exec($query);
+		return $count;
+	}
 }
 ?>
