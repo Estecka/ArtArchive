@@ -365,9 +365,19 @@ class DBService {
 	}
 
 	public function DeleteArtwork(string $slug) : bool {
-		$query = $this->pdo->prepare("DELETE FROM artworks WHERE slug = ?");
+		$query = "SELECT id FROM artworks WHERE slug = ?";
+		$query = $this->pdo->prepare($query);
 		$query->execute(array($slug));
-		return $query->rowCount() > 0;
+		if (!$query->rowCount())
+			return false;
+
+		$id = (int)$query->fetchColumn();
+		$query->closeCursor();
+
+		$this->DissociateArtwork($id);
+
+		$query = $this->pdo->exec("DELETE FROM artworks WHERE id = $id");
+		return true;
 	}
 
 	/**
@@ -738,9 +748,21 @@ class DBService {
 		return true;
 	}
 	public function DeleteTag(string $slug) : bool {
-		$query = $this->pdo->prepare("DELETE FROM tags WHERE slug = ?");
+		$query = "SELECT id FROM tags WHERE slug = ? LIMIT 1";
+		$query = $this->pdo->prepare($query);
 		$query->execute(array($slug));
-		return $query->rowCount() > 0;
+		if (!$query->rowCount())
+			return false;
+
+		$id = (int)$query->fetchColumn();
+		$query->closeCursor();
+
+		$this->DissociateTag($id);
+
+		$query = "DELETE FROM tags WHERE id = $id";
+		$query = $this->pdo->exec($query);
+
+		return true;
 	}
 
 	/** REGION CATEGORIES */
@@ -809,9 +831,21 @@ class DBService {
 		return true;
 	}
 	public function DeleteCategory(string $slug) : bool {
-		$query = $this->pdo->prepare("DELETE FROM categories WHERE slug = ?");
+		$query = "SELECT id FROM categories WHERE slug = ? LIMIT 1";
+		$query = $this->pdo->prepare($query);
 		$query->execute(array($slug));
-		return $query->rowCount() > 0;
+		if (!$query->rowCount())
+			return false;
+
+
+		$id = (int)$query->fetchColumn();
+		$query->closeCursor();
+
+		$this->DissociateCategory($id);
+
+		$query = $this->pdo->exec("DELETE FROM categories WHERE id = $id");
+
+		return true;
 	}
 	/**
 	 * @param int[] $order An associative array taking categories' slug as keys, and their intended position as value. 
