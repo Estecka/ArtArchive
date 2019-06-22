@@ -16,7 +16,7 @@ foreach($tags as $tag)
 	
 foreach($cats as $cat) {
 	$isempty = empty($cat->tags);
-	if ($isempty)
+	if ($isempty && $cat->id < 0)
 		continue;
 
 	$h3 = $cat->GetName();

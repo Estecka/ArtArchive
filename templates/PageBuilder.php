@@ -115,7 +115,7 @@ class PageBuilder{
 	/**
 	 * Presents the provided tags in a nice table, sorted by category.
 	 * @param TagDTO[] $tags The tags displayed in the list.
-	 * @param CategoryDTO[] $cats a list of categories containing at least those represented in the provided tags. (Except for null)
+	 * @param CategoryDTO[] $cats A list of categories to display, and at at least those represented in the provided tags.
 	 */
 	public function TagTable(array $tags, array $cats) {
 		include(__ROOT__."/templates/tagTable.php");

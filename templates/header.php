@@ -7,7 +7,7 @@
 		 | 
 		<a href=<?=URL::Search()?>>Search</a>
 		 | 
-		<a href="<?=URL::TagsHome()?>">Tags</a>
+		<a href="<?=URL::TagsHome()?>">Tags and Categories</a>
 		<?php
 		if (!ArtArchive::$isWebmaster){
 			?>
