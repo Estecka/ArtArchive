@@ -17,6 +17,10 @@ foreach($tags as $tag){
 
 print "<div>";
 foreach($cats as $cat){
+	$empty = empty($cat->tags);
+	if ($empty && !$allowInserts)
+		continue;
+
 	?><div class="inlineCategory"><?php
 	$name = $cat->GetName();
 	$style = $cat->color ? "style=\"color: $cat->color\"" : null;
