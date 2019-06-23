@@ -871,6 +871,7 @@ class DBService {
 
 	}
 
+
 	/** REGION Cleaning */
 	/**
 	 * Dissociate all tags from the given category.
@@ -904,5 +905,63 @@ class DBService {
 		$count = $this->pdo->exec($query);
 		return $count;
 	}
+
+	/**
+	 * Find deleted tags that are still assigned to artworks.
+	 * @return int[]
+	 */
+	public function FindOrphanedTags() : array {
+		$query = 
+			"SELECT DISTINCT(tagId) as tagId FROM `art-tag`
+			LEFT JOIN `tags` ON `tags`.`id` = `art-tag`.`tagId`
+			WHERE `tags`.`id` IS NULL";
+
+		$query = $this->pdo->query($query);
+		$ids = $query->fetchAll(PDO::FETCH_COLUMN);
+		return $ids;
+	}
+	/**
+	 * Find deleted artworks that are still assigned to tags.
+	 * @return int[]
+	 */
+	public function FindOrphanedArtworks() : array {
+		$query = 
+			"SELECT DISTINCT(artId) as artId FROM `art-tag`
+			LEFT JOIN `artworks` ON `artworks`.`id` = `art-tag`.`artId`
+			WHERE `artworks`.`id` IS NULL";
+
+		$query = $this->pdo->query($query);
+		$ids = $query->fetchAll(PDO::FETCH_COLUMN);
+		return $ids;
+	}
+	/**
+	 * Find deleted categories that are still assigned to tags.
+	 * @return int[]
+	 */
+	public function FindOrphanedCategories() : array {
+		$query = 
+			"SELECT DISTINCT(categoryId) as categoryId FROM tags
+			LEFT JOIN categories ON tags.categoryId = categories.id
+			WHERE categories.id IS NULL";
+			
+		$query = $this->pdo->query($query);
+		$ids = $query->fetchAll(PDO::FETCH_COLUMN);
+		return $ids;
+	}
+	/**
+	 * find deleted artworks that are still assigned to files.
+	 * @return int[]
+	 */
+	public function FindOrphanedFiles() : array {
+		$query = 
+			"SELECT DISTINCT(artworkId) as artId FROM `art-file`
+			LEFT JOIN artworks ON `art-file`.artworkId = artworks.id
+			WHERE artworks.id IS NULL";
+			
+		$query = $this->pdo->query($query);
+		$ids = $query->fetchAll(PDO::FETCH_COLUMN);
+		return $ids;
+	}
+	
 }
 ?>
