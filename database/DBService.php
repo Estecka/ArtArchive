@@ -871,7 +871,6 @@ class DBService {
 
 	}
 
-
 	/** REGION Cleaning */
 	/**
 	 * Dissociate all tags from the given category.
@@ -885,13 +884,17 @@ class DBService {
 	}
 
 	/**
-	 * Dissociate all tags from the given artwork.
+	 * Dissociate all tags and all files from the given artwork.
 	 * @var int $id The id of the artwork to clean
-	 * @return int The number of affected tags;
+	 * @return int The number of affected tags and files;
 	 */
 	public function DissociateArtwork(int $id) : int {
 		$query = "DELETE FROM `art-tag` WHERE artId = $id";
 		$count = $this->pdo->exec($query);
+
+		$query = "DELETE FROM `art-file` WHERE artworkId = $id";
+		$count += $this->pdo->exec($query);
+
 		return $count;
 	}
 
