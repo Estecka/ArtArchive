@@ -142,6 +142,7 @@ class PageBuilder{
 			case "jpg" : 
 			case "png" : 
 			case "bmp" : 
+			case "gif" :
 				include(__ROOT__."/templates/media/image.php"); 
 				break;
 			
