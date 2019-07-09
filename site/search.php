@@ -52,15 +52,6 @@ foreach($allTags as $key=>$tag)
 $page = new PageBuilder();
 $page->title = "Search";
 $page->StartPage();
-	?>
-	<form method="POST">
-		<?php
-		$page->TagSelectionForm($allTags, $allCats, false);
-		?>
-		<input type="reset"/>
-		<input type="submit"/>
-	</form>
-	<?php
 	if (isset($arts)){
 		if (!empty($invalidSlugs))
 			print("The following tags do not exist and were ignored : \n".implode(", ", $invalidSlugs));
@@ -74,5 +65,14 @@ $page->StartPage();
 		}
 		$page->PageList(URL::Search($_GET["tags"], "%d"), $pageNo, $pageAmount, 11);
 	}
+	?>
+	<form method="POST">
+		<?php
+		$page->TagSelectionForm($allTags, $allCats, false);
+		?>
+		<input type="reset"/>
+		<input type="submit"/>
+	</form>
+	<?php
 $page->EndPage();
 ?>
