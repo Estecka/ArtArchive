@@ -19,7 +19,7 @@ div.inlineCategory {
 }
 
 div.card {
-	display: inline-table;
+	display: inline-block;
 	vertical-align: top;
 	text-align: center;
 
@@ -41,6 +41,15 @@ div.card .viewport {
 	border-style: inset;
 	border-width: 1px;
 	border-radius: 1px;
+}
+div.card h4 {
+	display: block;
+	width: 160px;
+	margin: 0;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .viewport img {
 	width: 100%;
