@@ -280,11 +280,11 @@ class DBService {
 		// #2 Find the list (by id) of all matching artworks
 		self::PrepareSQLArray($required, $REQUIRED, $WL_params, "white");
 		$query = 
-			"SELECT DISTINCT(artId) FROM `art-tag` 
+			"SELECT DISTINCT(artId), COUNT(tagId) as score FROM `art-tag` 
 				WHERE artId NOT IN ($BLACKLIST)
 				AND tagId IN ($REQUIRED)
 			GROUP BY artId
-			HAVING COUNT(tagId) = :score"
+			HAVING score = :score"
 			;
 
 		$params = array_merge($WL_params, $BL_params);
