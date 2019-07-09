@@ -439,7 +439,8 @@ class DBService {
 		$query = $this->pdo->prepare(
 			"SELECT tags.* FROM tags 
 			JOIN `art-tag` ON tags.id = `art-tag`.tagId
-			WHERE `art-tag`.`artId` = ?"
+			WHERE `art-tag`.`artId` = ?
+			ORDER BY tags.slug ASC"
 		);
 		$query->execute(array($artID));
 		$result = $query->fetchAll();
