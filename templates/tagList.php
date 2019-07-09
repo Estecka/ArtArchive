@@ -33,7 +33,7 @@ foreach($cats as $cat) {
 	foreach($cat->tags as $tag) {
 		$style = empty($cat->color) ? null : "style ='color: $cat->color'";
 		?>
-		<a href="<?=URL::Tag($tag->slug)?>" <?=$style?>><?=$tag->slug?></a>
+		· <a href="<?=URL::Tag($tag->slug)?>" <?=$style?>><?=$tag->slug?></a>
 		<br/>
 		<?php
 	}
