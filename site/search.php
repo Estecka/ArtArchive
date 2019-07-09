@@ -38,11 +38,11 @@ if ($tags !== null){
 		}
 	}
 
-
-	$arts = $bdd->SearchArtworks($validIds, 10, $pageNo, $total);
+	$rpp = ArtArchive::$settings["ResultsPerPage"];
+	$arts = $bdd->SearchArtworks($validIds, $rpp, $pageNo, $total);
 	if ($arts)
 		$arts = $bdd->GetThumbnails($arts);
-	$pageAmount = (int)ceil($total * 0.1);
+	$pageAmount = (int)ceil($total /$rpp);
 }
 
 foreach($allTags as $key=>$tag)

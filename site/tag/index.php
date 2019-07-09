@@ -17,11 +17,12 @@ if ($tag == null){
 	die;
 }
 
+$rpp = ArtArchive::$settings["ResultsPerPage"];
 $currentPage = either($_GET['page'], 0);
-$artworks = $bdd->SearchArtworks(array($tag->id), 10, $currentPage, $total);
+$artworks = $bdd->SearchArtworks(array($tag->id), $rpp, $currentPage, $total);
 if ($artworks){
 	$artworks = $bdd->GetThumbnails($artworks);
-	$pageAmount = (int)ceil($total * 0.1);
+	$pageAmount = (int)ceil($total /$rpp);
 }
 
 $name = $tag->GetName();

@@ -20,8 +20,7 @@ if (!empty($_POST)) {
 }
 
 
-$settings = array();
-$settings["SiteName"] = "ArtArchive";
+$settings = &ArtArchive::$settings;
 
 try {
 	$settings = $bdd->GetSettings($settings);
@@ -43,6 +42,11 @@ $page->StartPage();
 	<form method="POST">
 		<label for="name">Site name</label>
 		<input id="name" type="text" name="settings[SiteName]" placeholder="ArtArchive" value="<?=htmlspecialchars($settings["SiteName"])?>" />
+
+		<br/>
+
+		<label for="rpp">Results per page</label>
+		<input id="rpp" type=number name="settings[ResultsPerPage]" placeholder=20 value="<?=(int)$settings["ResultsPerPage"]?>" />
 
 		<br/>
 

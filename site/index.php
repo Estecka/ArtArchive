@@ -2,8 +2,9 @@
 require("../ArtArchive.php");
 $bdd = &ArtArchive::$database;
 
+$rpp = ArtArchive::$settings['ResultsPerPage'];
 $pageNo = either($_GET["page"], 0);
-$artworks = $bdd->GetArtworks(10, $pageNo, $total);
+$artworks = $bdd->GetArtworks($rpp, $pageNo, $total);
 if ($artworks)
 	$artworks = $bdd->GetThumbnails($artworks);
 
@@ -13,7 +14,7 @@ $page->StartPage();
 
 	$page->ArtCardList($artworks);
 	if ($total > 10){
-		$pageAmount = (int)ceil($total * 0.1);
+		$pageAmount = (int)ceil($total /$rpp);
 		$page->PageList(URL::Home()."?page=%d", $pageNo, $pageAmount, 11);
 	}
 
