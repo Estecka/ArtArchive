@@ -35,7 +35,7 @@ $page->StartPage();
 		print("<h3>$slug</h3>");
 
 	if ($tag->description)
-		print($tag->description);
+		print(str_replace("\n", "<br/>", $tag->description));
 	else
 		print("This tag has no description.");
 $page->EndPage();
