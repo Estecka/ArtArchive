@@ -4,4 +4,4 @@
  * @var string $url
  */
 ?>
-<img src="<?=$url?>" alt="<?=$name?>" style="max-height:800px"/>
+<img src="<?=$url?>" alt="<?=$name?>" style="max-width:800px"/>
