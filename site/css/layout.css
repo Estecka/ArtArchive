@@ -18,6 +18,12 @@ div.inlineCategory {
 	display: table-cell;
 }
 
+div.cardList {
+	max-width: 940px;
+	margin: auto;
+
+	text-align: center;
+}
 div.card {
 	display: inline-block;
 	vertical-align: top;

@@ -78,7 +78,7 @@ class PageBuilder{
 	 */
 	public function ArtCardList(array $arts){
 		?>
-		<div class="pageList">
+		<div class="cardList">
 			<?php
 			foreach($arts as $art)
 				$this->ArtCard($art);
