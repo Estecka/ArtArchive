@@ -73,6 +73,19 @@ class PageBuilder{
 	public function ArtCard(ArtworkDTO $art){
 		include(__ROOT__."/templates/ArtCard.php");
 	}
+	/**
+	 * @param ArtworkDTO[] $arts
+	 */
+	public function ArtCardList(array $arts){
+		?>
+		<div class="pageList">
+			<?php
+			foreach($arts as $art)
+				$this->ArtCard($art);
+			?>
+		</div>
+		<?php
+	}
 
 
 	/**

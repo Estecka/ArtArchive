@@ -60,9 +60,7 @@ $page->StartPage();
 		if (sizeof($arts) <= 0)
 			print("This search did not yield any results. :(");
 		else
-		foreach($arts as $art){
-			$page->ArtCard($art);
-		}
+			$page->ArtCardList($arts);
 		$page->PageList(URL::Search($_GET["tags"], "%d"), $pageNo, $pageAmount, 11);
 	}
 	?>
