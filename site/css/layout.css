@@ -50,7 +50,7 @@ div.card .viewport {
 }
 
 div.margin {
-	width: 150px;
+	white-space: nowrap;
 }
 div.artwork {
 	width: 100%;
