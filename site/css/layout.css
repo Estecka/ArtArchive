@@ -18,8 +18,14 @@ div.inlineCategory {
 	display: table-cell;
 }
 
+div.cardList {
+	max-width: 940px;
+	margin: auto;
+
+	text-align: center;
+}
 div.card {
-	display: inline-table;
+	display: inline-block;
 	vertical-align: top;
 	text-align: center;
 
@@ -42,6 +48,15 @@ div.card .viewport {
 	border-width: 1px;
 	border-radius: 1px;
 }
+div.card h4 {
+	display: block;
+	width: 160px;
+	margin: 0;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 .viewport img {
 	width: 100%;
 	height: 100%;
@@ -50,7 +65,7 @@ div.card .viewport {
 }
 
 div.margin {
-	width: 150px;
+	white-space: nowrap;
 }
 div.artwork {
 	width: 100%;

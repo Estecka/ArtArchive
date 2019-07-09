@@ -38,11 +38,11 @@ if ($tags !== null){
 		}
 	}
 
-
-	$arts = $bdd->SearchArtworks($validIds, 10, $pageNo, $total);
+	$rpp = ArtArchive::$settings["ResultsPerPage"];
+	$arts = $bdd->SearchArtworks($validIds, $rpp, $pageNo, $total);
 	if ($arts)
 		$arts = $bdd->GetThumbnails($arts);
-	$pageAmount = (int)ceil($total * 0.1);
+	$pageAmount = (int)ceil($total /$rpp);
 }
 
 foreach($allTags as $key=>$tag)
@@ -52,6 +52,17 @@ foreach($allTags as $key=>$tag)
 $page = new PageBuilder();
 $page->title = "Search";
 $page->StartPage();
+	if (isset($arts)){
+		if (!empty($invalidSlugs))
+			print("The following tags do not exist and were ignored : \n".implode(", ", $invalidSlugs));
+
+		print("<h2>Results : </h2>");
+		if (sizeof($arts) <= 0)
+			print("This search did not yield any results. :(");
+		else
+			$page->ArtCardList($arts);
+		$page->PageList(URL::Search($_GET["tags"], "%d"), $pageNo, $pageAmount, 11);
+	}
 	?>
 	<form method="POST">
 		<?php
@@ -61,18 +72,5 @@ $page->StartPage();
 		<input type="submit"/>
 	</form>
 	<?php
-	if (isset($arts)){
-		if (!empty($invalidSlugs))
-			print("The following tags do not exist and were ignored : \n".implode(", ", $invalidSlugs));
-
-		print("<h2>Results : </h2>");
-		if (sizeof($arts) <= 0)
-			print("This search did not yield any results. :(");
-		else
-		foreach($arts as $art){
-			$page->ArtCard($art);
-		}
-		$page->PageList(URL::Search($_GET["tags"], "%d"), $pageNo, $pageAmount, 11);
-	}
 $page->EndPage();
 ?>

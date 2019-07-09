@@ -280,11 +280,11 @@ class DBService {
 		// #2 Find the list (by id) of all matching artworks
 		self::PrepareSQLArray($required, $REQUIRED, $WL_params, "white");
 		$query = 
-			"SELECT DISTINCT(artId) FROM `art-tag` 
+			"SELECT DISTINCT(artId), COUNT(tagId) as score FROM `art-tag` 
 				WHERE artId NOT IN ($BLACKLIST)
 				AND tagId IN ($REQUIRED)
 			GROUP BY artId
-			HAVING COUNT(tagId) = :score"
+			HAVING score = :score"
 			;
 
 		$params = array_merge($WL_params, $BL_params);
@@ -305,7 +305,7 @@ class DBService {
 		$query = 
 			"SELECT * FROM `artworks` 
 			WHERE id IN ($RESULTS)
-			ORDER BY `date` DESC
+			ORDER BY `date` DESC, `id` DESC
 			LIMIT :offset, :amount;"
 			;
 
@@ -439,7 +439,8 @@ class DBService {
 		$query = $this->pdo->prepare(
 			"SELECT tags.* FROM tags 
 			JOIN `art-tag` ON tags.id = `art-tag`.tagId
-			WHERE `art-tag`.`artId` = ?"
+			WHERE `art-tag`.`artId` = ?
+			ORDER BY tags.slug ASC"
 		);
 		$query->execute(array($artID));
 		$result = $query->fetchAll();
