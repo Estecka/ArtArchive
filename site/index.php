@@ -5,11 +5,18 @@ $bdd = &ArtArchive::$database;
 $rpp = ArtArchive::$settings['ResultsPerPage'];
 $pageNo = either($_GET["page"], 0);
 $artworks = $bdd->GetArtworks($rpp, $pageNo, $total);
+
+if (isset($_GET["feed_xml"])){
+	?>boop<?php
+	exit;
+}
+
 if ($artworks)
 	$artworks = $bdd->GetThumbnails($artworks);
 
 $page = new PageBuilder();
 $page->title = ArtArchive::GetSiteName();
+$page->rssfeeds = array("feed.xml");
 $page->StartPage();
 
 	$page->ArtCardList($artworks);

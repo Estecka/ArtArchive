@@ -22,6 +22,9 @@ RewriteCond %{REQUEST_URI} ^/tag/ [OR]
 RewriteCond %{REQUEST_URI} ^/category/
 RewriteRule ^([\w\-]+)/([\w\-]+)/?(.*) $1/$3?$1=$2 [DPI,QSA]
 
+# feed.xml becomes index.php?feed.xml
+RewriteRule feed.xml$ index.php?feed.xml [QSA]
+
 # Iternally rebase all urls to the /site/ folder
 RewriteCond %{REQUEST_URI} !^/site/
 RewriteRule ^(.*)$ site/$1 [END]
