@@ -12,6 +12,10 @@ h3.categoryName {
 	color: black;
 }
 
+a.social{
+	text-decoration: none;
+}
+
 div.artwork .description {
 	border-radius: 5px;
 	padding: 20px;

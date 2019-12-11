@@ -7,7 +7,7 @@ require_once("templates/PageBuilder.php");
 require_once "auth/authenticator.php";
 
 class ArtArchive {
-	static $version = "0.1.1";
+	static $version = "0.2";
 
 	/** @var array */
 	static $settings;
@@ -54,6 +54,8 @@ ArtArchive::$settings = ArtArchive::$database->GetSettings(
 	array(
 		"SiteName" => "ArtArchive",
 		"ResultsPerPage" => 20,
+		"AuthorName" => null,
+		"AuthorEmail" => null,
 	)
 );
 ?>

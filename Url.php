@@ -1,5 +1,9 @@
 <?php
 class URL {
+	static public function Root() : string {
+		return $_SERVER['SERVER_NAME'];
+	}
+
 	static public function Home() : string {
 		return "/";
 	}

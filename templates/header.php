@@ -1,4 +1,13 @@
 <div class="header">
+	<div id="Feeds">
+		<a href="/feed.xml" class="social" title="All artworks">
+			<div>
+				<span>RSS</span>
+				<img src="/resources/rss-32x32.png"/>
+			</div>
+		</a>
+	</div>
+
 	<h1><?=ArtArchive::GetSiteName()?></h1>
 	<div class="shortcuts">
 		<a href=<?=URL::Home()?>>home</a>

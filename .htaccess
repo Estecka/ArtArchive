@@ -15,6 +15,13 @@ RewriteBase /
 RewriteCond %{ENV:REDIRECT_STATUS} ^$
 RewriteRule ^site/(.*)$ /$1 [L,R=303]
 
+# feed.xml becomes index.php?feed.xml
+# This rule would work for every single url :
+# RewriteRule (.+/)?feed.xml$ $1index.php?feed.xml [QSA]
+# But I don't actually want this feature _everywhere_
+RewriteRule ^feed.xml$ index.php?feed.xml [QSA]
+RewriteRule ^tag/([^/]+)/feed.xml$ tag/$1/index.php?feed.xml [QSA]
+
 # {type}/{slug}/{action} becomes {type}/{action}?slug={slug}
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} ^/art/ [OR]

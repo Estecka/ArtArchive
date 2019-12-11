@@ -44,6 +44,18 @@ $page->StartPage();
 		<input id="name" type="text" name="settings[SiteName]" placeholder="ArtArchive" value="<?=htmlspecialchars($settings["SiteName"])?>" />
 
 		<br/>
+		<br/>
+
+		<label for="name">Author Name</label>
+		<input id="name" type="text" name="settings[AuthorName]" value="<?=htmlspecialchars($settings["AuthorName"])?>" />
+		<br/>
+		<label for="name">Author Email</label>
+		<input id="name" type="text" name="settings[AuthorEmail]" value="<?=htmlspecialchars($settings["AuthorEmail"])?>" />
+		<p>
+			<i>Author infos are used in the RSS feeds, and thus are made public. Both are optional.</i>
+		</p>
+
+		<br/>
 
 		<label for="rpp">Results per page</label>
 		<input id="rpp" type=number name="settings[ResultsPerPage]" placeholder=20 value="<?=(int)$settings["ResultsPerPage"]?>" />
