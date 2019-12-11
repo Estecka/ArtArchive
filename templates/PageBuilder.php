@@ -24,9 +24,9 @@ class PageBuilder{
 				<link rel=stylesheet type=text/css href="<?=$uri?>"/>
 				<?php
 			}
-			foreach($this->rssfeeds as $uri){
+			foreach($this->rssfeeds as $title=>$uri){
 				?>
-				<link rel=alternate type=application/atom+xml href="<?=$uri?>" title="RSS feed"/>
+				<link rel=alternate type=application/rss+xml href="<?=$uri?>" title="<?=$title?>"/>
 				<?php
 			}
 			?>
