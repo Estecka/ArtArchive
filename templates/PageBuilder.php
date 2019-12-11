@@ -9,6 +9,7 @@ class PageBuilder{
 		"/css/layout.css",
 		"/css/colors.css",
 	);
+	public $rssfeeds = array();
 
 	public function StartPage(){ 
 		?>
@@ -21,6 +22,11 @@ class PageBuilder{
 			foreach($this->stylesheets as $uri){
 				?>
 				<link rel=stylesheet type=text/css href="<?=$uri?>"/>
+				<?php
+			}
+			foreach($this->rssfeeds as $uri){
+				?>
+				<link rel=alternate type=application/atom+xml href="<?=$uri?>" title="RSS feed"/>
 				<?php
 			}
 			?>
