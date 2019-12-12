@@ -54,6 +54,8 @@ ArtArchive::$settings = ArtArchive::$database->GetSettings(
 	array(
 		"SiteName" => "ArtArchive",
 		"ResultsPerPage" => 20,
+		"AuthorName" => null,
+		"AuthorEmail" => null,
 	)
 );
 ?>

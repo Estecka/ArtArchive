@@ -7,6 +7,7 @@ class RSSBuilder{
 	public $title = "RSS Feed";
 	public $link = "";
 	public $description = "";
+	public $author = null;
 
 	/** @var DOMDocument **/
 	private $dom;
@@ -36,6 +37,17 @@ class RSSBuilder{
 
 		$elt = $dom->createElement("description", $this->description);
 		$channel->appendChild($elt);
+
+		if ($this->author == null) {
+			$authname = either(ArtArchive::$settings['AuthorName'], null);
+			$authemail = either(ArtArchive::$settings['AuthorEmail'], null);
+			if($authname && $authemail)
+				$this->author = $authname." <".$authemail.">";
+			else if ($authname)
+				$this->author = $authname;
+			else if ($authemail)
+				$this->author = $authemail;
+		}
 	}
 	public function Flush(){
 		header("Content-Type: text/rss+xml");
@@ -60,6 +72,11 @@ class RSSBuilder{
 
 		$elt = $dom->createElement("pubDate", $art->date);
 		$item->appendChild($elt);
+
+		if ($this->author) {
+			$elt = $dom->createElement("author", $this->author);
+			$item->appendChild($elt);
+		}
 
 		if ($art->description) {
 			$elt = $dom->createElement("description", $art->description);
