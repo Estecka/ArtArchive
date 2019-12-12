@@ -2,7 +2,7 @@
 class RSSBuilder{
 	public $xmlVersion = "1.0";
 	public $rssVersion = "2.0";
-	public $encodage = "iso-8859-1";
+	public $encodage = "utf-8";
 
 	public $title = "RSS Feed";
 	public $link = "";
@@ -42,5 +42,31 @@ class RSSBuilder{
 		echo $this->dom->saveXML();
 	}
 
+	public function AddArtwork(ArtworkDTO $art) : DOMElement{
+		$dom = &$this->dom;
+		$channel = &$this->channel;
+
+		$item = $dom->createElement("item");
+		$channel->appendChild($item);
+
+		$elt = $dom->createElement("title", $art->GetName());
+		$item->appendChild($elt);
+
+		$elt = $dom->createElement("link", "http://".URL::Root().URL::Artwork($art->slug));
+		$item->appendChild($elt);
+
+		$elt = $dom->createElement("guid", $art->slug);
+		$item->appendChild($elt);
+
+		$elt = $dom->createElement("pubDate", $art->date);
+		$item->appendChild($elt);
+
+		if ($art->description) {
+			$elt = $dom->createElement("description", $art->description);
+			$item->appendChild($elt);
+		}
+
+		return $item;
+	}
 }
 ?>

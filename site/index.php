@@ -13,6 +13,8 @@ if (isset($_GET["feed_xml"])){
 	$rss->link = URL::Home();
 	$rss->description = "Feed for every artworks that are posted in this gallery";
 	$rss->Init();
+	foreach($artworks as $art)
+		$rss->AddArtwork($art);
 	$rss->Flush();
 	exit;
 }
