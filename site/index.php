@@ -24,7 +24,6 @@ if ($artworks)
 
 $page = new PageBuilder();
 $page->title = ArtArchive::GetSiteName();
-$page->rssfeeds = array("All Artworks" => "/feed.xml");
 $page->StartPage();
 
 	$page->ArtCardList($artworks);

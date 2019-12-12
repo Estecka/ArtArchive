@@ -9,7 +9,9 @@ class PageBuilder{
 		"/css/layout.css",
 		"/css/colors.css",
 	);
-	public $rssfeeds = array();
+	public $rssfeeds = array(
+		"All Artworks" => "/feed.xml",
+	);
 
 	public function StartPage(){ 
 		?>
