@@ -50,7 +50,7 @@ class RSSBuilder{
 		}
 	}
 	public function Flush(){
-		header("Content-Type: text/rss+xml");
+		header("Content-Type: application/rss+xml");
 		echo $this->dom->saveXML();
 	}
 
