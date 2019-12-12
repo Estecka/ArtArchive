@@ -64,6 +64,22 @@ div.card h4 {
 	object-position: 50% 30%;
 }
 
+div#Feeds{
+	float: right;
+}
+
+div.social {
+	display: inline-block;
+}
+div.social * {
+	height: 100%;
+	vertical-align: middle;
+}
+div.social img {
+	height: 20px;
+	width: 20px;
+}
+
 div.margin {
 	white-space: nowrap;
 }
