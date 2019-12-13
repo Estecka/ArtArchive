@@ -52,13 +52,24 @@ $page->StartPage();
 		<?php
 	}
 	print("<h1>$name</h1>");
-	if ($slug != $name)
-		print("<h4>$slug</h4>");
 
-	if ($tag->description)
-		print(str_replace("\n", "<br/>", $tag->description));
-	else
-		print("This tag has no description.");
+	?>
+	<a href="feed.xml" class="social">
+		<h4>
+			<img src="/resources/rss-32x32.png"/>
+			<span><?=$slug?></span>
+		</h4>
+	</a>
+
+	<p>
+		<?php
+		if ($tag->description)
+			print(str_replace("\n", "<br/>", $tag->description));
+		else
+			print("This tag has no description.");
+		?>
+	</p>
+	<?php
 	
 	if ($artworks){
 		print "<h3>Related artworks : </h3>";

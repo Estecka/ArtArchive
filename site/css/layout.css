@@ -68,14 +68,10 @@ div#Feeds{
 	float: right;
 }
 
-div.social {
-	display: inline-block;
-}
-div.social * {
-	height: 100%;
+.social * {
 	vertical-align: middle;
 }
-div.social img {
+a.social img {
 	height: 20px;
 	width: 20px;
 }

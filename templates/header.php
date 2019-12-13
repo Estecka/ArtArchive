@@ -1,7 +1,7 @@
 <div class="header">
 	<div id="Feeds">
-		<a href="/feed.xml">
-			<div class="social">
+		<a href="/feed.xml" class="social">
+			<div>
 				<span>RSS</span>
 				<img src="/resources/rss-32x32.png"/>
 			</div>
