@@ -11,24 +11,37 @@ if (empty($slug)){
 $bdd = &ArtArchive::$database;
 /** @var TagDTO **/
 $tag = $bdd->GetTag($slug);
-
 if ($tag == null){
 	PageBuilder::ErrorDocument(404);
 	die;
 }
+$name = $tag->GetName();
 
 $rpp = ArtArchive::$settings["ResultsPerPage"];
 $currentPage = either($_GET['page'], 0);
 $artworks = $bdd->SearchArtworks(array($tag->id), $rpp, $currentPage, $total);
+
+if (isset($_GET['feed_xml'])){
+	require ("../../templates/RSSBuilder.php");
+	$rss = new RSSBuilder();
+	$rss->title = "Tag : ".$name;
+	$rss->link = URL::Tag($slug);
+	$rss->description = "All artworks tagged with ".$slug;
+	$rss->Init();
+	foreach($artworks as $art)
+		$rss->AddArtwork($art);
+	$rss->Flush();
+	exit;
+}
+
 if ($artworks){
 	$artworks = $bdd->GetThumbnails($artworks);
 	$pageAmount = (int)ceil($total /$rpp);
 }
 
-$name = $tag->GetName();
-
 $page = new PageBuilder();
 $page->title = $name;
+$page->rssfeeds["#".$slug] = "feed.xml";
 $page->StartPage();
 	if (ArtArchive::$isWebmaster)
 	{
