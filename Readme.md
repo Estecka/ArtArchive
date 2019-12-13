@@ -9,14 +9,8 @@ The server configuration used during developpement is:
 - MySQL: 5.7.14
 - Apache: 2.4.23
 
-You need to know how to : 
-- upload files via FTP (both for installation *and* usage)
-- create/configure a database.
-
-Not required, but could come handy in a pinch:
-- manage a database (preferably via PhpMyAdmin), 
-- run SQL queries on the database.
-
+You need to know how to upload files via FTP, for *both* installation *and* usage).  
+Uploading files is not yet supported, for now you have to upload the files via FTP, and provide the files' url instead when creating an artwork.
 
 ## Features
 - Attach multiple files to a single artwork.
@@ -28,14 +22,14 @@ Not required, but could come handy in a pinch:
   - documents (txt, pdf, html)
 
 #### Planned features :
-- Subscription via RSS feed
 - Disqus comments
+- Thumbnail generation
 
 ## Installation
+This is for a fresh installation. To upgrade from an existing version, refer to the [upgrade guide](Upgrade.md).  
+
 - [Download](https://github.com/Estecka/ArtArchive/releases/tag/0.1.0) and unzip the software archive into some folder.
 - Open [`database\config.php`](database/config.php) in a text editor, and fill in your database information.
 - Open [`auth\config.php`](auth/config.php) in a text editor, and fill in the credentials you want to use for admin rights.
 - Upload the whole folder onto your website via FTP.
 - In your web-broswer, navigate to your website and follow the Installation Wizard. (This require the credentials configured earlier.)
-
-Once the installation is complete, it is best that you delete the [`site\webmaster\databasewizard\`](site/webmaster/databasewizard/) folder from the site.
