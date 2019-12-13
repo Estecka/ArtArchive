@@ -54,7 +54,7 @@ $page->StartPage();
 	print("<h1>$name</h1>");
 
 	?>
-	<a href="feed.xml" class="social">
+	<a href="feed.xml" class="social" title="Tagged : <?=$slug?>">
 		<h4>
 			<img src="/resources/rss-32x32.png"/>
 			<span><?=$slug?></span>
