@@ -1,3 +1,9 @@
+####
+# This .htaccess is only useful in case you web host do not offer the functionality of the public_html folder,
+# or does not allow you to place files outside of it.
+####
+
+
 # Prevent directory browsing
 Options All -Indexes
 
@@ -14,20 +20,6 @@ RewriteBase /
 # Explicitely redirect any URL starting with /site/
 RewriteCond %{ENV:REDIRECT_STATUS} ^$
 RewriteRule ^site/(.*)$ /$1 [L,R=303]
-
-# feed.xml becomes index.php?feed.xml
-# This rule would work for every single url :
-# RewriteRule (.+/)?feed.xml$ $1index.php?feed.xml [QSA]
-# But I don't actually want this feature _everywhere_
-RewriteRule ^feed.xml$ index.php?feed.xml [QSA]
-RewriteRule ^tag/([^/]+)/feed.xml$ tag/$1/index.php?feed.xml [QSA]
-
-# {type}/{slug}/{action} becomes {type}/{action}?slug={slug}
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_URI} ^/art/ [OR]
-RewriteCond %{REQUEST_URI} ^/tag/ [OR]
-RewriteCond %{REQUEST_URI} ^/category/
-RewriteRule ^([\w\-]+)/([\w\-]+)/?(.*) $1/$3?$1=$2 [DPI,QSA]
 
 # Iternally rebase all urls to the /site/ folder
 RewriteCond %{REQUEST_URI} !^/site/

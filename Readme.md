@@ -1,7 +1,8 @@
 ## Introduction
 **ArtArchive** is a single-user gallery for PHP and MySQL, inspired by [Danbooru](https://safebooru.donmai.us)'s tagging system.
 
-Note that this software was primarily developed for my own personal usage. One feature that it will notably lack and that I don't plan on implementing yet is the ability to upload medias directly from the website's interface. All uploads shall be done via a FTP client.
+Note that this software was primarily developed for my own personal usage.
+One feature that it will notably lack and that I don't plan on implementing yet is the ability to upload medias directly from the website's interface. All uploads shall be done via a FTP client.
 
 ## Requirements
 The server configuration used during developpement is:
@@ -31,5 +32,9 @@ This is for a fresh installation. To upgrade from an existing version, refer to 
 - [Download](https://github.com/Estecka/ArtArchive/releases/tag/0.1.0) and unzip the software archive into some folder.
 - Open [`database\config.php`](database/config.php) in a text editor, and fill in your database information.
 - Open [`auth\config.php`](auth/config.php) in a text editor, and fill in the credentials you want to use for admin rights.
-- Upload the whole folder onto your website via FTP.
+- Upload the whole folder onto your server.
+	- If possible, match this repo's `public_html` folder with the one on your server.
+	- If your host forbids placing files outside of this folder, or does not offer this functionnality,
+	just dump everything wheverver you're allowed to;
+	it will be emulated using url-rewriting.
 - In your web-broswer, navigate to your website and follow the Installation Wizard. (This require the credentials configured earlier.)
