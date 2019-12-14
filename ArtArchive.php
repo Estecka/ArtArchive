@@ -7,7 +7,7 @@ require_once("templates/PageBuilder.php");
 require_once "auth/authenticator.php";
 
 class ArtArchive {
-	static $version = "0.2.1-indev";
+	static $version = "0.2.1";
 
 	/** @var array */
 	static $settings;
