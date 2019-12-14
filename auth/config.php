@@ -1,4 +1,4 @@
 <?php
-define("WEBMASTERID",  "root");
-define("WEBMASTERMDP", "1234");
+define("WEBMASTERID",  "your_username");
+define("WEBMASTERMDP", "your_password");
 ?>
