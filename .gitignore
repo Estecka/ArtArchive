@@ -1,4 +1,1 @@
-/site/storage/*
-!/site/storage/readme.txt
-!/site/storage/.htaccess
 !*.bak
