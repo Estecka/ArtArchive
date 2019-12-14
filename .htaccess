@@ -12,4 +12,4 @@ RewriteRule ^public_html/(.*)$ /$1 [L,R=303]
 
 # Iternally rebase all urls to the /public_html/ folder
 RewriteCond %{REQUEST_URI} !^/public_html/
-RewriteRule ^(.*)$ public_html/$1 [END]
+RewriteRule ^(.*)$ public_html/$1
