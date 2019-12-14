@@ -27,14 +27,35 @@ class Authenticator {
 	
 		return $needed_parts ? false : $data;
 	}
+
+	static private function CheckCredentials() : bool {
+			return false;
+		if (WEBMASTERID == "your_username" || WEBMASTERMDP == "your_password"){
+			return false;
+		} else
+			return true;
+	}
 	
 	public function ForceLogin(){
-		header('HTTP/1.1 401 Unauthorized');
-		header('WWW-Authenticate: Digest realm="'.$this->realm.
-			   '",qop="auth",nonce="'.uniqid().'",opaque="'.md5($this->realm).'"');
+		if (!self::CheckCredentials()){
+			header("HTTP/1.1 403 Forbidden" );
+			?>
+				<p>
+					It seems you have not fully configured your credentials.
+					<br/>You won't be able to log in until you do so.
+				</p>
+			<?php
+			die;
+		} else {
+			header('HTTP/1.1 401 Unauthorized');
+			header('WWW-Authenticate: Digest realm="'.$this->realm.
+				   '",qop="auth",nonce="'.uniqid().'",opaque="'.md5($this->realm).'"');
+		}
 	}
 
 	public function CheckLogin() : bool {
+		if (!self::CheckCredentials())
+			return false;
 		if ( empty($_SERVER['PHP_AUTH_DIGEST']) )
 			return false;
 		
