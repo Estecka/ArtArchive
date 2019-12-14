@@ -16,7 +16,7 @@ RewriteBase /
 # RewriteRule (.+/)?feed.xml$ $1index.php?feed.xml [QSA]
 # But I don't actually want this feature _everywhere_
 RewriteRule ^feed.xml$ index.php?feed.xml [QSA]
-RewriteRule ^tag/([^/]+)/feed.xml$ tag/$1/index.php?feed.xml [QSA]
+RewriteRule ^tag/([^/]+)/feed.xml$ tag/$1/index.php?feed.xml [DPI,QSA]
 
 # {type}/{slug}/{action} becomes {type}/{action}?slug={slug}
 RewriteCond %{REQUEST_FILENAME} !-f

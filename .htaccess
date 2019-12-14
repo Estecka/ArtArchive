@@ -3,24 +3,13 @@
 # or does not allow you to place files outside of it.
 ####
 
-
-# Prevent directory browsing
-Options All -Indexes
-
-# Protect htaccess
-<Files ~ "^.*\.([Hh][Tt][AaPp])">
-order allow,deny
-deny from all
-satisfy all
-</Files>
-
 RewriteEngine on
 RewriteBase /
 
-# Explicitely redirect any URL starting with /site/
+# Explicitely redirect any URL starting with /public_html/
 RewriteCond %{ENV:REDIRECT_STATUS} ^$
-RewriteRule ^site/(.*)$ /$1 [L,R=303]
+RewriteRule ^public_html/(.*)$ /$1 [L,R=303]
 
-# Iternally rebase all urls to the /site/ folder
-RewriteCond %{REQUEST_URI} !^/site/
-RewriteRule ^(.*)$ site/$1 [END]
+# Iternally rebase all urls to the /public_html/ folder
+RewriteCond %{REQUEST_URI} !^/public_html/
+RewriteRule ^(.*)$ public_html/$1 [END]
