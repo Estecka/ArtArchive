@@ -3,8 +3,8 @@ textarea {
 	resize: vertical;
 }
 
-div.inlineCategory {
-	display: inline-block;
+.inlineCategory {
+	display: inline-table;
 	vertical-align: top;
 	min-width: 100px;
 	margin: 5px;

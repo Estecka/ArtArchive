@@ -10,21 +10,21 @@
 $empty = empty($tags);
 
 for($col=0; $col==0 || current($tags); $col++){
-	$hidden = $col ? "style=\"display: hidden\"" : null;
+	$hidden = $col ? "style=\"visibility: hidden\"" : null;
 	?>
 	<table class="inlineCategory">
 		<tr <?=$hidden?>>
 			<th><?=$printCat($cat)?></th>
 		</tr>
 		<?php
-		if (!$col && current($tags)) {
+		if (!$col && !current($tags)) {
 			print("<tr><td>This category is empty.<td><tr>");
 			break;
 		}
-		for($tag=0, $tag=current($tags); $row<$rowMax && $tag; $row++, next($tags)){
+		for($row=0; $row<$rowMax && $tag = current($tags); $row++, next($tags)){
 			?>
 			<tr>
-				<td><?=$printTag($tag)?></td>
+				<td><?=$printTag($cat, $tag)?></td>
 			</tr>
 			<?php
 		}

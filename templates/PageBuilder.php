@@ -139,6 +139,7 @@ class PageBuilder{
 	 * @param CategoryDTO[] $cats A list of categories to display, and at at least those represented in the provided tags.
 	 */
 	public function TagTable(array $tags, array $cats) {
+		$page = $this;
 		include(__ROOT__."/templates/tagTable.php");
 	}
 
@@ -150,8 +151,8 @@ class PageBuilder{
 	 * @param callable $printCat function(CategoryDTO) => Formats and prints the name of the Category.
 	 * @param callable $printTag function(TagDTO) => Formats and prints the name of the tag.
 	 */
-	public function TagLiquid(CategoryDTO $cat, array $tags, int $rowmax, callable $printCat, callable $printTag){
-
+	public function TagLiquid(CategoryDTO $cat, array $tags, int $rowMax, callable $printCat, callable $printTag){
+		include(__ROOT__."/templates/tagLiquid.php");
 	}
 
 	public function CategoryForm(CategoryDTO $cat, $action = null){
