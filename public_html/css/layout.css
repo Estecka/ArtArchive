@@ -9,6 +9,9 @@ textarea {
 	min-width: 100px;
 	margin: 5px;
 }
+.inlineCategory th {
+	text-align: left;
+}
 
 .row {
 	display: table-row;
