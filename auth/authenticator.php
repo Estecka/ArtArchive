@@ -29,7 +29,6 @@ class Authenticator {
 	}
 
 	static private function CheckCredentials() : bool {
-			return false;
 		if (WEBMASTERID == "your_username" || WEBMASTERMDP == "your_password"){
 			return false;
 		} else
