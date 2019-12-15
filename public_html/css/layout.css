@@ -1,13 +1,31 @@
+<?php
+	header("Content-Type: text/css");
+
+	// 0 == Liquid
+	// 1 == Rigid masonry
+	// 2+ == Liquid masonry
+	$masonry = isset($_GET['masonry']) ? $_GET['masonry'] : 0;
+?>
+
 textarea {
 	width: 100%;
 	resize: vertical;
 }
 
-div.inlineCategory {
-	display: inline-block;
+div.masonry {
+	column-width: <?=$masonry ? "175px"  : "auto" ?>;
+}
+
+.inlineCategory {
+	display: <?=$masonry > 1 ? "block" : "inline-block" ?>;
+	break-inside: avoid;
 	vertical-align: top;
-	min-width: 100px;
+	width: 175px;
 	margin: 5px;
+}
+.inlineCategory ul{
+	padding: 0;
+	list-style-type: none;
 }
 
 .row {
