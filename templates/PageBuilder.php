@@ -142,6 +142,18 @@ class PageBuilder{
 		include(__ROOT__."/templates/tagTable.php");
 	}
 
+	/**
+	 * Display a single category and its tags in a liquid fashion.
+	 * @param CategoryDTO $cat
+	 * @param TagDTO[] $tags
+	 * @param int $rowmax The maximum amount of tags before creating a new block.
+	 * @param callable $printCat function(CategoryDTO) => Formats and prints the name of the Category.
+	 * @param callable $printTag function(TagDTO) => Formats and prints the name of the tag.
+	 */
+	public function TagLiquid(CategoryDTO $cat, array $tags, int $rowmax, callable $printCat, callable $printTag){
+
+	}
+
 	public function CategoryForm(CategoryDTO $cat, $action = null){
 		include(__ROOT__."/templates/categoryForm.php");
 	}
