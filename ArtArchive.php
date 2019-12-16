@@ -56,6 +56,9 @@ ArtArchive::$settings = ArtArchive::$database->GetSettings(
 		"ResultsPerPage" => 20,
 		"AuthorName" => null,
 		"AuthorEmail" => null,
+
+		"tagMasonry" => 0,
+		"tagLiquidity" => 16,
 	)
 );
 ?>
