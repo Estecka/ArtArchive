@@ -21,7 +21,7 @@ for($col=0; $col==0 || current($tags); $col++){
 			print("<tr><td>This category is empty.<td><tr>");
 			break;
 		}
-		for($row=0; $row<$rowMax && $tag = current($tags); $row++, next($tags)){
+		for($row=0; (!$rowMax || $row<$rowMax) && $tag = current($tags); $row++, next($tags)){
 			?>
 			<tr>
 				<td><?=$printTag($cat, $tag)?></td>
