@@ -11,9 +11,14 @@ then unzip the resulting "patch.zip" file into your website.
 A handful of pre-made patches can be found attached to the appropriate [releases](https://github.com/Estecka/ArtArchive/releases).
 
 
+## 0.3.0
+From [`0.2.1`](#021)  
+Update files.  
+
 ## 0.2.1
 From [`0.1.x`](#010) or [`0.2.0`](#020)  
 Update files.  
+Make sure not to overwrite [`/auth/config.php`](/auth/config.php) in the process.
 **Move all files from `/site/storage/` into `/public_html/storage/`.**  
 Delete the `/site/` folder completely.  
 
