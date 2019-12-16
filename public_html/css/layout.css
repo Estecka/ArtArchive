@@ -3,10 +3,14 @@ textarea {
 	resize: vertical;
 }
 
+div.masonry {
+	column-width: 175px;
+}
+
 div.inlineCategory {
 	display: inline-block;
 	vertical-align: top;
-	min-width: 100px;
+	width: 175px;
 	margin: 5px;
 }
 

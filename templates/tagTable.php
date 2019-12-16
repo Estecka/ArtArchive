@@ -13,7 +13,7 @@ foreach($cats as $key=>$value)
 foreach($tags as $tag)
 	$cats[$tag->categoryId]->tags[] = $tag;
 
-	
+print "<div class='masonry'>";
 foreach($cats as $cat) {
 	$isempty = empty($cat->tags);
 	if ($isempty && $cat->id < 0)
@@ -42,6 +42,7 @@ foreach($cats as $cat) {
 	</div>
 	<?php
 }
+print "</div>";
 
 ?>
 

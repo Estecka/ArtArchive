@@ -15,7 +15,7 @@ foreach($tags as $tag){
 	$cats[$tag->categoryId]->tags[] = $tag;
 }
 
-print "<div>";
+print "<div class='masonry'>";
 foreach($cats as $cat){
 	$empty = empty($cat->tags);
 	if ($empty && !$allowInserts)
