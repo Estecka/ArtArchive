@@ -1,5 +1,6 @@
 <?php
 /**
+ * @var PageBuilder $page
  * @var TagDTO[] $tags
  * @var CategoryDTO[] $cats
  */
@@ -13,36 +14,31 @@ foreach($cats as $key=>$value)
 foreach($tags as $tag)
 	$cats[$tag->categoryId]->tags[] = $tag;
 
+$printCat = function(CategoryDTO $c){
+	$h3 = $c->GetName();
+	if ($c->slug != null){
+		$url = URL::Category($c->slug);
+		$h3 = "<a href=\"$url\">$h3</a>";
+	}
+	?>
+	<h3 class="categoryName"><?=$h3?></h3>
+	<?php
+};
+$printTag = function(CategoryDTO $c, TagDTO $t){
+	$style = empty($c->color) ? null : "style =\"color: $c->color\"";
+	?>
+	<a href="<?=URL::Tag($t->slug)?>" <?=$style?>><?=$t->slug?></a>
+	<br/>
+	<?php
+};
+
 print "<div class='masonry'>";
 foreach($cats as $cat) {
 	$isempty = empty($cat->tags);
 	if ($isempty && $cat->id < 0)
 		continue;
-
-	$h3 = $cat->GetName();
-	if ($cat->slug != null){
-		$url = URL::Category($cat->slug);
-		$h3 = "<a href=\"$url\">$h3</a>";
+	else {
+		$page->TagLiquid($cat, $cat->tags, 6, $printCat, $printTag);
 	}
-	?>
-	<div class="inlineCategory">
-		<h3 class="categoryName"><?=$h3?></h3>
-		<?php
-		if($isempty)
-			print("This category is empty");
-		else
-		foreach($cat->tags as $tag) {
-			$style = empty($cat->color) ? null : "style ='color: $cat->color'";
-			?>
-			<a href="<?=URL::Tag($tag->slug)?>" <?=$style?>><?=$tag->slug?></a>
-			<br/>
-			<?php
-		}
-		?>
-	</div>
-	<?php
 }
 print "</div>";
-
-?>
-

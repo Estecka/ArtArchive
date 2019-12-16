@@ -16,12 +16,15 @@ div.masonry {
 	column-width: <?=$masonry ? "175px"  : "auto" ?>;
 }
 
-div.inlineCategory {
-	display: <?=$masonry > 1 ? "block" : "inline-block" ?>;
+.inlineCategory {
+	display: <?=$masonry > 1 ? "table" : "inline-table" ?>;
 	break-inside: avoid;
 	vertical-align: top;
 	width: 175px;
 	margin: 5px;
+}
+.inlineCategory th {
+	text-align: left;
 }
 
 .row {
