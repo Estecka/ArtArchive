@@ -5,13 +5,19 @@ class PageBuilder{
 	public $title = "ArtDump";
 	public $charset = "windows-1252";
 
-	public $stylesheets = array(
-		"/css/layout.css",
-		"/css/colors.css",
-	);
+	/** @var string[] */
+	public $stylesheets;
 	public $rssfeeds = array(
 		"All Artworks" => "/feed.xml",
 	);
+
+	public function __construct()
+	{
+		$this->stylesheets = array(
+			"/css/layout.css?masonry=".ArtArchive::$settings['tagMasonry'] ,
+			"/css/colors.css",
+		);
+	}
 
 	public function StartPage(){ 
 		?>
@@ -152,7 +158,7 @@ class PageBuilder{
 	 * @param callable $printCat function(CategoryDTO) => Formats and prints the name of the Category.
 	 * @param callable $printTag function(TagDTO) => Formats and prints the name of the tag.
 	 */
-	public function TagLiquid(CategoryDTO $cat, array $tags, int $rowMax, callable $printCat, callable $printTag){
+	public function TagLiquid(CategoryDTO $cat, array $tags, callable $printCat, callable $printTag){
 		include(__ROOT__."/templates/tagLiquid.php");
 	}
 

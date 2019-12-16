@@ -49,7 +49,7 @@ foreach($cats as $cat){
 	if (empty($cat->tags) && !$allowInserts)
 		continue;
 	else
-		$page->TagLiquid($cat, $cat->tags, 6, $printCat, $printTag);
+		$page->TagLiquid($cat, $cat->tags, $printCat, $printTag);
 }
 print "</div>"
 ?>

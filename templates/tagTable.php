@@ -38,7 +38,7 @@ foreach($cats as $cat) {
 	if ($isempty && $cat->id < 0)
 		continue;
 	else {
-		$page->TagLiquid($cat, $cat->tags, 6, $printCat, $printTag);
+		$page->TagLiquid($cat, $cat->tags, $printCat, $printTag);
 	}
 }
 print "</div>";

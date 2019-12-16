@@ -2,33 +2,32 @@
 /**
  * @var CategoryDTO $cat
  * @var TagDTO[] $tags
- * @var int $rowMax
  * @var function $printCat function(CategoryDTO) 
  * @var function $printTag function(TagDTO)
  */
 
+$rowMax = ArtArchive::$settings['tagMasonry'] ? 0 : ArtArchive::$settings['tagLiquidity'];
 $empty = empty($tags);
 
 for($col=0; $col==0 || current($tags); $col++){
 	$hidden = $col ? "style=\"visibility: hidden\"" : null;
 	?>
-	<table class="inlineCategory">
-		<tr <?=$hidden?>>
-			<th><?=$printCat($cat)?></th>
-		</tr>
+	<div class="inlineCategory">
+		<div <?=$hidden?>>
+			<?=$printCat($cat)?>
+		</div>
+		<ul>
 		<?php
 		if (!$col && !current($tags)) {
-			print("<tr><td>This category is empty.<td><tr>");
-			break;
+			print("This category is empty.");
 		}
 		for($row=0; (!$rowMax || $row<$rowMax) && $tag = current($tags); $row++, next($tags)){
 			?>
-			<tr>
-				<td><?=$printTag($cat, $tag)?></td>
-			</tr>
+			<li><?=$printTag($cat, $tag)?></li>
 			<?php
 		}
 		?>
-	</table>
+		</ul>
+	</div>
 	<?php
 }
