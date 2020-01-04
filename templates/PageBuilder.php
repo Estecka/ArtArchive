@@ -14,8 +14,7 @@ class PageBuilder{
 	public function __construct()
 	{
 		$this->stylesheets = array(
-			"/css/layout.css?masonry=".ArtArchive::$settings['tagMasonry'] ,
-			"/css/colors.css",
+			"/css/stylesheet.css?masonry=".ArtArchive::$settings['tagMasonry'],
 		);
 	}
 

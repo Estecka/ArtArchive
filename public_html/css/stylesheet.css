@@ -1,0 +1,6 @@
+<?php
+header("Content-Type: text/css");
+
+include "colors.css";
+include "layout.css";
+?>
