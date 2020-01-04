@@ -1,0 +1,43 @@
+:root {
+	--cat-color: black;
+}
+
+html{
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+hr	{
+	border-color: #06f;
+	border-style: solid;
+	border-bottom-style: none;
+	border-width: 3px;
+}
+
+textarea {
+	width: 100%;
+	resize: vertical;
+}
+
+.row {
+	display: table-row;
+	width: 100%;
+}
+.column {
+	display: table-cell;
+}
+
+.catName {
+	color: var(--cat-color);
+}
+
+.tagName {
+	color: var(--cat-color);
+}
+
+div.pageList {
+	text-align: center;
+}
+
+div.footer {
+	text-align: center;
+}
