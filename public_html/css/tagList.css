@@ -34,3 +34,13 @@ h3.categoryName {
 	padding: 0;
 	list-style-type: none;
 }
+
+label.tagName:hover{
+	font-weight: bold;
+	/* text-decoration: underline; */
+}
+input:checked + label.tagName {
+	font-weight: bolder;
+	color: white;
+	background-color: var(--tag-color);
+}

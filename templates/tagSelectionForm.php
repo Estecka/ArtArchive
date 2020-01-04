@@ -34,12 +34,12 @@ $printCat = function(CategoryDTO $c) use ($allowInserts){
 	}
 };
 $printTag = function(CategoryDTO $c, TagDTO $t){
-	$style = $c->color ? "style=\"color: $c->color\"" : null;
+	$style = $c->color ? "style=\"--tag-color: $c->color\"" : null;
 	$inputName = $t->enabled ? "keep" : "add";
 	$inputName.= "[$t->slug]";
 	?>
 	<input type="checkbox" id="<?=$inputName?>" name ="<?=$inputName?>" <?=$t->enabled?"checked":null?>/>
-	<label for="<?=$inputName?>" <?=$style?>><?=$t->slug?></label>
+	<label class="tagName" for="<?=$inputName?>" <?=$style?>><?=$t->slug?></label>
 	<br/>
 	<?php
 };
