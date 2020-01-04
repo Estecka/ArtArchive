@@ -1,25 +1,23 @@
-<?php
-	header("Content-Type: text/css");
-?>
+/*
+** Artwork Page
+*/
 
-html{
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
-}
-hr	{
-	border-color: #06f;
-	border-style: solid;
-	border-bottom-style: none;
-	border-width: 3px;
+/* Tag List */
+div.margin {
+	white-space: nowrap;
 }
 
-h3.categoryName {
-	color: black;
+
+/* Medias */
+div.artwork {
+	width: 100%;
+}
+div.media {
+	text-align: center;
 }
 
-a.social{
-	text-decoration: none;
-}
 
+/* Descriptions */
 div.artwork .description {
 	border-radius: 5px;
 	padding: 20px;

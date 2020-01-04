@@ -1,6 +1,10 @@
 <?php
 header("Content-Type: text/css");
 
-include "colors.css";
-include "layout.css";
+include "defaults.css";
+
+include "socialLinks.css";
+include "tagList.css";
+include "artPage.css";
+include "artCard.css";
 ?>

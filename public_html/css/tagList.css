@@ -1,0 +1,36 @@
+<?php
+	// 0 == Liquid
+	// 1 == Rigid masonry
+	// 2+ == Liquid masonry
+	$masonry = isset($_GET['masonry']) ? $_GET['masonry'] : 0;
+?>
+
+/* 
+** Tag List
+*/
+
+:root {
+	--masonry-col-width: <?=$masonry ? "175px"  : "auto" ?>;
+	--masonry-display: <?=$masonry > 1 ? "block" : "inline-block" ?>;
+}
+
+div.masonry {
+	column-width: var(--masonry-col-width);
+}
+
+
+h3.categoryName {
+	color: black;
+}
+
+.inlineCategory {
+	display: var(--masonry-display);
+	break-inside: avoid;
+	vertical-align: top;
+	width: 175px;
+	margin: 5px;
+}
+.inlineCategory ul{
+	padding: 0;
+	list-style-type: none;
+}
