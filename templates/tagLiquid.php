@@ -12,7 +12,7 @@ $empty = empty($tags);
 for($col=0; $col==0 || current($tags); $col++){
 	$hidden = $col ? "style=\"visibility: hidden\"" : null;
 	?>
-	<div class="inlineCategory">
+	<div class="inlineCategory" style="--cat-color: <?=either($cat->color, "black")?>">
 		<div <?=$hidden?>>
 			<?=$printCat($cat)?>
 		</div>
@@ -23,7 +23,7 @@ for($col=0; $col==0 || current($tags); $col++){
 		}
 		for($row=0; (!$rowMax || $row<$rowMax) && $tag = current($tags); $row++, next($tags)){
 			?>
-			<li class="tagName" style="--tag-color: <?=either($cat->color, "black")?>"><?=$printTag($cat, $tag)?></li>
+			<li class="tagName"><?=$printTag($cat, $tag)?></li>
 			<?php
 		}
 		?>

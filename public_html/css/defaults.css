@@ -1,5 +1,4 @@
 :root {
-	--tag-color: black;
 	--cat-color: black;
 }
 
@@ -32,7 +31,7 @@ textarea {
 }
 
 .tagName {
-	color: var(--tag-color);
+	color: var(--cat-color);
 }
 
 div.pageList {

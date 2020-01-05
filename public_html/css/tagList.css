@@ -55,5 +55,5 @@ label.tagName:hover{
 input:checked + label.tagName {
 	font-weight: bolder;
 	color: white;
-	background-color: var(--tag-color);
+	background-color: var(--cat-color);
 }
