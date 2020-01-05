@@ -1,8 +1,8 @@
 ## Introduction
-**ArtArchive** is a single-user gallery for PHP and MySQL, inspired by [Danbooru](https://safebooru.donmai.us)'s tagging system.
+**ArtArchive** is a single-user gallery for PHP and MySQL, inspired by [Danbooru](https://safebooru.donmai.us)'s tagging system.  
+It's main purpose is to serve as an organizer rather than a portfolio.
 
-Note that this software was primarily developed for my own personal usage.
-One feature that it will notably lack and that I don't plan on implementing yet is the ability to upload medias directly from the website's interface. All uploads shall be done via a FTP client.
+One feature that it will notably lacks as of now is the ability to upload medias directly from the website's interface. All uploads must be done via a FTP client.
 
 ## Requirements
 The server configuration used during developpement is:
