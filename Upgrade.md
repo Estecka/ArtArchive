@@ -1,7 +1,7 @@
 # Upgrade guide
 
 For most upgrades, simply replacing the files that changed should be enough.
-However some of them require certain files to be deleted, and/or changes to be made on the database. 
+However some upgrades require certain files to be deleted, and in the futur, require changes to be made on the database.
 This guide will keep track of what kind of changes are made between versions, and how to perform them.
 
 In order to update the files, you _could_ just dump this entire repo into your website, but mind this this will overwrite you configuration files.  
@@ -22,9 +22,8 @@ Update files.
 ## 0.2.1
 From [`0.1.x`](#010) or [`0.2.0`](#020)  
 Update files.  
-Make sure not to overwrite [`/auth/config.php`](/auth/config.php) in the process.
-**Move all files from `/site/storage/` into `/public_html/storage/`.**  
-Delete the `/site/` folder completely.  
+Make sure not to overwrite [`/auth/config.php`](/auth/config.php) in the process.  
+**Move all files from `/site/storage/` into `/public_html/storage/`.** Then delete the `/site/` folder completely.  
 
 #### 0.2.0
 From [`0.1.x`](#010)  
