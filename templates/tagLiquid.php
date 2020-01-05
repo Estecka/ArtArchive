@@ -23,7 +23,7 @@ for($col=0; $col==0 || current($tags); $col++){
 		}
 		for($row=0; (!$rowMax || $row<$rowMax) && $tag = current($tags); $row++, next($tags)){
 			?>
-			<li><?=$printTag($cat, $tag)?></li>
+			<li class="tagName" style="--tag-color: <?=either($cat->color, "black")?>"><?=$printTag($cat, $tag)?></li>
 			<?php
 		}
 		?>
