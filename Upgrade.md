@@ -6,12 +6,16 @@ This guide will keep track of what kind of changes are made between versions, an
 
 In order to update the files, you _could_ just dump this entire repo into your website, but mind this this will overwrite you configuration files.  
 To do it with more finesse, and only replace the files that need to be, clone the repo, and run this command :  
-`git archive <target_version> -o patch.zip $(git diff <your_version> <target_version> --name-only)`  
+`git archive <target_version> -o patch.zip $(git diff <your_version> <target_version> --name-only --diff-filter=MAR)`  
 then unzip the resulting "patch.zip" file into your website.  
 A handful of pre-made patches can be found attached to the appropriate [releases](https://github.com/Estecka/ArtArchive/releases).
 
+## 0.3.1
+From [`0.2.1`](#021) or [`0.3.0`](#030)  
+Update files.  
+In `/public_html/css/`, delete `layout.css` and `colors.css`.
 
-## 0.3.0
+### 0.3.0
 From [`0.2.1`](#021)  
 Update files.  
 
