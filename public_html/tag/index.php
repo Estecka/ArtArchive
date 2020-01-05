@@ -39,8 +39,7 @@ if ($artworks){
 	$pageAmount = (int)ceil($total /$rpp);
 }
 
-$page = new PageBuilder();
-$page->title = $name;
+$page = new PageBuilder($name);
 $page->rssfeeds["#".$slug] = "feed.xml";
 $page->StartPage();
 	if (ArtArchive::$isWebmaster)

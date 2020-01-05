@@ -49,8 +49,7 @@ foreach($allTags as $key=>$tag)
 	$allTags[$key]->enabled = either($enabledTags[strtolower($tag->slug)], false);
 
 
-$page = new PageBuilder();
-$page->title = "Search";
+$page = new PageBuilder("Search");
 $page->StartPage();
 	if (isset($arts)){
 		if (!empty($invalidSlugs))

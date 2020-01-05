@@ -23,7 +23,6 @@ if ($artworks)
 	$artworks = $bdd->GetThumbnails($artworks);
 
 $page = new PageBuilder();
-$page->title = ArtArchive::GetSiteName();
 $page->StartPage();
 
 	$page->ArtCardList($artworks);

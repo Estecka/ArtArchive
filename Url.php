@@ -1,7 +1,20 @@
 <?php
 class URL {
+	static public function Protocol() : string {
+		if ($_SERVER['SERVER_PORT'] == 443 && value($_SERVER['HTTPS']) !== "off")
+			return "https://";
+		else
+			return "http://";
+	}
 	static public function Root() : string {
-		return $_SERVER['SERVER_NAME'];
+		return URL::Protocol().$_SERVER['SERVER_NAME'];
+	}
+
+	static public function Absolute(string $url) {
+		if (substr($url, 0, 7) == "http://" || substr($url, 0, 8) == "https://")
+			return $url;
+		else
+			return URL::Root().$url;
 	}
 
 	static public function Home() : string {

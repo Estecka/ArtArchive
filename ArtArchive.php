@@ -2,12 +2,13 @@
 define("__ROOT__", __DIR__);
 require_once("shorthands.php");
 require_once("Url.php");
+require_once("MediaType.php");
 require_once("database/DBService.php");
 require_once("templates/PageBuilder.php");
 require_once "auth/authenticator.php";
 
 class ArtArchive {
-	static $version = "0.3.1";
+	static $version = "0.4.0";
 
 	/** @var array */
 	static $settings;

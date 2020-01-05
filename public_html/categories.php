@@ -8,8 +8,7 @@ $bdd = &ArtArchive::$database;
  */
 $cats = $bdd->GetAllCategories();
 
-$page = new PageBuilder();
-$page->title = "Categories order";
+$page = new PageBuilder("Categories order");
 $page->StartPage();
 
 	print("<h2>Categories order</h2>");

@@ -33,8 +33,7 @@ try {
 }
 
 
-$page = new PageBuilder();
-$page->title = "Site settings";
+$page = new PageBuilder("Site settings");
 $page->StartPage();
 	?>
 

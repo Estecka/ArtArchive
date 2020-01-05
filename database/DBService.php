@@ -510,6 +510,9 @@ class DBService {
 		);
 		$query->execute(array($id));
 		$result = $query->fetchAll(PDO::FETCH_COLUMN);
+		// Get rid of carriage returns that slipped into the database through older versions.
+		foreach($result as $i=>$path) 
+			$result[$i] = trim($path);
 		return $result;
 	}
 	/**

@@ -13,8 +13,7 @@ $bdd = &ArtArchive::$database;
 $tags = $bdd->GetAllTagsByArtwork(-1);
 $cats = $bdd->GetAllCategories();
 
-$page = new PageBuilder();
-$page->title = "Submit";
+$page = new PageBuilder("Submit Artwork");
 $page->StartPage();
 
 	$art = ArtworkDTO::CreateFrom($_POST);

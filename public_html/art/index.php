@@ -22,8 +22,10 @@ $cats = empty($tags) ? null : $bdd->GetAllCategories();
 
 $name = $art->title ?? $slug;
 
-$page = new PageBuilder();
-$page->title = $name;
+$page = new PageBuilder($name);
+$page->openGraph->description = $art->date;
+foreach($files as $file)
+	$page->openGraph->AddMedia($file);
 $page->StartPage();
 	$page->ArtPage($art, $tags, $cats, $files);
 $page->EndPage();

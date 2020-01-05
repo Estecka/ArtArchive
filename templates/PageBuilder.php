@@ -1,8 +1,9 @@
 <?php
 require_once(__ROOT__."/database/ArtworkDTO.php");
+require_once(__ROOT__."/templates/OpenGraphBuilder.php");
 
 class PageBuilder{
-	public $title = "ArtDump";
+	private $title = "ArtArchive";
 	public $charset = "windows-1252";
 
 	/** @var string[] */
@@ -11,11 +12,19 @@ class PageBuilder{
 		"All Artworks" => "/feed.xml",
 	);
 
-	public function __construct()
+	/** @var OpenGraphBuilder */
+	public $openGraph;
+
+	public function __construct(string $title = NULL)
 	{
+		$this->title = $title ? $title : ArtArchive::GetSiteName();
 		$this->stylesheets = array(
 			"/css/stylesheet.css?masonry=".ArtArchive::$settings['tagMasonry'],
 		);
+		$this->openGraph = new OpenGraphBuilder();
+		$this->openGraph->siteName = ArtArchive::GetSiteName();
+		$this->openGraph->url = URL::Root().$_SERVER['REQUEST_URI'];
+		$this->openGraph->title = $this->title;
 	}
 
 	public function StartPage(){ 
@@ -36,6 +45,7 @@ class PageBuilder{
 				<link rel=alternate type=application/rss+xml href="<?=$uri?>" title="<?=$title?>"/>
 				<?php
 			}
+			$this->openGraph->Flush();
 			?>
 		</head>
 		<body>
@@ -53,8 +63,7 @@ class PageBuilder{
 
 	static public function ErrorDocument(int $code, string $message = null){
 		http_response_code($code);
-		$page = new PageBuilder();
-		$page->title = $code;
+		$page = new PageBuilder($code);
 		$page->StartPage();
 			print("<h1>$code</h1>");
 			print($message);
@@ -168,38 +177,25 @@ class PageBuilder{
 	/** REGION MEDIA */
 	public function Media (string $path) {
 		$url = URL::Media($path);
-		
 		$name = $path;
-		$type = pathinfo($path, PATHINFO_EXTENSION);
-		$type = trim($type); // removes \n. There WILL be new lines
 
-		switch ($type) {
+		switch (GetMediaType($path)) {
 			default :
+			case EMedia_undefined:
 				include(__ROOT__."/templates/media/default.php");
 				break;
 
-			case "jpeg" : 
-			case "jpg" : 
-			case "png" : 
-			case "bmp" : 
-			case "gif" :
+			case EMedia_image :
 				include(__ROOT__."/templates/media/image.php"); 
 				break;
 			
-			case "mp3":
-			case "wav":
-			case "ogg":
-			case "m4a":
+			case EMedia_audio:
 				include(__ROOT__."/templates/media/audio.php");
 				break;
 			
-			case "txt":
-			case "pdf":
-			case "html":
-			case "htm":
+			case EMedia_iframe:
 				include(__ROOT__."/templates/media/iframe.php");
 				break;
-
 		}
 	}
 }

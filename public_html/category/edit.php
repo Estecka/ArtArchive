@@ -24,8 +24,7 @@ if ($cat == null){
 
 $name = $cat->GetName();
 
-$page = new PageBuilder();
-$page->title = "Edit Category : $name";
+$page = new PageBuilder("Edit Category : $name");
 $page->StartPage();
 	print("<h2>Edit Category</h2>");
 	$page->CategoryForm($cat);
