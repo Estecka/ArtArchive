@@ -5,6 +5,8 @@ class PageBuilder{
 	public $title = "ArtDump";
 	public $charset = "windows-1252";
 
+	public $previewImage = NULL;
+
 	/** @var string[] */
 	public $stylesheets;
 	public $rssfeeds = array(
@@ -36,6 +38,14 @@ class PageBuilder{
 				<link rel=alternate type=application/rss+xml href="<?=$uri?>" title="<?=$title?>"/>
 				<?php
 			}
+			$this->printMeta(array("property"=>"og:site_name",  "content"=>"ArtArchive"           ));
+			$this->printMeta(array("property"=>"og:title",      "content"=>$this->title           ));
+			$this->printMeta(array("property"=>"og:decription", "content"=>""                     ));
+			$this->printMeta(array("property"=>"og:url",        "content"=>"http://".URL::Root()));
+			if ($this->previewImage != NULL){
+				$this->printMeta(array("property"=>"og:image",     "content"=>$this->previewImage));
+				$this->printMeta(array("property"=>"og:image:alt", "content"=>$this->title       ));
+			}
 			?>
 		</head>
 		<body>
@@ -49,6 +59,19 @@ class PageBuilder{
 		</body>
 		</html>
 	<?php
+	}
+
+	/**
+	 * Prints a <meta/> tag.
+	 * 
+	 * @param string[string] $values	The properties of the tag and their values.
+	 */
+	private function printMeta(array $properties){
+		print("<meta");
+		foreach($properties as $property=>$value){
+			print(" ".$property."=\"".$value."\"");
+		}
+		print("/>");
 	}
 
 	static public function ErrorDocument(int $code, string $message = null){
