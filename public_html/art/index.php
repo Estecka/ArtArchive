@@ -24,7 +24,8 @@ $name = $art->title ?? $slug;
 
 $page = new PageBuilder();
 $page->title = $name;
-$page->previewImage = "http://".URL::Root()."/storage/".$files[0];
+foreach($files as $file)
+	$page->AddPreviewImage($file, $name);
 $page->StartPage();
 	$page->ArtPage($art, $tags, $cats, $files);
 $page->EndPage();

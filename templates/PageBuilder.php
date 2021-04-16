@@ -2,10 +2,19 @@
 require_once(__ROOT__."/database/ArtworkDTO.php");
 
 class PageBuilder{
-	public $title = "ArtDump";
+	public $title = "ArtArchive";
 	public $charset = "windows-1252";
 
-	public $previewImage = NULL;
+	/** @var string */
+	public $previewDescription;
+	/** 
+	 * @var string[string][]
+	 * Each index contains a piece of media.
+	 * Each media is a dictionnary of meta tags, taking a `property` as index, and a `content` as value.
+	 */
+	public $previewMedia = array();
+
+
 
 	/** @var string[] */
 	public $stylesheets;
@@ -38,13 +47,13 @@ class PageBuilder{
 				<link rel=alternate type=application/rss+xml href="<?=$uri?>" title="<?=$title?>"/>
 				<?php
 			}
-			$this->printMeta(array("property"=>"og:site_name",  "content"=>"ArtArchive"           ));
-			$this->printMeta(array("property"=>"og:title",      "content"=>$this->title           ));
-			$this->printMeta(array("property"=>"og:decription", "content"=>""                     ));
-			$this->printMeta(array("property"=>"og:url",        "content"=>"http://".URL::Root()));
-			if ($this->previewImage != NULL){
-				$this->printMeta(array("property"=>"og:image",     "content"=>$this->previewImage));
-				$this->printMeta(array("property"=>"og:image:alt", "content"=>$this->title       ));
+			$this->printMeta(array("property"=>"og:site_name",  "content"=>"ArtArchive"             ));
+			$this->printMeta(array("property"=>"og:title",      "content"=>$this->title             ));
+			$this->printMeta(array("property"=>"og:decription", "content"=>$this->previewDescription));
+			$this->printMeta(array("property"=>"og:url",        "content"=>"http://".URL::Root()    ));
+			foreach($this->previewMedia as $media)
+			foreach($media as $property=>$content) {
+				?><meta property="<?=$property?>" content="<?=$content?>" /><?php
 			}
 			?>
 		</head>
@@ -61,15 +70,22 @@ class PageBuilder{
 	<?php
 	}
 
+	public function	AddPreviewImage(string $url, string $altText){
+		$this->previewMedia[] = array(
+			"og:image"     => "http://".URL::Root()."/storage/".$url,
+			"og:image:alt" => $altText,
+		);
+	}
+
 	/**
-	 * Prints a <meta/> tag.
+	 * Prints a \<meta/> tag.
 	 * 
-	 * @param string[string] $values	The properties of the tag and their values.
+	 * @param string[string] $attributes	The attributes of the tag and their values.
 	 */
-	private function printMeta(array $properties){
+	private function printMeta(array $attributes){
 		print("<meta");
-		foreach($properties as $property=>$value){
-			print(" ".$property."=\"".$value."\"");
+		foreach($attributes as $attr=>$value){
+			print(" ".$attr."=\"".$value."\"");
 		}
 		print("/>");
 	}
