@@ -1,5 +1,6 @@
 <?php
 require_once(__ROOT__."/database/ArtworkDTO.php");
+require_once(__ROOT__."/templates/OpenGraphBuilder.php");
 
 class PageBuilder{
 	public $title = "ArtArchive";
