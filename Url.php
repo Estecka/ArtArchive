@@ -10,6 +10,20 @@ class URL {
 		return URL::Protocol().$_SERVER['SERVER_NAME'];
 	}
 
+	static public function Absolute(string $url) {
+		if (substr($url, 0, 7) == "http://" || substr($url, 0, 8) == "https://")
+			return $url;
+		else
+			return URL::Root().$url;
+	}
+
+	static public function	File(string $path) {
+		if (substr($path, 0, 7) == "http://" || substr($path, 0, 8) == "https://")
+			return $path;
+		else
+			return "/storage/".$path;
+	}
+
 	static public function Home() : string {
 		return "/";
 	}
