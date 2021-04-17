@@ -32,7 +32,7 @@ class RSSBuilder{
 		$elt = $dom->createElement("title", $this->title);
 		$channel->appendChild($elt);
 
-		$elt = $dom->createElement("link", "http://".URL::Root().$this->link);
+		$elt = $dom->createElement("link", URL::Root().$this->link);
 		$channel->appendChild($elt);
 
 		$elt = $dom->createElement("description", $this->description);
@@ -64,7 +64,7 @@ class RSSBuilder{
 		$elt = $dom->createElement("title", $art->GetName());
 		$item->appendChild($elt);
 
-		$elt = $dom->createElement("link", "http://".URL::Root().URL::Artwork($art->slug));
+		$elt = $dom->createElement("link", URL::Root().URL::Artwork($art->slug));
 		$item->appendChild($elt);
 
 		$elt = $dom->createElement("guid", $art->slug);

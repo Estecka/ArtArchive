@@ -51,7 +51,7 @@ class PageBuilder{
 			$this->printMeta(array("property"=>"og:site_name",   "content"=>"ArtArchive"              ));
 			$this->printMeta(array("property"=>"og:title",       "content"=>$this->title              ));
 			$this->printMeta(array("property"=>"og:description", "content"=>$this->previewDescription ));
-			$this->printMeta(array("property"=>"og:url",         "content"=>"http://".URL::Root()     ));
+			$this->printMeta(array("property"=>"og:url",         "content"=>URL::Root()     ));
 			foreach($this->previewMedia as $media)
 			foreach($media as $property=>$content) {
 				?><meta property="<?=$property?>" content="<?=$content?>" /><?php
@@ -73,7 +73,7 @@ class PageBuilder{
 
 	public function	AddPreviewImage(string $url, string $altText){
 		$this->previewMedia[] = array(
-			"og:image"     => "http://".URL::Root()."/storage/".$url,
+			"og:image"     => URL::Root()."/storage/".$url,
 			"og:image:alt" => $altText,
 		);
 	}
