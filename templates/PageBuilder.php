@@ -47,10 +47,10 @@ class PageBuilder{
 				<link rel=alternate type=application/rss+xml href="<?=$uri?>" title="<?=$title?>"/>
 				<?php
 			}
-			$this->printMeta(array("property"=>"og:site_name",  "content"=>"ArtArchive"             ));
-			$this->printMeta(array("property"=>"og:title",      "content"=>$this->title             ));
-			$this->printMeta(array("property"=>"og:decription", "content"=>$this->previewDescription));
-			$this->printMeta(array("property"=>"og:url",        "content"=>"http://".URL::Root()    ));
+			$this->printMeta(array("property"=>"og:site_name",   "content"=>"ArtArchive"              ));
+			$this->printMeta(array("property"=>"og:title",       "content"=>$this->title              ));
+			$this->printMeta(array("property"=>"og:description", "content"=>$this->previewDescription ));
+			$this->printMeta(array("property"=>"og:url",         "content"=>"http://".URL::Root()     ));
 			foreach($this->previewMedia as $media)
 			foreach($media as $property=>$content) {
 				?><meta property="<?=$property?>" content="<?=$content?>" /><?php

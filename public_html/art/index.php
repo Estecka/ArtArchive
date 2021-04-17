@@ -24,6 +24,7 @@ $name = $art->title ?? $slug;
 
 $page = new PageBuilder();
 $page->title = $name;
+$page->previewDescription = $art->date;
 foreach($files as $file)
 	$page->AddPreviewImage($file, $name);
 $page->StartPage();
