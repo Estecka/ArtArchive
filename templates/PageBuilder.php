@@ -3,19 +3,8 @@ require_once(__ROOT__."/database/ArtworkDTO.php");
 require_once(__ROOT__."/templates/OpenGraphBuilder.php");
 
 class PageBuilder{
-	public $title = "ArtArchive";
+	private $title = "ArtArchive";
 	public $charset = "windows-1252";
-
-	/** @var string */
-	public $previewDescription;
-	/** 
-	 * @var string[string][]
-	 * Each index contains a piece of media.
-	 * Each media is a dictionnary of meta tags, taking a `property` as index, and a `content` as value.
-	 */
-	public $previewMedia = array();
-
-
 
 	/** @var string[] */
 	public $stylesheets;
@@ -23,11 +12,19 @@ class PageBuilder{
 		"All Artworks" => "/feed.xml",
 	);
 
-	public function __construct()
+	/** @var OpenGraphBuilder */
+	public $openGraph;
+
+	public function __construct(string $title = NULL)
 	{
+		$this->title = $title ? $title : ArtArchive::GetSiteName();
 		$this->stylesheets = array(
 			"/css/stylesheet.css?masonry=".ArtArchive::$settings['tagMasonry'],
 		);
+		$this->openGraph = new OpenGraphBuilder();
+		$this->openGraph->siteName = ArtArchive::GetSiteName();
+		$this->openGraph->url = URL::Root().$_SERVER['REQUEST_URI'];
+		$this->openGraph->title = $this->title;
 	}
 
 	public function StartPage(){ 
@@ -48,14 +45,7 @@ class PageBuilder{
 				<link rel=alternate type=application/rss+xml href="<?=$uri?>" title="<?=$title?>"/>
 				<?php
 			}
-			$this->printMeta(array("property"=>"og:site_name",   "content"=>"ArtArchive"              ));
-			$this->printMeta(array("property"=>"og:title",       "content"=>$this->title              ));
-			$this->printMeta(array("property"=>"og:description", "content"=>$this->previewDescription ));
-			$this->printMeta(array("property"=>"og:url",         "content"=>URL::Root()     ));
-			foreach($this->previewMedia as $media)
-			foreach($media as $property=>$content) {
-				?><meta property="<?=$property?>" content="<?=$content?>" /><?php
-			}
+			$this->openGraph->Flush();
 			?>
 		</head>
 		<body>
@@ -71,30 +61,9 @@ class PageBuilder{
 	<?php
 	}
 
-	public function	AddPreviewImage(string $url, string $altText){
-		$this->previewMedia[] = array(
-			"og:image"     => URL::Root()."/storage/".$url,
-			"og:image:alt" => $altText,
-		);
-	}
-
-	/**
-	 * Prints a \<meta/> tag.
-	 * 
-	 * @param string[string] $attributes	The attributes of the tag and their values.
-	 */
-	private function printMeta(array $attributes){
-		print("<meta");
-		foreach($attributes as $attr=>$value){
-			print(" ".$attr."=\"".$value."\"");
-		}
-		print("/>");
-	}
-
 	static public function ErrorDocument(int $code, string $message = null){
 		http_response_code($code);
-		$page = new PageBuilder();
-		$page->title = $code;
+		$page = new PageBuilder($code);
 		$page->StartPage();
 			print("<h1>$code</h1>");
 			print($message);

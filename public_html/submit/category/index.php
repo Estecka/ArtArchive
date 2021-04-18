@@ -7,8 +7,7 @@ if (!empty($_POST)){
 	exit;
 }
 
-$page = new PageBuilder();
-$page->title = "Submit";
+$page = new PageBuilder("Submit Category");
 $page->StartPage();
 
 	$cat = CategoryDTO::CreateFrom($_POST);

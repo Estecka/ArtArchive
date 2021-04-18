@@ -24,8 +24,7 @@ if ($tag == null){
 
 $name = $tag->GetName();
 
-$page = new PageBuilder();
-$page->title = "Edit : $name";
+$page = new PageBuilder("Edit : $name");
 $page->StartPage();
 	print("<h2>Edit tag</h2>");
 	$page->TagForm($tag, $cats);

@@ -10,8 +10,7 @@ if (!empty($_POST)){
 $bdd = &ArtArchive::$database;
 $cats = $bdd->GetAllCategories();
 
-$page = new PageBuilder();
-$page->title = "Submit";
+$page = new PageBuilder("Submit Tag");
 $page->StartPage();
 
 	$tag = TagDTO::CreateFrom($_POST);

@@ -21,8 +21,7 @@ $name = $cat->GetName();
 
 $style = $cat->color ? "style=\"color : $cat->color\"" : null;
 
-$page = new PageBuilder();
-$page->title = "Category : ".$name;
+$page = new PageBuilder("Category : $name");
 $page->StartPage();
 	if (ArtArchive::$isWebmaster)
 	{

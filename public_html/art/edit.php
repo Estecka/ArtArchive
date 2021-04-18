@@ -28,8 +28,7 @@ $cats  = $bdd->GetAllCategories();
 
 $name = $art->GetName();
 
-$page = new PageBuilder();
-$page->title = "Edit : $name";
+$page = new PageBuilder("Edit : $name");
 $page->StartPage();
 		print("<h2>Submit artwork</h2>");
 		$page->ArtForm($art, $tags, $cats, $files);

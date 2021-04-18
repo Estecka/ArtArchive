@@ -4,15 +4,31 @@ class OpenGraphBuilder {
 	public $siteName = "ArtArchive";
 	public $title = "Untitled";
 	public $description = "";
-	public $url;
+	public $url = "";
 
-	public $media = array();
-
-	private $hasImage;
-	private $hasAudio;
+	private $imageMedia = array();
+	private $audioMedia = array();
+	private $hasImage = false;
+	private $hasAudio = false;
 
 	public function __construct() {
 		$this->url = URL::Root();
+	}
+
+	public function	AddMedia(string $path) : void {
+		$type = GetMediaType($path);
+		$path = URL::Absolute(URL::Media($path));
+
+		if ($type === EMedia_image) 
+		{
+			$this->hasImage = true;
+			$this->imageMedia[] = $path;
+		}
+		else if ($type === EMedia_audio) 
+		{
+			$this->hasAudio = true;
+			$this->audioMedia[] = $path;
+		}
 	}
 
 	public function Flush() : void {
@@ -33,6 +49,12 @@ class OpenGraphBuilder {
 		$this->PrintMeta("og:description", $this->description );
 		$this->PrintMeta("og:url",         $this->url         );
 		$this->PrintMeta("og:type",        $type              );
+		foreach($this->audioMedia as $url)
+			$this->PrintMeta("og:audio",    $url          );
+		foreach($this->imageMedia as $url){
+			$this->PrintMeta("og:image",    $url          );
+			$this->PrintMeta("og:image:alt", $this->title );
+		}
 	}
 	
 	private function FlushTwitter() : void{
@@ -41,11 +63,14 @@ class OpenGraphBuilder {
 		$this->PrintMeta("twitter:description", $this->description );
 		$this->PrintMeta("twitter:url",         $this->url         );
 		if ($this->hasImage)
-			$this->PrintMeta("twitter:card", "summary_large_image");
+			$this->PrintMeta("twitter:card",  "summary_large_image" );
+		foreach($this->imageMedia as $url){
+			$this->PrintMeta("twitter:image", $url                  );
+		}
 
 	}
 
-	private function PrintMeta(string $property, string $content) {
+	private function PrintMeta(string $property, ?string $content) {
 		?>
 		<meta property="<?=$property?>" content="<?=$content?>" />
 		<?php
