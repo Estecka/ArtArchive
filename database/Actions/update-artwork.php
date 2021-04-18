@@ -13,6 +13,9 @@ $create = either($_POST["create"], array());
 if (isset($_POST["createNULL"]))
 	$create[null] = $_POST["createNULL"];
 
+foreach ($files as $i=>$file)
+	$files[$i] = trim($file);
+
 foreach($create as $cat=>$tags){
 	if (!empty($tags)){
 		$tags = explode("\n", $tags);

@@ -17,13 +17,6 @@ class URL {
 			return URL::Root().$url;
 	}
 
-	static public function	File(string $path) {
-		if (substr($path, 0, 7) == "http://" || substr($path, 0, 8) == "https://")
-			return $path;
-		else
-			return "/storage/".$path;
-	}
-
 	static public function Home() : string {
 		return "/";
 	}

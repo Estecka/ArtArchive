@@ -208,38 +208,25 @@ class PageBuilder{
 	/** REGION MEDIA */
 	public function Media (string $path) {
 		$url = URL::Media($path);
-		
 		$name = $path;
-		$type = pathinfo($path, PATHINFO_EXTENSION);
-		$type = trim($type); // removes \n. There WILL be new lines
 
-		switch ($type) {
+		switch (GetMediaType($path)) {
 			default :
+			case EMedia_undefined:
 				include(__ROOT__."/templates/media/default.php");
 				break;
 
-			case "jpeg" : 
-			case "jpg" : 
-			case "png" : 
-			case "bmp" : 
-			case "gif" :
+			case EMedia_image :
 				include(__ROOT__."/templates/media/image.php"); 
 				break;
 			
-			case "mp3":
-			case "wav":
-			case "ogg":
-			case "m4a":
+			case EMedia_audio:
 				include(__ROOT__."/templates/media/audio.php");
 				break;
 			
-			case "txt":
-			case "pdf":
-			case "html":
-			case "htm":
+			case EMedia_iframe:
 				include(__ROOT__."/templates/media/iframe.php");
 				break;
-
 		}
 	}
 }
