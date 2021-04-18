@@ -44,35 +44,40 @@ class OpenGraphBuilder {
 		else
 			$type = "website";
 			
-		$this->PrintMeta("og:site_name",   $this->siteName    );
-		$this->PrintMeta("og:title",       $this->title       );
-		$this->PrintMeta("og:description", $this->description );
-		$this->PrintMeta("og:url",         $this->url         );
-		$this->PrintMeta("og:type",        $type              );
+		$this->PrintProperty("og:site_name",   $this->siteName    );
+		$this->PrintProperty("og:title",       $this->title       );
+		$this->PrintProperty("og:description", $this->description );
+		$this->PrintProperty("og:url",         $this->url         );
+		$this->PrintProperty("og:type",        $type              );
 		foreach($this->audioMedia as $url)
-			$this->PrintMeta("og:audio",    $url          );
+			$this->PrintProperty("og:audio",    $url          );
 		foreach($this->imageMedia as $url){
-			$this->PrintMeta("og:image",    $url          );
-			$this->PrintMeta("og:image:alt", $this->title );
+			$this->PrintProperty("og:image",    $url          );
+			$this->PrintProperty("og:image:alt", $this->title );
 		}
 	}
 	
 	private function FlushTwitter() : void{
-		$this->PrintMeta("twitter:site",        "@artarchive"      );
-		$this->PrintMeta("twitter:title",       $this->title       );
-		$this->PrintMeta("twitter:description", $this->description );
-		$this->PrintMeta("twitter:url",         $this->url         );
+		$this->PrintName("twitter:site",        "@artarchive"      );
+		$this->PrintName("twitter:title",       $this->title       );
+		$this->PrintName("twitter:description", $this->description );
+		$this->PrintName("twitter:url",         $this->url         );
 		if ($this->hasImage)
-			$this->PrintMeta("twitter:card",  "summary_large_image" );
+			$this->PrintName("twitter:card",  "summary_large_image" );
 		foreach($this->imageMedia as $url){
-			$this->PrintMeta("twitter:image", $url                  );
+			$this->PrintName("twitter:image", $url                  );
 		}
 
 	}
 
-	private function PrintMeta(string $property, ?string $content) {
+	private function PrintProperty(string $property, ?string $content) {
 		?>
 		<meta property="<?=$property?>" content="<?=$content?>" />
+		<?php
+	}
+	private function PrintName(string $name, ?string $content) {
+		?>
+		<meta name="<?=$name?>" content="<?=$content?>" />
 		<?php
 	}
 }
