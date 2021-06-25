@@ -1,4 +1,7 @@
 # 0
+## 0.4
+- Link embed are now possible with OpenGraph and Twitter previews.
+
 ## 0.3
 ### 0.3.1
 - Made tag picker forms easier to read.
