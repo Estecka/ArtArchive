@@ -8,7 +8,11 @@ function either(&$var, $else){
 }
 
 function clamp($value, $min, $max){
-	return $value>$min ? $value<$max ? $value : $max : $min ;
+	if ($value < $min)
+		return $min;
+	if ($value > $max)
+		return $max;
+	return $value;
 } 
 
 function isDate($value){
