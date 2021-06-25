@@ -1,4 +1,10 @@
 # 0
+## 0.5
+- Art cards will now display thumbnails, instead of full-size artworks.
+
+## 0.4
+- Link embed are now possible with OpenGraph and Twitter previews.
+
 ## 0.3
 ### 0.3.1
 - Made tag picker forms easier to read.
