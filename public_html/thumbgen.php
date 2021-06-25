@@ -4,18 +4,19 @@ if (!array_key_exists('path', $_GET)) {
 	die;
 }
 
+define("__TARGET_PX_SIZE__", 500);
+define("__TARGET_QUALITY__", 60);
+
 define("__ROOT__", __DIR__."/../");
 require_once __ROOT__."MediaType.php";
 require_once __ROOT__."URL.php";
-
-// echo "ThumbGen.exe";
-// var_dump($_GET);
 
 $uri = $_GET['path'];
 
 $type = GetMediaType($uri);
 if ($type != EMedia_image) {
-	http_response_code();
+	http_response_code(400);
+	echo "Image not found";
 	die;
 }
 
@@ -28,13 +29,48 @@ function	GetPath(string $uri) : string {
 	return __DIR__.$uri;
 }
 
+function	Fail() {
+	http_response_code(500);
+	echo "Thumbnail generation failed";
+	die;
+}
 
 $src = GetPath("/storage/$uri");
-$dst = $src;
+$dst = GetPath("/thumbs/$uri");
 
-// echo $dst;
+echo false ?? "not false";
+
+// Compute the dimensions of the thumbnail.
+$src_size = getimagesize($src) ?: Fail();
+$scale_factor = min(
+	__TARGET_PX_SIZE__ / $src_size[0],
+	__TARGET_PX_SIZE__ / $src_size[1],
+	1,
+);
+$dst_size = array(
+	0 => $src_size[0] * $scale_factor,
+	1 => $src_size[1] * $scale_factor,
+);
+
+// Resizes the image
+$image = imagecreatefromjpeg($src) ?: Fail();
+$r = imagecopyresampled($image, $image, 0,0, 0,0, $dst_size[0], $dst_size[1], $src_size[0], $src_size[1]) ?: Fail();
+$image = imagecrop($image, array('x'=>0, 'y'=>0, 'width'=>$dst_size[0], 'height'=>$dst_size[1])) ?: Fail();
+
+// $r = imagejpeg($image, $dst, 75);
+// if (!$r)
+// 	goto failure;
+
+// var_dump($_GET);
+// var_dump($src);
+// var_dump($src_size);
+// var_dump($dst);
+// var_dump($dst_size);
+// var_dump($r);
 // exit;
 
+// Serve and cache the image
 header("Content-type: image/jpg");
-readfile($dst);
+imagejpeg($image, NULL, __TARGET_QUALITY__);
+// readfile($dst);
 ?>
