@@ -28,7 +28,7 @@ $src = GetPath("/storage/$uri");
 $dst = GetPath("/thumbs/$uri");
 
 if (!file_exists($src)) {
-	http_response_code(400);
+	http_response_code(404);
 	echo "Image not found";
 	die;
 }
@@ -65,23 +65,20 @@ $dst_size = array(
 	1 => $src_size[1] * $scale_factor,
 );
 
+// Perform downscaling
 $r = imagecopyresampled($image, $image, 0,0, 0,0, $dst_size[0], $dst_size[1], $src_size[0], $src_size[1]) ?: Fail();
 $image = imagecrop($image, array('x'=>0, 'y'=>0, 'width'=>$dst_size[0], 'height'=>$dst_size[1])) ?: Fail();
 
-// $r = imagejpeg($image, $dst, 75);
-// if (!$r)
-// 	goto failure;
-
-// var_dump($_GET);
-// var_dump($src);
-// var_dump($src_size);
-// var_dump($dst);
-// var_dump($dst_size);
-// var_dump($r);
-// exit;
-
-// Serve and cache the image
+// Serve the image
 header("Content-type: image/jpg");
 imagejpeg($image, NULL, __TARGET_QUALITY__);
-// readfile($dst);
+ob_end_flush();
+flush();
+
+// Cache the image
+$dir = pathinfo($dst, PATHINFO_DIRNAME);
+if (!file_exists($dir))
+	mkdir($dir, 0777, true);
+imagejpeg($image, $dst, __TARGET_QUALITY__);
+
 ?>
