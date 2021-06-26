@@ -6,8 +6,11 @@ require_once("CategoryDTO.php");
 require_once("TagListElt.php");
 
 class DBService {
-	/** @var int The version of the database php software. Not to be mistalen with the installed database structure version. */
-	static public $version = 1;
+	/** 
+	 * @var int The expected version for the database's structure.
+	 * This may vary from the actual database's version if it's not up to date.
+	 */
+	static public $version = 2;
 
 	/** @var PDO **/
 	public $pdo;

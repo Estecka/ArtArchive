@@ -1,6 +1,7 @@
 <?php
-require_once "../../../auth/authenticator.php";
-require_once "../../../database/DBStructure.php";
+define("__ROOT__", __DIR__."/../../..");
+require_once __ROOT__."/auth/authenticator.php";
+require_once __ROOT__."/database/DBStructure.php";
 
 $auth = new Authenticator("Wizard");
 if (!$auth->CheckLogin()){

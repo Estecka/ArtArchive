@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 11, 2019 at 09:23 PM
--- Server version: 5.7.14
--- PHP Version: 7.0.10
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jun 26, 2021 at 10:33 PM
+-- Server version: 5.7.31
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,9 +23,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `artworks` (
   `id` int(11) NOT NULL,
   `slug` varchar(32) CHARACTER SET ascii NOT NULL,
-  `title` varchar(32) DEFAULT NULL,
+  `title` varchar(128) DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `description` text
+  `description` text,
+  `links` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

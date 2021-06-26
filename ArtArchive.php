@@ -8,7 +8,7 @@ require_once("templates/PageBuilder.php");
 require_once "auth/authenticator.php";
 
 class ArtArchive {
-	static $version = "0.5.0-indev";
+	static $version = "0.6.0-indev";
 
 	/** @var array */
 	static $settings;
@@ -35,11 +35,12 @@ class ArtArchive {
 }
 
 ArtArchive::$database = new DBService();
-if (ArtArchive::$database->GetVersion() == 0){
+if (ArtArchive::$database->GetVersion() < DBService::$version){
 	http_response_code(503);
 	?>
 	<p>
-		The database has not been setup. Please consult <a href="<?=URL::Wizard()?>">~The Wizard~</a>.
+		The database has not been setup or needs an update.
+		Please consult <a href="<?=URL::Wizard()?>">~The Wizard~</a>.
 	</p>
 	<?php
 	die;

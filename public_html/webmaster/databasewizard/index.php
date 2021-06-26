@@ -1,8 +1,9 @@
 <?php
 require_once "Wizard.php";
 
-// Existing ersion found
-if ($installedVersion != 0){
+// Existing version found
+if ($installedVersion != 0)
+{
 	print "<p>";
 	if ($installedVersion == DBStructure::$version) {
 		?>
@@ -21,9 +22,9 @@ if ($installedVersion != 0){
 		?>
 		An older version of the database seem to be already set up.
 		<br/>
-		<br/>Did you mean to upgrade ? 
-		<br/>In this case <a href="upgrade.php">click here</a>.
-		<br/>
+		<br/>Automatic update is possible. It is recommended to backup your database before updating.
+		<br/><a href="upgrade.php"><input type=submit value="Update now"/></a>
+		<hr/>
 		<br/>Else do you wish to perform a clean install?
 		<?php
 	}
@@ -42,9 +43,9 @@ if ($installedVersion != 0){
 	<?php
 	print "</p>";
 }
-
 // No existing version found
-else {
+else
+{
 	?>
 	This Wizard will setup the database for use with ArtArchive.
 	<br/>Proceed ?
