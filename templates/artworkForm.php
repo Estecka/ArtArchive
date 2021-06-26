@@ -9,13 +9,20 @@
 
  $filesText = $files ? implode("\n", $files) : null;
 $filesHint = 
-	"Insert one media per line. It can be an absolute URL, or relative to the /storage/ folder. \n"
+	"Insert one media per line. It should be the url relative to the /storage/ folder. \n"
 	."E.g: \n\n"
-	."dankmeme.jpg \n"
-	."subfolder/dankermeme.mp3 \n"
-	."http://mydomain/storage/dankerstmeme.pdf"
+	."artwork1.jpg \n"
+	."subfolder/artwork2.mp3 \n"
+	// ."http://mydomain/storage/dankerstmeme.pdf"
+	;
+
+$extlinkHint = "One link per line. Markdown link syntax is supported.\n"
+	."E.g:\n\n"
+	."http://website.com/artwork \n"
+	."[Link label](http://website.com/artwork)\n"
 	;
 ?>
+
 
 <div>
 	<form action="<?=value($action)?>" method="post">
@@ -39,7 +46,7 @@ $filesHint =
 			id="description" 
 			name="description" 
 			placeholder="Supports any html formatting"
-			rows=15
+			rows=10
 		><?=htmlspecialchars($art->description)?></textarea>
 
 		<br/>
@@ -52,6 +59,15 @@ $filesHint =
 			rows=5
 		><?=htmlspecialchars($filesText)?></textarea>
 
+		<br/>
+
+		<h4><label for="links">External links :</label></h4>
+		<textarea
+			id="links"
+			name="links"
+			placeholder="<?=$extlinkHint?>"
+			rows=5
+		><?=htmlspecialchars($art->links)?></textarea>
 		<br/>
 
 		<h4>Tags :</h4>

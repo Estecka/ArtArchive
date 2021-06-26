@@ -6,8 +6,11 @@ require_once("CategoryDTO.php");
 require_once("TagListElt.php");
 
 class DBService {
-	/** @var int The version of the database php software. Not to be mistalen with the installed database structure version. */
-	static public $version = 1;
+	/** 
+	 * @var int The expected version for the database's structure.
+	 * This may vary from the actual database's version if it's not up to date.
+	 */
+	static public $version = 2;
 
 	/** @var PDO **/
 	public $pdo;
@@ -325,12 +328,13 @@ class DBService {
 
 	public function AddArtwork(ArtworkDTO $art) : bool {
 		self::CheckSlug($art->slug, true);
-		$query = $this->pdo->prepare("INSERT INTO artworks (slug, title, date, description) VALUES (?,?,?,?)");
+		$query = $this->pdo->prepare("INSERT INTO artworks (slug, title, date, description, links) VALUES (?,?,?,?,?)");
 		$result = $query->execute(array(
 			$art->slug,
 			$art->title,
 			$art->date,
 			$art->description,
+			$art->links,
 		));
 		return $result;
 	}
@@ -351,14 +355,13 @@ class DBService {
 
 		// Perform the change
 		self::CheckSlug($art->slug, true);
-		$query = $this->pdo->prepare(
-			"UPDATE artworks SET slug = ?, title = ?, date = ?, description = ? WHERE slug = ?"
-		);
+		$query = $this->pdo->prepare("UPDATE artworks SET slug = ?, title = ?, date = ?, description = ?, links = ? WHERE slug = ?");
 		$query->execute(array(
 			$art->slug,
 			$art->title,
 			$art->date,
 			$art->description,
+			$art->links,
 			$slug,
 		));
 		return true;
@@ -585,11 +588,12 @@ class DBService {
 	 */
 	public function GetThumbnails(array $artworks) : array {
 		$extensions = array(
-			"png",
+			"bmp",
 			"jpg",
 			"jpeg",
-			"bmp",
-			"gif"
+			"png",
+			"gif",
+			"webp",
 		);
 
 		$artIds = array();

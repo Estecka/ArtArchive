@@ -82,6 +82,13 @@ class PageBuilder{
 	}
 
 	/**
+	 * @param string $links	The list of link, with one link per line.
+	 */
+	public function	LinkList(string $links){
+		include(__ROOT__."/templates/linkList.php");
+	}
+
+	/**
 	 * @param ArtWorkDTO $art
 	 * @param TagDTO[] $tags List of all available tags. Each tag should provide an additional `enabled`  property.
 	 * @param CategoryDTO[] $cats List of all available categories.

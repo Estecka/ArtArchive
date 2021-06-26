@@ -6,8 +6,11 @@ class DBStructure {
 	static $pdo;
 	static $error = null;
 
-	/** @var int The version of the database php software. Not to be mistaken with the installed database structure version. */
-	static public $version = 1;
+	/** 
+	 * @var int The expected version for the database's structure.
+	 * This may vary from the actual database's version if it's not up to date.
+	 */
+	static public $version = 2;
 
 	
 	
@@ -40,9 +43,9 @@ class DBStructure {
 		self::$pdo->commit();
 	}
 
-	static public function GetVersion(){
+	static public function GetVersion() {
 		try {
-			return (float)self::$pdo->query("SELECT `value` FROM `settings` WHERE `name`='dbVersion';")->fetchColumn();
+			return self::$pdo->query("SELECT `value` FROM `settings` WHERE `name`='dbVersion';")->fetchColumn();
 		} catch (PDOException $e) {
 			return false;
 		}

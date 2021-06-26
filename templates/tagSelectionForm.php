@@ -37,8 +37,10 @@ $printTag = function(CategoryDTO $c, TagDTO $t){
 	$inputName = $t->enabled ? "keep" : "add";
 	$inputName.= "[$t->slug]";
 	?>
-	<input type="checkbox" id="<?=$inputName?>" name ="<?=$inputName?>" <?=$t->enabled?"checked":null?>/>
-	<label class="tagName" for="<?=$inputName?>"><?=$t->slug?></label>
+	<label class="tagName" for="<?=$inputName?>">
+		<input type="checkbox" id="<?=$inputName?>" name ="<?=$inputName?>" <?=$t->enabled?"checked":null?> />
+		<?=$t->slug?>
+	</label>
 	<?php
 };
 

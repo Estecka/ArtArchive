@@ -1,4 +1,7 @@
 # 0
+## 0.6
+- Artworks metadata may now contain external links.
+
 ## 0.5
 - Art cards will now display thumbnails, instead of full-size artworks.
 
