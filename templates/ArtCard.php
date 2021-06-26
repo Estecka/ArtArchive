@@ -12,7 +12,7 @@ $name = $art->title ?? $art->slug;
 		<?php
 		if ($art->thumbnail) {
 			?>
-			<img src="<?=URL::Media($art->thumbnail)?>"/>
+			<img src="<?=URL::Thumb($art->thumbnail)?>"/>
 			<?php
 		}
 		?>

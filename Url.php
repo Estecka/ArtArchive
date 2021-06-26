@@ -68,6 +68,12 @@ class URL {
 		else
 			return "/storage/$path";
 	}
+	static public function Thumb(string $path) : string {
+		if (preg_match("#^https?://.+#", $path))
+			return $path;
+		else
+			return "/thumbs/$path";
+	}
 
 	/** REGION TAGS */
 	static public function TagsHome() : string {
