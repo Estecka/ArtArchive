@@ -328,12 +328,13 @@ class DBService {
 
 	public function AddArtwork(ArtworkDTO $art) : bool {
 		self::CheckSlug($art->slug, true);
-		$query = $this->pdo->prepare("INSERT INTO artworks (slug, title, date, description) VALUES (?,?,?,?)");
+		$query = $this->pdo->prepare("INSERT INTO artworks (slug, title, date, description, links) VALUES (?,?,?,?,?)");
 		$result = $query->execute(array(
 			$art->slug,
 			$art->title,
 			$art->date,
 			$art->description,
+			$art->links,
 		));
 		return $result;
 	}
@@ -354,14 +355,13 @@ class DBService {
 
 		// Perform the change
 		self::CheckSlug($art->slug, true);
-		$query = $this->pdo->prepare(
-			"UPDATE artworks SET slug = ?, title = ?, date = ?, description = ? WHERE slug = ?"
-		);
+		$query = $this->pdo->prepare("UPDATE artworks SET slug = ?, title = ?, date = ?, description = ?, links = ? WHERE slug = ?");
 		$query->execute(array(
 			$art->slug,
 			$art->title,
 			$art->date,
 			$art->description,
+			$art->links,
 			$slug,
 		));
 		return true;

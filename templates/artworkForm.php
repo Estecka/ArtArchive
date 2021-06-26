@@ -15,7 +15,12 @@ $filesHint =
 	."subfolder/dankermeme.mp3 \n"
 	."http://mydomain/storage/dankerstmeme.pdf"
 	;
+
+$extlinkHint = "http links to external versions of this artwork\n"
+	."One link per line."
+	;
 ?>
+
 
 <div>
 	<form action="<?=value($action)?>" method="post">
@@ -52,6 +57,15 @@ $filesHint =
 			rows=5
 		><?=htmlspecialchars($filesText)?></textarea>
 
+		<br/>
+
+		<h4><label for="links">External links :</label></h4>
+		<textarea
+			id="links"
+			name="links"
+			placeholder="<?=$extlinkHint?>"
+			rows=3
+		><?=htmlspecialchars($art->links)?></textarea>
 		<br/>
 
 		<h4>Tags :</h4>
