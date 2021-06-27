@@ -14,24 +14,36 @@ div.margin ul {
 	list-style-position: inside;
 }
 div.margin li {
-	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 div.margin li:hover {
 	overflow: visible;
 }
-div.margin li::marker {
+
+.taglist li::marker {
 	content: "·";
 }
-
 .taglist h4 {
 	margin-bottom: 5px;
 }
 .extlinkslist h3 {
 	margin-bottom: 5px;
 }
-
+.extlinkslist li {
+	--link-favicon: url("/resources/link.png");
+	list-style: none;
+}
+/* Only god knows why this doesn't work on ::marker */
+.extlinkslist li::before {
+	content: '';
+	display: inline-block;
+	background-image: var(--link-favicon);
+	background-size: contain;
+	width: 16px;
+	height: 16px;
+	vertical-align:middle;
+}
 
 /* Medias */
 div.artwork {
