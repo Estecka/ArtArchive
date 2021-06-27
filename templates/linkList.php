@@ -4,8 +4,20 @@
  */
 
 $links = explode("\n", $links);
-foreach($links as $key=>$value)
-	$links[$key] = htmlspecialchars(trim($value));
+foreach($links as $key=>$value) {
+	$matches = array();
+	$r = preg_match("#^\s*\[(.*)\]\s*\((.*)\)\s*$#", $value, $matches); // "[label](link)"
+	$l = array('label'=>NULL, 'adress'=>NULL);
+
+	if ($r == false) {
+		$l['adress'] = $value;
+		$l['label']  = $l['adress'];
+	} else {
+		$l['adress'] = $matches[2];
+		$l['label']  = $matches[1];
+	}
+	$links[$key] = $l;
+}
 
 function	GetFavicon(string $link) : ?string {
 	$http = parse_url($link, PHP_URL_SCHEME);
@@ -22,12 +34,16 @@ function	GetFavicon(string $link) : ?string {
 	<ul>
 		<?php
 		foreach($links as $l) {
-			$favicon = GetFavicon($l);
+			$l['adress'] = htmlspecialchars(trim($l['adress']));
+			$l['label']  = htmlspecialchars(trim($l['label' ]));
+			$favicon = GetFavicon($l['adress']);
 			if ($favicon)
 				$favicon = "style=\"--link-favicon: url($favicon)\""
 			?>
 			<li <?=$favicon?>>
-				<a href="<?=$l?>" title="<?=$l?>"><?=$l?></a>
+				<a href="<?=$l['adress']?>" title="<?=$l['label']?>">
+					<?=$l['label']?>
+				</a>
 			</li>
 			<?php
 		}
