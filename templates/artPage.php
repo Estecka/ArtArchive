@@ -19,10 +19,12 @@ if (ArtArchive::$isWebmaster)
 <div class="row">
 	<div class="column margin">
 		<?php
-		if (!empty($tags)){
-			print("<h4>Tags : </h4>");
+		if (!empty($tags))
 			$this->TagList($tags, $cats, false);
-		}
+		if (!empty($tags) && !empty($art->links))
+			print "<hr/>";
+		if (!empty($art->links))
+			$this->LinkList($art->links);
 		?>
 	</div>
 	<div class="column artwork">
