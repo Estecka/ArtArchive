@@ -28,7 +28,7 @@ function	GetFavicon(string $link) : ?string {
 		case "deviantart.com":
 			return "https://deviantart.com/favicon.ico";
 		case "artstation.com":
-			return "https://dartstation.com/favicon.ico";
+			return "https://artstation.com/favicon.ico";
 		case "tumblr.com":
 			return "https://www.tumblr.com/favicon.ico";
 		case "youtu.be":
