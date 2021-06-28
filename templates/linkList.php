@@ -20,12 +20,26 @@ foreach($links as $key=>$value) {
 }
 
 function	GetFavicon(string $link) : ?string {
-	$http = parse_url($link, PHP_URL_SCHEME);
-	$host = parse_url($link, PHP_URL_HOST);
-	if ($http && $host)
-		return "$http://$host/favicon.ico";
-	else
-		return NULL;
+	$matches = array();
+	if (preg_match("#https?:\/\/(?:[\w-]*\.)?(\w+\.\w+)(?:\/.*)?#", $link, $matches))
+	switch ($matches[1]) {
+		case "fav.me":
+		case "sta.sh":
+		case "deviantart.com":
+			return "https://deviantart.com/favicon.ico";
+		case "artstation.com":
+			return "https://dartstation.com/favicon.ico";
+		case "tumblr.com":
+			return "https://www.tumblr.com/favicon.ico";
+		case "youtu.be":
+		case "youtube.com":
+			return "https://www.youtube.com/favicon.ico";
+		case "twitter.com":
+			return "https://twitter.com/favicon.ico";
+		case "soundcloud.com":
+			return "https://soundcloud.com/favicon.ico";
+	}
+	return "/resources/link.png";
 }
 ?>
 
