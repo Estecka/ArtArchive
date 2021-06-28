@@ -11,7 +11,10 @@ foreach($links as $key=>$value) {
 
 	if ($r == false) {
 		$l['adress'] = $value;
-		$l['label']  = $l['adress'];
+		if (preg_match("#^https?:\/\/(.+)$#", $l['adress'], $matches))
+			$l['label'] = $matches[1];
+		else
+			$l['label'] = $l['adress'];
 	} else {
 		$l['adress'] = $matches[2];
 		$l['label']  = $matches[1];
