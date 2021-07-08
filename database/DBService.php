@@ -588,11 +588,12 @@ class DBService {
 	 */
 	public function GetThumbnails(array $artworks) : array {
 		$extensions = array(
-			"png",
+			"bmp",
 			"jpg",
 			"jpeg",
-			"bmp",
-			"gif"
+			"png",
+			"gif",
+			"webp",
 		);
 
 		$artIds = array();

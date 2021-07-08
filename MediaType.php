@@ -10,11 +10,12 @@ function	GetMediaType(string $filename) : string {
 		default:
 			return EMedia_undefined;
 
+		case "bmp" :
 		case "jpeg" :
 		case "jpg" :
 		case "png" :
-		case "bmp" :
 		case "gif" :
+		case "webp" :
 			return EMedia_image;
 		
 		case "mp3":

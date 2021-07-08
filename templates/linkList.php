@@ -41,6 +41,8 @@ function	GetFavicon(string $link) : ?string {
 			return "https://twitter.com/favicon.ico";
 		case "soundcloud.com":
 			return "https://soundcloud.com/favicon.ico";
+		case "itch.io":
+			return "https://itch.io/favicon.ico";
 	}
 	return "/resources/link.png";
 }
