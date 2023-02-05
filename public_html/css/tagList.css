@@ -39,11 +39,8 @@ h3.categoryName {
 li.tagName {
 	break-inside: avoid;
 }
-li.tagName>input[type=checkbox]{
-	float: left;
-}
 
-/* Make the <label> fill the <li>  */
+/* Make the <label> fill the <li> */
 li>label.tagName {
 	display: block;
 }
