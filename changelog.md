@@ -1,5 +1,8 @@
 # 0
 ## 0.6
+### 0.6.1
+- Fixed checkbox stairway in the tag selection form in Firefox
+### 0.6.0
 - Artworks metadata may now contain external links.
 
 ## 0.5
