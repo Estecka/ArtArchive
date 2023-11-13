@@ -1,5 +1,6 @@
 <?php
 require("../../ArtArchive.php");
+require_once __ROOT__."/templates/Markdown.php";
 
 $slug = value($_GET['art']);
 

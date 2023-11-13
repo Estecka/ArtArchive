@@ -34,6 +34,7 @@ class PageBuilder{
 		<head>
 			<title><?= $this->title ?></title>
 			<meta charset="<?=$this->charset?>"/>
+			<meta name="robots" content="noai, noimageai">
 			<?php
 			foreach($this->stylesheets as $uri){
 				?>
@@ -127,6 +128,52 @@ class PageBuilder{
 		$page = &$this;
 		include(__ROOT__."/templates/artPage.php");
 	}
+
+	/**
+	 * A link to a single tag.
+	 * @param $color Override  for the  category color  to use. This is  usually
+	 * defined in the  html parents, in which case it doesn't need to be defined
+	 * here.
+	 */
+	public function TagLink(TagDTO $tag, $color=null){
+		if ($color != null)
+			$color = "style='--cat-color:$color'";
+		?>
+		<a 
+			class=tagName
+			href="<?=URL::Tag($tag->slug)?>" 
+			title="<?=$tag->slug?>"
+			<?=$color?>
+		>
+			<?=$tag->GetName()?>
+		</a>
+		<?php
+	}
+
+	/**
+	 * A tag link followed by a short description.
+	 * @param $color See TagLink.
+	 */
+	public function TagPreview(TagDTO $tag, $color=null){
+		if ($tag->description != null) {
+			$shortDesc = explode("\n", $tag->description, 2);
+			if (!empty($shortDesc)){
+				$shortDesc = $shortDesc[0];
+				$shortDesc = trim($shortDesc);
+			}
+		}
+		?>
+		<div class=tagPreview>
+			<?php
+			$this->TagLink($tag, $color);
+			if (!empty($shortDesc)) {
+				?><span class=tagShortDesc><?=Markdown::MarkdownToHtml($shortDesc)?></span><?php
+			}
+			?>
+		</div>
+		<?php
+	}
+
 	/**
 	 * @param TagDTO $tag The tag to populate the form with
 	 * @param CategoryDTO[] $cats A list of all available categories.

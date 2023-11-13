@@ -1,0 +1,47 @@
+/*
+** Social Links
+*/
+
+img#MainLogo {
+	float: left;
+	width: 80px;
+	height: auto;
+	margin-right: 8px;
+}
+
+/***********/
+/* ## RSS  */
+/***********/
+
+div#Feeds{
+	float: right;
+	text-align: right;
+}
+
+a.largeSocial{
+	text-decoration: none;
+}
+
+a.largeSocial:hover div * {
+	text-decoration: underline;
+}
+a.largeSocial img {
+	height: 20px;
+	width: 20px;
+}
+.largeSocial * {
+	vertical-align: middle;
+}
+
+/***************/
+/* ## Socials  */
+/***************/
+
+#Header ul.extlinkslist {
+	margin: 5px;
+	padding: 0;
+}
+#Header .extlinkslist li {
+	display: inline-block;
+	margin-right: 4px;
+}

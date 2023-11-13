@@ -6,6 +6,10 @@
  * @var function $printTag function(TagDTO)
  */
 
+/**
+ * TODO: Figure out if how much of this cna be merged into tagList.php
+ */
+
 $rowMax = ArtArchive::$settings['tagMasonry'] ? 0 : ArtArchive::$settings['tagLiquidity'];
 $empty = empty($tags);
 

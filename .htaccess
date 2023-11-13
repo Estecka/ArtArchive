@@ -6,6 +6,9 @@
 RewriteEngine on
 RewriteBase /
 
+# Forbid access to any dot file
+RewriteRule ^(.*/)?\..+ - [R=404,L]
+
 # Explicitely redirect any URL starting with /public_html/
 RewriteCond %{ENV:REDIRECT_STATUS} ^$
 RewriteRule ^public_html/(.*)$ /$1 [L,R=303]

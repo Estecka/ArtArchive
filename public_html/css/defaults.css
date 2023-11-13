@@ -15,6 +15,7 @@ hr	{
 
 textarea {
 	width: 100%;
+	height: 10em;
 	resize: vertical;
 }
 
@@ -34,10 +35,35 @@ textarea {
 	color: var(--cat-color);
 }
 
+div.homePage {
+	text-align: center;
+}
+
 div.pageList {
 	text-align: center;
 }
 
 div.footer {
 	text-align: center;
+}
+
+
+/***************/
+/* ## Socials  */
+/***************/
+
+.extlinkslist li {
+	--link-favicon: url("/resources/link.png");
+	list-style: none;
+}
+
+/* Only god knows why this doesn't work on ::marker */
+.extlinkslist li::before {
+	content: '';
+	display: inline-block;
+	background-image: var(--link-favicon);
+	background-size: contain;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
 }

@@ -1,5 +1,6 @@
 <?php
 require("../../ArtArchive.php");
+require_once __ROOT__."/templates/Markdown.php";
 
 $slug = value($_GET['tag']);
 
@@ -15,6 +16,17 @@ if ($tag == null){
 	PageBuilder::ErrorDocument(404);
 	die;
 }
+
+/** @var ?CategoryDTO */
+if ($tag->categoryId){
+	$cat = $bdd->GetCategoryById($tag->categoryId);
+	$catColorStyle = "style='--cat-color:$cat->color'";
+}
+else{
+	$cat = null;
+	$catColorStyle = null;
+}
+
 $name = $tag->GetName();
 
 $rpp = ArtArchive::$settings["ResultsPerPage"];
@@ -40,7 +52,7 @@ if ($artworks){
 }
 
 $page = new PageBuilder($name);
-$page->rssfeeds["#".$slug] = "feed.xml";
+$page->rssfeeds["#".$slug] = URL::Tag($slug)."feed.xml";
 $page->StartPage();
 	if (ArtArchive::$isWebmaster)
 	{
@@ -50,20 +62,34 @@ $page->StartPage();
 		<a href="<?=URL::DeleteTag($slug)?>">Delete</a>
 		<?php
 	}
-	print("<h1>$name</h1>");
-
 	?>
-	<a href="feed.xml" class="social" title="Tagged : <?=$slug?>">
-		<h4>
-			<img src="/resources/rss-32x32.png"/>
-			<span><?=$slug?></span>
-		</h4>
-	</a>
+
+	<!-- <div id="Feeds">
+		<a id=Feeds href="feed.xml" class="social" title="Tagged : <?=$slug?>">
+			<h4>
+				<img src="/resources/rss-32x32.png"/>
+				<span><?=$slug?></span>
+			</h4>
+		</a>
+	</div> -->
+
+	<span id=TagTitles <?=$catColorStyle?>>
+		<h1 id=TagMaintitle><?=$name?></h1>
+		<?php
+	if ($cat){
+		?>
+		<h2 id=TagSubtitle>
+			<a href="<?=URL::Category($cat->slug)?>"><?=$cat->GetName()?></a>
+		</h2>
+		<?php
+	}
+	?>
+	</span>
 
 	<p>
 		<?php
 		if ($tag->description)
-			print(str_replace("\n", "<br/>", $tag->description));
+			print(Markdown::MarkdownToHtml($tag->description));
 		else
 			print("This tag has no description.");
 		?>
@@ -71,7 +97,7 @@ $page->StartPage();
 	<?php
 	
 	if ($artworks){
-		print "<h3>Related artworks : </h3>";
+		// print "<h3>Related artworks : </h3>";
 		$page->ArtCardList($artworks);
 		$page->PageList("?page=%d", $currentPage, $pageAmount);
 	}

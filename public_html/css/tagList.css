@@ -54,3 +54,19 @@ input:checked + label.tagName {
 	color: white;
 	background-color: var(--cat-color);
 }
+
+.tagPreview {
+	display: inline-block;
+	vertical-align: text-top;
+	max-width: 100%;
+}
+
+.tagPreview > * {
+	display: block;
+}
+.tagPreview > .tagShortDesc {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: grey;
+	text-wrap: nowrap;
+}

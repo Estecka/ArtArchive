@@ -30,20 +30,6 @@ div.margin li:hover {
 .extlinkslist h3 {
 	margin-bottom: 5px;
 }
-.extlinkslist li {
-	--link-favicon: url("/resources/link.png");
-	list-style: none;
-}
-/* Only god knows why this doesn't work on ::marker */
-.extlinkslist li::before {
-	content: '';
-	display: inline-block;
-	background-image: var(--link-favicon);
-	background-size: contain;
-	width: 16px;
-	height: 16px;
-	vertical-align:middle;
-}
 
 /* Medias */
 div.artwork {

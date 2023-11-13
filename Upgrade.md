@@ -10,8 +10,14 @@ To do it with more finesse, and only replace the files that need to be, clone th
 then unzip the resulting "patch.zip" file into your website.  
 A handful of pre-made patches can be found attached to the appropriate [releases](https://github.com/Estecka/ArtArchive/releases).
 
-## 0.4.0
-From [`0.3.1`](#021)  
+## 0.7.0
+From [`0.3.1`](#050) or above  
+Update files.  
+Make sure not to overwrite [`/auth/config.php`](/auth/config.php) in the process.  
+Delete `public_html/css/socialLinks.css`
+
+## 0.4.0 - 0.6.1
+From [`0.3.1`](#050) or above  
 Update files only
 
 ## 0.3.1

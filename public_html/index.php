@@ -1,10 +1,12 @@
 <?php
 require("../ArtArchive.php");
+require_once __ROOT__."/templates/Markdown.php";
 $bdd = &ArtArchive::$database;
 
 $rpp = ArtArchive::$settings['ResultsPerPage'];
 $pageNo = either($_GET["page"], 0);
 $artworks = $bdd->GetArtworks($rpp, $pageNo, $total);
+$homePage = $bdd->GetPage("home");
 
 if (isset($_GET["feed_xml"])){
 	require __ROOT__."/templates/RSSBuilder.php";
@@ -24,6 +26,12 @@ if ($artworks)
 
 $page = new PageBuilder();
 $page->StartPage();
+
+	?>
+	<div class="homePage">
+		<?=Markdown::MarkdownToHtml($homePage)?>
+	</div>
+	<?php
 
 	$page->ArtCardList($artworks);
 	if ($total > 10){

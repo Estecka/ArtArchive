@@ -112,7 +112,11 @@ class DBService {
 		}
 	}
 
-	/** REGION SITE */
+
+/******************************************************************************/
+/* # Site Infos                                                               */
+/******************************************************************************/
+
 	/**
 	 * @param string[] $settings An associative array with setting names as key, filled with default values.
 	 * @return string[] Array of setting values with setting names as key.
@@ -185,7 +189,10 @@ class DBService {
 	}
 
 
-	/** REGION ARTWORKS */
+/******************************************************************************/
+/* # Artworks                                                                 */
+/******************************************************************************/
+
 	public function GetArtworks(int $amount, int $page, int &$total = null)
 	{
 		$total = $this->pdo->query("SELECT count(id) FROM artworks;")->fetchColumn();
@@ -208,8 +215,10 @@ class DBService {
 		$query->closeCursor();
 		return $result ? ArtworkDTO::CreateFrom($result) : null;
 	}
+
 	/**
-	 * OBSOLETE Use `SearchArtworks` instead. 
+	 * @deprecated Use `SearchArtworks` instead
+	 * 
 	 * This method require excessive privileges ("CREATE TEMPORARY TABLE")
 	 * This method will be removed.
 	 * Seeks artworks that are assigned all of the provided tags.
@@ -259,6 +268,7 @@ class DBService {
 			$result[$key] = ArtworkDTO::CreateFrom($art);
 		return $result;
 	}
+
 	/**
 	 * An improved and hopefully more performant version of `GetArtworksByTag`.
 	 * Seeks artworks that are assigned all of the desired tags, and none of the blacklisted ones.
@@ -416,7 +426,8 @@ class DBService {
 		$query->execute($params);
 		return $query->rowCount();
 	}
-	/** 
+
+	/**
 	 * @param string $art The slug of the arwork
 	 * @param string[] tags An array of the tags' slugs
 	 * @return int The amount of tags succesfully added. Failures may be due to tags already existing for this artworks.
@@ -438,6 +449,7 @@ class DBService {
 		$query->execute($params);
 		return $query->rowCount();
 	}
+
 	public function GetTagsFromArtwork(int $artID) : array {
 		$query = $this->pdo->prepare(
 			"SELECT tags.* FROM tags 
@@ -452,7 +464,7 @@ class DBService {
 		return $result;
 	}
 
-	/** 
+	/**
 	 * Gets all available tags, along with whether they are assigned to the given Artwork
 	 * @return TagListElt[]
 	*/
@@ -474,6 +486,7 @@ class DBService {
 			$result[$key] = TagListElt::CreateFrom($value);
 		return $result;
 	}
+
 	/** 
 	 * Gets all available tags, along with whether they are assigned to the given Artwork. 
 	 * Each tagDTO object is assigned an additional `enabled` property telling whether they are
@@ -648,7 +661,11 @@ class DBService {
 		return $return;
 	}
 
-	/** REGION TAGS */
+
+/******************************************************************************/
+/* # Tags                                                                     */
+/******************************************************************************/
+
 	/**
 	 * @return TagDTO[]
 	 */
@@ -658,6 +675,7 @@ class DBService {
 			$result[$key] = TagDTO::CreateFrom($tag);
 		return $result;
 	}
+
 	public function GetTag(string $slug) /*: TagDTO*/ {
 		$query = $this->pdo->prepare("SELECT * from tags WHERE slug = ?");
 		$query->execute(array($slug));
@@ -666,6 +684,7 @@ class DBService {
 
 		return $result ? TagDTO::CreateFrom($result) : null;
 	}
+
 	/**
 	 * Returns the Id of the given tags.
 	 * @param string[] $tags
@@ -688,6 +707,7 @@ class DBService {
 
 		return $result;
 	}
+
 	/**
 	 * Inserts a bulk of tags into a given category.
 	 * @param string $category The slug of the category
@@ -713,6 +733,7 @@ class DBService {
 		$params[":category"] = $category;
 		$query->execute($params);
 	}
+
 	public function InsertTag(TagDTO $tag) {
 		self::CheckSlug($tag->slug, true);
 		$query = $this->pdo->prepare(
@@ -726,6 +747,7 @@ class DBService {
 			":category" => $tag->categoryId,
 		));
 	}
+
 	public function UpdateTag(string $slug, TagDTO $tag) {
 		// Check the tag exists
 		$query = $this->pdo->prepare("SELECT COUNT(*) FROM tags WHERE slug = ?");
@@ -755,6 +777,7 @@ class DBService {
 		));
 		return true;
 	}
+
 	public function DeleteTag(string $slug) : bool {
 		$query = "SELECT id FROM tags WHERE slug = ? LIMIT 1";
 		$query = $this->pdo->prepare($query);
@@ -773,7 +796,11 @@ class DBService {
 		return true;
 	}
 
-	/** REGION CATEGORIES */
+
+/******************************************************************************/
+/* # Categories                                                               */
+/******************************************************************************/
+
 	/**
 	 * Fetch all available categories. Returns an associative array using the categories IDs as keys, and sorted by their `order` property.
 	 * @return CategorytDTO[]
@@ -787,11 +814,12 @@ class DBService {
 		}
 		return $r;
 	}
+
 	/**
 	 * Fetch a category by its slug.
 	 * @return CategoryDTO
 	*/
-	public function GetCategoryBySlug(string $slug){
+	public function GetCategoryBySlug(string $slug) : CategoryDTO {
 		$query = $this->pdo->prepare("SELECT * FROM categories WHERE slug = ?");
 		$query->execute(array($slug));
 		
@@ -799,6 +827,28 @@ class DBService {
 		$query->closeCursor();
 		return $result ? CategoryDTO::CreateFrom($result) : null;
 	}
+
+	/**
+	 * @return CategoryDTO
+	*/
+	public function GetCategoryById(int $id) : CategoryDTO {
+		$query = $this->pdo->prepare("SELECT * FROM categories WHERE id = ?");
+		$query->execute(array($id));
+		
+		$result = $query->fetch();
+		$query->closeCursor();
+		return $result ? CategoryDTO::CreateFrom($result) : null;
+	}
+
+	public function GetTagsFromCategory(int $catId) : array {
+		$query = $this->pdo->prepare("SELECT * FROM tags WHERE categoryId = ? ORDER BY slug ASC");
+		$query->execute(array($catId));
+		$result = $query->fetchAll();
+		foreach($result as $key => $value)
+			$result[$key] = TagDTO::CreateFrom($value);
+		return $result;
+	}
+
 	public function InsertCategory(CategoryDTO $cat){
 		self::CheckSlug($cat->slug, true);
 		$query = $this->pdo->prepare("INSERT INTO categories (slug, name, description, color) VALUES (:slug, :name, :description, :color)");
@@ -809,6 +859,7 @@ class DBService {
 			":color" => $cat->color,
 		));
 	}
+
 	public function UpdateCategory(string $slug, CategoryDTO $cat) : bool {
 		// Check the tag exists
 		$query = $this->pdo->prepare("SELECT COUNT(*) FROM categories WHERE slug = ?");
@@ -838,6 +889,7 @@ class DBService {
 		));
 		return true;
 	}
+
 	public function DeleteCategory(string $slug) : bool {
 		$query = "SELECT id FROM categories WHERE slug = ? LIMIT 1";
 		$query = $this->pdo->prepare($query);
@@ -855,6 +907,7 @@ class DBService {
 
 		return true;
 	}
+
 	/**
 	 * @param int[] $order An associative array taking categories' slug as keys, and their intended position as value. 
 	 */
@@ -879,7 +932,11 @@ class DBService {
 
 	}
 
-	/** REGION Cleaning */
+
+/******************************************************************************/
+/* # Cleaning                                                                 */
+/******************************************************************************/
+
 	/**
 	 * Dissociate all tags from the given category.
 	 * @var int $id The id of the category to clean.

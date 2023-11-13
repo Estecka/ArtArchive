@@ -5,9 +5,14 @@
  * @var CategoryDTO[] $cats
  */
 
+/**
+ * TODO: Figure out if how much of this can be merged with tagList.php
+ */
+
 $cats[null] = CategoryDTO::Empty();
 $cats[null]->name = "Uncategorized";
 
+// Apparently I'm grafting a new field onto a class, and it just works.
 foreach($cats as $key=>$value)
 	$cats[$key]->tags = array();
 
@@ -25,11 +30,8 @@ $printCat = function(CategoryDTO $c){
 	<?php
 };
 $printTag = function(CategoryDTO $c, TagDTO $t){
-	$style = empty($c->color) ? null : "style =\"color: $c->color\"";
-	?>
-	<a href="<?=URL::Tag($t->slug)?>" <?=$style?>><?=$t->slug?></a>
-	<br/>
-	<?php
+	global $page;
+	$page->TagLink($t);
 };
 
 print "<div class='masonry'>";

@@ -1,5 +1,6 @@
 <?php
 /**
+ * @var PageBuilder $this
  * @var TagDTO[] $tags
  * @var CategoryDTO[] $cats
  * @var bool $showEmptyCats
@@ -7,6 +8,7 @@
 
 $cats[null] = CategoryDTO::Empty();
 
+// Apparently I'm grafting a new field onto a class, and it just works.
 foreach($cats as $key=>$value)
 	$cats[$key]->tags = array();
 
@@ -33,20 +35,14 @@ foreach($tags as $tag)
 		if($empty)
 		print("This category is empty");
 		else {
+			$style = empty($cat->color) ? null : "style='--cat-color:$cat->color'";
 			?>
-			<ul>
+			<ul <?=$style?>>
 			<?php
 			foreach($cat->tags as $tag) {
-				$style = empty($cat->color) ? null : "style ='color: $cat->color'";
 				?>
 				<li>
-					<a 
-						href="<?=URL::Tag($tag->slug)?>" 
-						title="<?=$tag->slug?>"
-						<?=$style?>
-					>
-						<?=$tag->slug?>
-					</a>
+					<?php $this->TagLink($tag) ?>
 				</li>
 				<?php
 			}

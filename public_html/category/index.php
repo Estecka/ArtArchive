@@ -1,5 +1,6 @@
 <?php
 require("../../ArtArchive.php");
+require_once __ROOT__."/templates/Markdown.php";
 
 $slug = value($_GET['category']);
 
@@ -11,15 +12,16 @@ if (empty($slug)){
 $bdd = &ArtArchive::$database;
 /** @var CategoryDTO */
 $cat = $bdd->GetCategoryBySlug($slug);
-
 if ($cat == null) {
 	PageBuilder::ErrorDocument(404);
 	die;
 }
 
+$tags = $bdd->GetTagsFromCategory($cat->id);
+
 $name = $cat->GetName();
 
-$style = $cat->color ? "style=\"color : $cat->color\"" : null;
+$style = $cat->color ? "style='--cat-color:$cat->color'" : null;
 
 $page = new PageBuilder("Category : $name");
 $page->StartPage();
@@ -32,9 +34,21 @@ $page->StartPage();
 		<?php
 	}
 	?>
-	<h2 <?=$style?>><?=$name?></h2>
+	<h1 id=CategoryName <?=$style?>><?=$name?></h1>
 	<?php
-	print($cat->description ?? "This category has no description.");
+	print(Markdown::MarkdownToHtml($cat->description ?? "This category has no description."));
+
+	?>
+	<!-- <h3>Tags:</h3> -->
+	<ul class=extendedTagList style="--cat-color:<?=$cat->color?>">
+		<?php
+		foreach($tags as $t){
+			?><li><?php $page->TagPreview($t) ?></li><?php
+		}
+		?>
+	</ul>
+	<?php
+
 $page->EndPage();
 
 ?>

@@ -1,0 +1,16 @@
+#TagTitles {
+	display: block;
+	margin: 21px 0;
+}
+#TagTitles a:not(:hover){
+	text-decoration: none;
+}
+#TagMaintitle{
+	margin: 0;
+}
+#TagSubtitle {
+	margin: 0;
+}
+#TagSubtitle * {
+	color: var(--cat-color)
+}

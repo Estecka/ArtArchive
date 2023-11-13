@@ -23,8 +23,14 @@ if (ArtArchive::$isWebmaster)
 			$this->TagList($tags, $cats, false);
 		if (!empty($tags) && !empty($art->links))
 			print "<hr/>";
-		if (!empty($art->links))
-			$this->LinkList($art->links);
+		if (!empty($art->links)){
+			?>
+			<div class="extlinkslist">
+				<h3>External links :</h3>
+				<?php $this->LinkList($art->links); ?>
+			</div>
+			<?php
+		}
 		?>
 	</div>
 	<div class="column artwork">
@@ -45,7 +51,7 @@ if (ArtArchive::$isWebmaster)
 			<hr/>
 			<?=$art->date?> <br/>
 			<p>
-				<?=str_replace("\n", "<br/>", $art->description)?>
+				<?=Markdown::MarkdownToHtml($art->description)?>
 			<p>
 		</div>
 	</div>

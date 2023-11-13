@@ -2,29 +2,29 @@
 **ArtArchive** is a single-user gallery for PHP and MySQL, inspired by [Danbooru](https://safebooru.donmai.us)'s tagging system.  
 It's main purpose is to serve as an organizer rather than a portfolio.
 
-One feature that it will notably lacks as of now is the ability to upload medias directly from the website's interface. All uploads must be done via a FTP client.
+One feature that it noticeably lacks as of now is the ability to upload medias directly from the website's interface. Currently, all uploads must be done via a FTP client.
 
 ## Requirements
 The server configuration used during developpement is:
-- PHP: 7.0.10
-- MySQL: 5.7.14
-- Apache: 2.4.23
+- PHP: 7.3.21
+- MySQL: 5.7.31
+- Apache: 2.4.46
 
-You need to know how to upload files via FTP, for *both* installation *and* usage).  
-Uploading files is not yet supported, for now you have to upload the files via FTP, and provide the files' url instead when creating an artwork.
+You need to know how to upload files via FTP, for *both* installation *and* usage.  
+Uploading files via the website is not yet supported, for now you have to upload the files via FTP, and provide the file urls instead when registering an artwork.
 
 ## Features
 - Attach multiple files to a single artwork.
 - Manage numerous tags, separate tags into categories.
-- Description page for each and every tag and category
+- Description page for every tag and category
 - Multimedia artworks :
   - image
   - audio
   - documents (txt, pdf, html)
 
 #### Planned features :
-- Disqus comments
-- Thumbnail generation
+- filtered tags / blacklist
+- hide artworks without deleting them.
 
 ## Installation
 This is for a fresh installation. To upgrade from an existing version, refer to the [upgrade guide](Upgrade.md).  

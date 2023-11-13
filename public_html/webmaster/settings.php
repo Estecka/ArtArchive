@@ -1,5 +1,5 @@
 <?php
-require("../../ArtArchive.php");
+require_once "../../ArtArchive.php";
 ArtArchive::RequireWebmaster();
 
 $bdd = &ArtArchive::$database;
@@ -9,6 +9,9 @@ if (!empty($_POST)) {
 		$bdd->StartTransaction();
 		$bdd->SetSettings($_POST['settings']);
 		$bdd->SetPage("about", $_POST['pages']['about']);
+		$bdd->SetPage("home",  $_POST['pages']['home']);
+		$bdd->SetPage("socialLinks", $_POST['socialLinks']);
+		$bdd->SetPage("socialIcons", $_POST['socialFavicon']);
 		$bdd->CommitTransaction();
 	} catch (PDOException $e){
 		$bdd->Rollback();
@@ -19,12 +22,16 @@ if (!empty($_POST)) {
 	}
 }
 
+require_once __ROOT__."/templates/SocialIcon.php";
+$favicons = $bdd->GetPage("socialIcons");
+$socials = $bdd->GetPage("socialLinks");
 
 $settings = &ArtArchive::$settings;
 
 try {
 	$settings = $bdd->GetSettings($settings);
 	$about = $bdd->GetPage("about");
+	$home  = $bdd->GetPage("home");
 } catch (PDOException $e) {
 	echo $e->getCode();
 	echo "<br/>";
@@ -40,28 +47,45 @@ $page->StartPage();
 	<form method="POST">
 		
 		<h2>Site infos</h2>
-		<label for="name">Site name</label>
-		<input id="name" type="text" name="settings[SiteName]" placeholder="ArtArchive" value="<?=htmlspecialchars($settings["SiteName"])?>" />
+		<label for="SiteName">Site name</label>
+		<input id="SiteName" type="text" name="settings[SiteName]" placeholder="ArtArchive" value="<?=htmlspecialchars($settings["SiteName"])?>" />
+
+		<label for="SiteLogo">Site logo</label>
+		<input id="SiteLogo" type="text" name="settings[SiteLogo]" placeholder="/resources/logo.png" value="<?=htmlspecialchars($settings["SiteLogo"])?>" />
 
 		<br/>
+
+		<label for=socialLinks>Social Links</label>
+		<textarea id="socialLinks" name="socialLinks"
+			placeholder="[My Tumblr](https://my.tumblr.com)"
+		><?=$socials?></textarea>
+
+		<br/>
+
+		<label for="home">Home page</label>
+		<br/>
+		<textarea name="pages[home]" id="home" placeholder="Write HTML here"><?=htmlspecialchars($home)?></textarea>
 
 		<label for="about">About page</label>
 		<br/>
-		<textarea name="pages[about]" id ="about"><?=htmlspecialchars($about)?></textarea>
+		<textarea name="pages[about]" id="about" placeholder="Write HTML here"><?=htmlspecialchars($about)?></textarea>
 
 		<br/>
 
 		<h2>RSS infos</h2>
-		<label for="name">Author Name</label>
-		<input id="name" type="text" name="settings[AuthorName]" value="<?=htmlspecialchars($settings["AuthorName"])?>" />
+		<label for="AuthorName">Author Name</label>
+		<input id="AuthorName" type="text" name="settings[AuthorName]" value="<?=htmlspecialchars($settings["AuthorName"])?>" />
 		<br/>
-		<label for="name">Author Email</label>
-		<input id="name" type="text" name="settings[AuthorEmail]" value="<?=htmlspecialchars($settings["AuthorEmail"])?>" />
+		<label for="AutorEmail">Author Email</label>
+		<input id="AutorEmail" type="text" name="settings[AuthorEmail]" value="<?=htmlspecialchars($settings["AuthorEmail"])?>" />
 		<p>
 			<i>Author infos are used in the RSS feeds, and thus are made public. Both are optional.</i>
 		</p>
 
-		<br/>
+		<h2>External Link Icons</h2>
+		<textarea id="socialFavicon" name="socialFavicon"
+			placeholder="<?=htmlspecialchars(SocialIcon::GetFormPlaceholder())?>"
+		><?=$favicons?></textarea>
 
 		<h2>Site layout</h2>
 		<label for="rpp">Results per page</label>
