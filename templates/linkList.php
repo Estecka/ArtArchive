@@ -4,7 +4,7 @@
  * @param string $links	The list of link, with one link per line.
  */
 
-require_once __ROOT__."/templates/SocialIcon.php";
+require_once __ROOT__."/php/SocialIcon.php";
 
 $lines = explode("\n", $links);
 $links = array();

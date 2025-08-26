@@ -20,7 +20,7 @@ if (!empty($_POST)) {
 	}
 }
 
-require_once __ROOT__."/templates/SocialIcon.php";
+require_once __ROOT__."/php/SocialIcon.php";
 
 $settings = &ArtArchive::$settings;
 $pages    = ArtArchive::$database->GetPages(); // TODO: Default values

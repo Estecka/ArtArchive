@@ -1,6 +1,6 @@
 <?php
 require("../../ArtArchive.php");
-require_once __ROOT__."/templates/Markdown.php";
+require_once __ROOT__."/php/Markdown.php";
 
 $slug = value($_GET['tag']);
 
@@ -34,7 +34,7 @@ $currentPage = either($_GET['page'], 0);
 $artworks = $bdd->SearchArtworks(array($tag->id), $rpp, $currentPage, $total);
 
 if (isset($_GET['feed_xml'])){
-	require ("../../templates/RSSBuilder.php");
+	require (__ROOT__."/php/RSSBuilder.php");
 	$rss = new RSSBuilder();
 	$rss->title = "Tag : ".$name;
 	$rss->link = URL::Tag($slug);

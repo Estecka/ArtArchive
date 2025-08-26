@@ -1,6 +1,6 @@
 <?php
 require_once(__ROOT__."/database/ArtworkDTO.php");
-require_once(__ROOT__."/templates/OpenGraphBuilder.php");
+require_once(__ROOT__."/php/OpenGraphBuilder.php");
 
 class PageBuilder{
 	private $title = "ArtArchive";
@@ -51,13 +51,13 @@ class PageBuilder{
 		</head>
 		<body>
 			<?php
-			include("header.php");
+			include(__ROOT__."/templates/header.php");
 			?><main><?php
 	}
 
 	public function EndPage(){
 		?></main><?php
-		include ("footer.php");
+		include (__ROOT__."/templates/footer.php");
 		?>
 		</body>
 		</html>
@@ -103,7 +103,7 @@ class PageBuilder{
 	}
 
 	public function ArtCard(ArtworkDTO $art){
-		include(__ROOT__."/templates/ArtCard.php");
+		include(__ROOT__."/templates/artCard.php");
 	}
 	/**
 	 * @param ArtworkDTO[] $arts

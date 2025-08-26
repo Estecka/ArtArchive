@@ -13,7 +13,6 @@ $filesHint =
 	."E.g: \n\n"
 	."artwork1.jpg \n"
 	."subfolder/artwork2.mp3 \n"
-	// ."http://mydomain/storage/dankerstmeme.pdf"
 	;
 
 $extlinkHint = "One link per line. Markdown link syntax is supported.\n"
