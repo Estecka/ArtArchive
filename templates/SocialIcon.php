@@ -113,6 +113,6 @@ class SocialIcon
 	}
 }
 
-SocialIcon::InitFromForm(ArtArchive::$database->GetPage("socialIcons"));
+SocialIcon::InitFromForm(ArtArchive::$database->GetPage("socialFavicons"));
 
 ?>

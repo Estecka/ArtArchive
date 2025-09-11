@@ -12,6 +12,8 @@ $cats = $bdd->GetAllCategories();
 
 $page = new PageBuilder("Tags and Categories");
 $page->StartPage();
-	$page->TagTable($tags, $cats);
+	?><article class='tagTable'><?php
+		$page->TagTable($tags, $cats);
+	?></article><?php
 $page->EndPage();
 ?>

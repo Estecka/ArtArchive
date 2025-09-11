@@ -5,12 +5,13 @@ require_once __ROOT__."/templates/Markdown.php";
 $bdd = &ArtArchive::$database;
 
 $text = $bdd->GetPage("about");
-$text = Markdown::MarkdownToHtml($text);
 
 $page = new PageBuilder();
 $page->StartPage();
-	
-	print "<div>$text</div>";
-
+	?>
+	<article class='about'>
+		<?=Markdown::MarkdownToHtml($text)?>
+	</article>
+	<?php
 $page->EndPage();
 ?>

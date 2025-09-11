@@ -32,7 +32,7 @@ div.card .viewport {
 	border-width: 1px;
 	border-radius: 1px;
 }
-div.card h4 {
+div.card .artTitle {
 	display: block;
 	width: 160px;
 	margin: 0;

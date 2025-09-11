@@ -7,8 +7,8 @@ $links = ArtArchive::$database->GetPage("socialLinks");
 $links = trim($links);
 ?>
 
-<div id=Header>
-	<div id="Feeds">
+<header>
+	<nav id="Feeds">
 		<?php
 		foreach ($this->rssfeeds as $name => $url){
 			?>
@@ -21,19 +21,19 @@ $links = trim($links);
 			<?php
 		}
 		?>
-	</div>
+	</nav>
 
 	<img id="MainLogo" src="<?=ArtArchive::$settings["SiteLogo"]?>" />
 
 	<h1><?=ArtArchive::GetSiteName()?></h1>
-	<div class="shortcuts">
-		<a href=<?=URL::Home()?>>Home</a>
+	<nav class='shortcuts'>
+		<a class='iconLink home' href=<?=URL::Home()?>>Home</a>
 		 | 
-		<a href="<?=URL::About()?>">About</a>
+		<a class='iconLink info' href="<?=URL::About()?>">About</a>
 		 | 
-		<a href=<?=URL::Search()?>>Search</a>
+		<a class='iconLink search' href=<?=URL::Search()?>>Search</a>
 		 | 
-		<a href="<?=URL::TagsHome()?>">Tags and Categories</a>
+		<a class='iconLink tags' href="<?=URL::TagsHome()?>">Tags and Categories</a>
 		<?php
 		if (!ArtArchive::$isWebmaster){
 			?>
@@ -42,14 +42,14 @@ $links = trim($links);
 			<?php
 		}
 		?>
-	</div>
+	</nav>
 	<?php
 		if (!empty($links)){
 			?>
 			<hr/>
-			<div class=extLinkList>
+			<nav class=socials>
 				<?php $this->LinkList($links); ?>
-			</div>
+			</nav>
 			<?php
 		}
 		?>
@@ -57,7 +57,7 @@ $links = trim($links);
 	if (ArtArchive::$isWebmaster) {
 		?>
 		<hr/>
-		<div>
+		<nav class=webmaster>
 			<b>Webmaster tools :</b>
 			<a href="<?=URL::SiteSettings()?>">Control panel</a>
 			| 
@@ -68,9 +68,8 @@ $links = trim($links);
 			<a href="<?=URL::SubmitCategory()?>">Create category</a>
 			| 
 			<a href="<?=URL::OrderCategory()?>">Reorder Category</a>
-		</div>
+	</nav>
 		<?php
 	}
 	?>
-</div>
-<hr/>
+</header>

@@ -1,0 +1,66 @@
+/******************************************************************************/
+/* # Meta                                                                     */
+/******************************************************************************/
+
+.artPage .margin {
+	max-width: 200px;
+}
+.artPage .margin ul {
+	margin: 0;
+	padding: 0;
+	list-style-position: inside;
+}
+.artPage .margin li {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.artPage .margin li:hover {
+	overflow: visible;
+}
+
+.taglist h4 {
+	margin-bottom: 5px;
+}
+.extlinkslist h3 {
+	margin-bottom: 5px;
+}
+
+
+/******************************************************************************/
+/* # Files                                                                    */
+/******************************************************************************/
+
+div.artwork {
+	width: 100%;
+}
+
+section.media {
+	text-align: center;
+}
+
+
+/******************************************************************************/
+/* # Description                                                              */
+/******************************************************************************/
+div.artwork .description {
+	border-radius: 5px;
+	padding: 20px;
+	padding-top:0;
+	margin-bottom: 10px;
+
+	border-style: inset;
+	border-width: 1px;
+
+	border-color: #ccc;
+	background-color: #f4f4f4;
+}
+.description hr {
+	border-style: inset;
+	border-color: #f4f4f4;
+	border-width: 1px;
+}
+.description p {
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	text-align: justify;
+}

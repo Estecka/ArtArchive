@@ -1,0 +1,59 @@
+.pageList {
+	margin: 5px;
+	display: flex;
+	justify-content: center;
+	--border-radius: 5px;
+}
+
+
+/* Makes sure the link's clickable area covers the whole box. */
+.pageList .pageItem,
+.pageList .pageItem a
+{
+	display: inline-block;
+	min-width: 16px;
+}
+.pageList .pageItem:not(:has(a)),
+.pageList .pageItem a
+{
+	padding: 2px 8px;
+}
+
+
+/* Styling is done on the box surrounding the links */
+
+.pageList .pageItem {
+	
+	background-color: var(--color-bg-deep);
+	border-top: solid;
+	border-bottom: solid;
+	border-width: 1px;
+	border-color: var(--color-highlight-soft);
+
+	box-shadow: darkslateblue 2px 2px 3px 0;
+}
+
+.pageList .pageItem+.pageItem {
+	border-left-style: solid;
+}
+
+.pageList .pageItem:first-child {
+	border-radius: var(--border-radius) 0 0 var(--border-radius);
+	/* border-left-style: solid; */
+}
+.pageList .pageItem:last-child {
+	border-radius: 0 var(--border-radius) var(--border-radius) 0;
+	/* border-right-style: solid; */
+}
+
+.pageList :has(a:hover) {
+	box-shadow: darkslateblue 2px 2px 3px 0,
+	            inset white   0 0 3px 0px
+	            ;
+}
+
+.pageList .ellipsis {
+	border-top: none;
+	border-bottom: none;
+	box-shadow: none;
+}

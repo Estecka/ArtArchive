@@ -40,11 +40,15 @@
 - Added configurable home page message
 - Added configurable header logo
 - Added configurable social links to the header
-- Social/External link incon set is now configurable
-- Moved all RSS links to the same place
+- The set of icons for social/external is now configurable
+- Moved all RSS links to the header.
 - Tag pages now link back to their category.
 - Category pages now list their tags, with shortened descriptions
 - Showing full tag names in more places
 - Fixed link lists showing empty links
 - Fixed "Home" link not being capitalized
 - Prevented client access to all dot files
+
+## 0.8
+- Added configurable stylesheet
+- Added Chrome theme

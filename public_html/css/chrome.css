@@ -1,0 +1,14 @@
+<?php
+// Redundant with .htaccess, but needed if mod_headers is absent.
+header("Content-Type: text/css");
+
+include "millenial/common.css";
+include "millenial/tags.css";
+include "millenial/artPage.css";
+
+include "chrome/common.css";
+include "chrome/tags.css";
+include "chrome/pageList.css";
+include "chrome/artCard.css";
+include "chrome/artPage.css";
+?>

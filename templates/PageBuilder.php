@@ -19,7 +19,7 @@ class PageBuilder{
 	{
 		$this->title = $title ? $title : ArtArchive::GetSiteName();
 		$this->stylesheets = array(
-			"/css/stylesheet.css?masonry=".ArtArchive::$settings['tagMasonry'],
+			ArtArchive::$settings['stylesheet']."?masonry=".ArtArchive::$settings['tagMasonry'],
 		);
 		$this->openGraph = new OpenGraphBuilder();
 		$this->openGraph->siteName = ArtArchive::GetSiteName();
@@ -52,9 +52,11 @@ class PageBuilder{
 		<body>
 			<?php
 			include("header.php");
+			?><main><?php
 	}
 
 	public function EndPage(){
+		?></main><?php
 		include ("footer.php");
 		?>
 		</body>
@@ -77,7 +79,7 @@ class PageBuilder{
 	 * @param int $pageAmount The total amount of page, from start to end.
 	 * @param int $maxRange How many links to nearby pages should be displayed.
 	 */
-	public function PageList(string $urlFormat, int $currentPage, int $pageAmount, int $maxRange = 11){
+	public function PageList(string $urlFormat, int $currentPage, int $pageAmount, int $maxRange = 10){
 		if ($pageAmount > 1)
 			include(__ROOT__."/templates/pageList.php");
 	}

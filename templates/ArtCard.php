@@ -5,10 +5,10 @@
  */
 
 $name = $art->title ?? $art->slug;
-?>
 
+?>
 <a href="<?=URL::Artwork($art->slug)?>" title="<?=htmlspecialchars($name)?>"><div class="card">
-	<div class="viewport">
+	<div class=viewport>
 		<?php
 		if ($art->thumbnail) {
 			?>
@@ -17,6 +17,8 @@ $name = $art->title ?? $art->slug;
 		}
 		?>
 	</div>
-	<h4><?=$name?></h4>
-	<?=$art->date?>
+	<div class=details>
+		<h4 class=artTitle><?=$name?></h4>
+		<span class=date><?=$art->date?></span>
+	</div>
 </div></a>

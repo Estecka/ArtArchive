@@ -1,0 +1,125 @@
+/******************************************************************************/
+/* # Generic Tag names                                                        */
+/******************************************************************************/
+
+:root {
+	/* Will be overriden in html */
+	--cat-color: var(--color-txt-main);
+}
+
+.catName {
+	color: var(--cat-color);
+}
+
+.tagName {
+	color: var(--cat-color);
+}
+li.tagName:has(a):before {
+	content: "#";
+	color: var(--color-txt-soft);
+	text-decoration: none;
+}
+
+
+/******************************************************************************/
+/* # Tag Previews                                                             */
+/******************************************************************************/
+
+.tagPreview {
+	display: inline-block;
+	vertical-align: text-top;
+	max-width: 100%;
+}
+
+.tagPreview > * {
+	display: block;
+}
+.tagPreview > .tagShortDesc {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: var(--color-txt-discrete);
+	text-wrap: nowrap;
+}
+
+
+/******************************************************************************/
+/* # Tag Lists                                                                */
+/******************************************************************************/
+
+<?php
+	// 0 == Liquid
+	// 1 == Rigid masonry
+	// 2+ == Liquid masonry
+	$masonry = isset($_GET['masonry']) ? $_GET['masonry'] : 0;
+?>
+
+:root {
+	--masonry-col-width: <?=$masonry ? "175px"  : "auto" ?>;
+	--masonry-display: <?=$masonry > 1 ? "block" : "inline-block" ?>;
+}
+
+/* TODO: More specific class naming */
+div.masonry {
+	column-width: var(--masonry-col-width);
+}
+
+.inlineCategory {
+	display: var(--masonry-display);
+	break-inside: avoid;
+	vertical-align: top;
+	width: 175px;
+	margin: 5px;
+}
+
+ul.tagList {
+	list-style: none;
+}
+ul.tagList:not(.extendedTagList) {
+	padding: 0;
+}
+
+ul.tagList li.tagName {
+	break-inside: avoid;
+}
+
+
+/******************************************************************************/
+/* # Tag Selection Forms                                                      */
+/******************************************************************************/
+
+/* Make the <label> fill the <li> */
+li>label.tagName {
+	display: block;
+}
+
+label.tagName:hover{
+	font-weight: bold;
+	/* text-decoration: underline; */
+}
+input:checked + label.tagName {
+	font-weight: bolder;
+	color: white;
+	background-color: var(--cat-color);
+}
+
+
+/******************************************************************************/
+/* # Tag Page                                                                 */
+/******************************************************************************/
+
+#TagTitles {
+	display: block;
+	margin: 21px 0;
+}
+#TagTitles a:not(:hover){
+	text-decoration: none;
+}
+#TagMaintitle{
+	margin: 0;
+}
+#TagSubtitle {
+	margin: 0;
+}
+#TagSubtitle * {
+	color: var(--cat-color)
+}

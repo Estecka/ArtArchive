@@ -1,0 +1,16 @@
+.pageList {
+	text-align: center;
+}
+
+.pageList .pageNumber::after {
+	content: ", ";
+}
+
+.pageList .pagePrevious::after {
+	content: " | ";
+
+}
+
+.pageList .pageNext::before {
+	content: " | ";
+}

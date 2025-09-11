@@ -10,31 +10,41 @@
 if (ArtArchive::$isWebmaster) 
 {
 	?>
-	<a href="<?=URL::EditArt($art->slug)?>">Edit</a> | <a href="<?=URL::DeleteArt($art->slug)?>">Delete</a>
-	<hr>
+	<nav>
+		<a href="<?=URL::EditArt($art->slug)?>">Edit</a>
+		 |
+		<a href="<?=URL::DeleteArt($art->slug)?>" class=danger>Delete</a>
+		<hr>
+	</nav>
 	<?php
 }
 
 ?>
-<div class="row">
-	<div class="column margin">
+<article class='artPage row'>
+	<section class='meta column margin'>
 		<?php
-		if (!empty($tags))
-			$this->TagList($tags, $cats, false);
+		if (!empty($tags)){
+			?><section class='tagList'><?php
+				$this->TagList($tags, $cats, false);
+			?></section><?php
+		}
+
 		if (!empty($tags) && !empty($art->links))
 			print "<hr/>";
+
 		if (!empty($art->links)){
 			?>
-			<div class="extlinkslist">
-				<h3>External links :</h3>
+			<section class="extlinkslist">
+				<h4>External links</h4>
 				<?php $this->LinkList($art->links); ?>
-			</div>
+			</section>
 			<?php
 		}
 		?>
-	</div>
+	</section>
+
 	<div class="column artwork">
-		<div class="media">
+		<section class="media">
 			<h2><?=$art->GetName()?></h2>
 			<?php
 			if (empty($files))
@@ -44,15 +54,17 @@ if (ArtArchive::$isWebmaster)
 				print "<br/>";
 			}
 			?>
-		</div>
+		</section>
+
 		<hr>
-		<div class="description">
+
+		<section class="description">
 			<h2><?=$art->GetName()?></h2>
 			<hr/>
 			<?=$art->date?> <br/>
 			<p>
 				<?=Markdown::MarkdownToHtml($art->description)?>
 			<p>
-		</div>
+		</section>
 	</div>
-</div>
+</article>

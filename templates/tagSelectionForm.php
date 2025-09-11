@@ -44,7 +44,7 @@ $printTag = function(CategoryDTO $c, TagDTO $t){
 	<?php
 };
 
-print "<div class='masonry'>";
+print "<div class='masonry tagForm'>";
 foreach($cats as $cat){
 	if (empty($cat->tags) && !$allowInserts)
 		continue;

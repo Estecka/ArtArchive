@@ -1,1 +1,7 @@
 AddType application/x-httpd-php .css
+
+<ifModule mod_headers.c>
+<FilesMatch "\.css$">
+	Header set Content-Type "text/css"
+</FilesMatch>
+</ifModule>

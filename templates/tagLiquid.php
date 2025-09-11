@@ -15,15 +15,16 @@ $empty = empty($tags);
 
 for($col=0; $col==0 || current($tags); $col++){
 	$hidden = $col ? "style=\"visibility: hidden\"" : null;
+	$style=$cat->color ? "style='--cat-color:$cat->color'" : null;
 	?>
-	<div class="inlineCategory" style="--cat-color: <?=either($cat->color, "black")?>">
+	<div class="inlineCategory" <?=$style?>>
 		<div <?=$hidden?>>
 			<?=$printCat($cat)?>
 		</div>
-		<ul>
+		<ul class='tagList'>
 		<?php
 		if (!$col && !current($tags)) {
-			print("This category is empty.");
+			?><i class='emptyNotice'>This category is empty.</i><?php
 		}
 		for($row=0; (!$rowMax || $row<$rowMax) && $tag = current($tags); $row++, next($tags)){
 			?>

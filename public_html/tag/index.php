@@ -57,43 +57,37 @@ $page->StartPage();
 	if (ArtArchive::$isWebmaster)
 	{
 		?>
-		<a href="<?=URL::EditTag($slug)?>">Edit</a>
-		 | 
-		<a href="<?=URL::DeleteTag($slug)?>">Delete</a>
+		<nav class='webmaster tagControls'>
+			<a href="<?=URL::EditTag($slug)?>">Edit</a>
+			 | 
+			<a href="<?=URL::DeleteTag($slug)?>" class='danger'>Delete</a>
+		</nav>
 		<?php
 	}
 	?>
 
-	<!-- <div id="Feeds">
-		<a id=Feeds href="feed.xml" class="social" title="Tagged : <?=$slug?>">
-			<h4>
-				<img src="/resources/rss-32x32.png"/>
-				<span><?=$slug?></span>
-			</h4>
-		</a>
-	</div> -->
-
-	<span id=TagTitles <?=$catColorStyle?>>
-		<h1 id=TagMaintitle><?=$name?></h1>
-		<?php
-	if ($cat){
+	<article class='tagPage'>
+		<span id=TagTitles <?=$catColorStyle?>>
+			<h1 id=TagMaintitle><?=$name?></h1>
+			<?php
+		if ($cat){
+			?>
+			<h2 id=TagSubtitle>
+				<a href="<?=URL::Category($cat->slug)?>"><?=$cat->GetName()?></a>
+			</h2>
+			<?php
+		}
 		?>
-		<h2 id=TagSubtitle>
-			<a href="<?=URL::Category($cat->slug)?>"><?=$cat->GetName()?></a>
-		</h2>
-		<?php
-	}
-	?>
-	</span>
+		</span>
 
-	<p>
 		<?php
 		if ($tag->description)
 			print(Markdown::MarkdownToHtml($tag->description));
-		else
-			print("This tag has no description.");
+		else if (!$artworks) {
+			?><p><i class='emptyNotice'>This tag is empty<i></p> <?php
+		}
 		?>
-	</p>
+	</article>
 	<?php
 	
 	if ($artworks){

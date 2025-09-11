@@ -117,32 +117,54 @@ class DBService {
 /* # Site Infos                                                               */
 /******************************************************************************/
 
+	/***
+	 * Large configs are stored in the page table for the time being.
+	 */
+
+	public function GetSettings(array $settings = null) : array {
+		return $this->GetSettingByTable('settings', $settings);
+	}
+	public function GetConfigs(array $settings = null) : array {
+		return $this->GetSettingByTable('pages', $settings);
+	}
+	public function GetPages(array $settings = null) : array {
+		return $this->GetSettingByTable('pages', $settings);
+	}
 	/**
 	 * @param string[] $settings An associative array with setting names as key, filled with default values.
 	 * @return string[] Array of setting values with setting names as key.
 	 */
-	public function GetSettings(array $settings = null) : array {
+	private function GetSettingByTable(string $tableName, array $settings = null) : array {
 		if ($settings == null)
 		{
-			$query = $this->pdo->query("SELECT * FROM `settings`;");
-			$settings = $query->fetchAll();
+			$query = $this->pdo->query("SELECT `name`, `value` FROM `$tableName`;");
 		}
 		else 
 		{
 			self::PrepareSQLArray(array_keys($settings), $names, $params);
-			$query = $this->pdo->prepare("SELECT `name`, `value` FROM `settings` WHERE `name` IN ($names);");
+			$query = $this->pdo->prepare("SELECT `name`, `value` FROM `$tableName` WHERE `name` IN ($names);");
 			$query->execute($params);
-			$result = $query->fetchAll();
-			foreach($result as $entry)
-				$settings[$entry['name']] = $entry['value'];
 		}
 
+		$result = $query->fetchAll();
+		foreach($result as $entry)
+			$settings[$entry['name']] = $entry['value'];
+
 		return $settings;
+	}
+	public function SetSettings(array $settings) {
+		return $this->SetSettingByTable('settings', $settings);
+	}
+	public function SetConfigs(array $settings) {
+		return $this->SetSettingByTable('pages', $settings);
+	}
+	public function SetPages(array $settings) {
+		return $this->SetSettingByTable('pages', $settings);
 	}
 	/**
 	 * @param mixed[] $settings An associative array of setting values with setting names as key.
 	 */
-	public function SetSettings(array $settings) {
+	private function SetSettingByTable(string $tableName, array $settings) {
 		if (sizeof($settings) <= 0)
 			return;
 
@@ -164,7 +186,7 @@ class DBService {
 		$VALUES = "VALUES \n".implode(", \n", $VALUES);
 
 		$query = 
-			"INSERT INTO `settings` (`name`, `value`) $VALUES 
+			"INSERT INTO `$tableName` (`name`, `value`) $VALUES 
 			ON DUPLICATE KEY UPDATE 
 				`value` = VALUES (`value`)";
 

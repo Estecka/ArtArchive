@@ -25,23 +25,23 @@ foreach($tags as $tag)
 		if ($empty && !$showEmptyCats)
 		continue;
 		
-		$h3 = $cat->GetName();
+		$catTitle = "<h4>".$cat->GetName()."</h4>";
 		if ($cat->slug != null){
 			$url = URL::Category($cat->slug);
-			$h3 = "<a href=\"$url\">$h3</a>";
+			$catTitle = "<a href=\"$url\">$catTitle</a>";
 		}
-		print("<h4>$h3</h4>");
+		print $catTitle;
 		
 		if($empty)
 		print("This category is empty");
 		else {
 			$style = empty($cat->color) ? null : "style='--cat-color:$cat->color'";
 			?>
-			<ul <?=$style?>>
+			<ul class='tagList' <?=$style?>>
 			<?php
 			foreach($cat->tags as $tag) {
 				?>
-				<li>
+				<li class='tagName'>
 					<?php $this->TagLink($tag) ?>
 				</li>
 				<?php

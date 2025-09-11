@@ -21,13 +21,17 @@ foreach($tags as $tag)
 
 $printCat = function(CategoryDTO $c){
 	$h3 = $c->GetName();
-	if ($c->slug != null){
-		$url = URL::Category($c->slug);
-		$h3 = "<a href=\"$url\">$h3</a>";
+	$url = ($c->slug != null) ? URL::Category($c->slug) : null;
+
+	if ($url!=null){
+		?><a href="<?=$url?>"><?php
 	}
-	?>
-	<h3 class="categoryName"><?=$h3?></h3>
-	<?php
+
+	?><h3 class="categoryName"><?=$h3?></h3><?php
+
+	if ($url!=null){
+		?></a><?php
+	}
 };
 $printTag = function(CategoryDTO $c, TagDTO $t){
 	global $page;

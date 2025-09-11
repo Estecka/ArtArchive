@@ -8,43 +8,54 @@
 
 $pageMin = $currentPage - floor($maxRange*0.5);
 $pageMin = max(0, $pageMin);
+
 $pageMax = $pageMin + $maxRange;
 $pageMax = min($pageMax, $pageAmount-1);
+
 $pageMin = $pageMax - $maxRange;
 $pageMin = max(0, $pageMin);
 
-print "<div class=\"pageList\">";
-if ($currentPage > 0){
-	$url = sprintf($urlFormat, $currentPage-1);
+function ellipsis(){
 	?>
-	<a href="<?=$url?>">Previous <<</a> | 
+	<span class='pageItem ellipsis' >
+		•••
+	</span>
 	<?php
 }
 
-if ($pageMin > 0){
-	echo " ••• ";
-}
-
-for ($i=$pageMin; $i<=$pageMax; $i++){
-	if ($i == $currentPage){
-		echo "<b>$i</b>,";
-	}
-	else {
-		$url = sprintf($urlFormat, $i);
+?><nav class='pageList'><?php
+	if ($currentPage > 0){
+		$url = sprintf($urlFormat, $currentPage-1);
 		?>
-		<a href="<?=$url?>"><?=$i?></a>, 
+		<span class='pageItem pageNav pagePrevious'><a href="<?=$url?>">Previous <<</a></span>
 		<?php
 	}
-}
 
-if ($currentPage < ($pageAmount-1)){
-	if ($pageMax < ($pageAmount-1)){
-		echo " ••• ";
+	if ($pageMin > 0){
+		ellipsis();
 	}
-	$url = sprintf($urlFormat, $currentPage+1);
-	?>
-	| <a href="<?=$url?>">>> Next</a>
-	<?php
-}
-print "</div>";
-?>
+
+	for ($i=$pageMin; $i<=$pageMax; $i++){
+		if ($i == $currentPage){
+			?>
+			<span class='pageItem pageNumber currentPage'><b><?=$i?></b></span>
+			<?php
+		}
+		else {
+			$url = sprintf($urlFormat, $i);
+			?>
+			<span class='pageItem pageNumber otherPage'><a href="<?=$url?>"><?=$i?></a></span>
+			<?php
+		}
+	}
+
+	if ($currentPage < ($pageAmount-1)){
+		if ($pageMax < ($pageAmount-1)){
+			ellipsis();
+		}
+		$url = sprintf($urlFormat, $currentPage+1);
+		?>
+		<span class='pageItem pageNav pageNext'><a href="<?=$url?>">>> Next</a></span>
+		<?php
+	}
+?></nav><?php

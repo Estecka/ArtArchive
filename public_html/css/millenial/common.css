@@ -1,0 +1,181 @@
+:root {
+	--color-danger: red;
+	--color-danger-highlight: red;
+	--color-hr: #06f;
+	--color-txt-main: black;
+	--color-txt-soft: dimgrey;
+	--color-txt-discrete: grey;
+
+	--hr-width: 3px
+}
+
+html{
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+hr	{
+	border-color: var(--color-hr);
+	border-width: var(--hr-width);
+	border-style: solid;
+	border-bottom: none;
+}
+
+
+/******************************************************************************/
+/* # Generic Boxes                                                            */
+/******************************************************************************/
+
+textarea {
+	width: 100%;
+	height: 10em;
+	resize: vertical;
+}
+
+.row {
+	display: table-row;
+	width: 100%;
+}
+.column {
+	display: table-cell;
+}
+
+
+/******************************************************************************/
+/* # Generic Texts                                                            */
+/******************************************************************************/
+
+h1 {
+	font-size: 2em;
+}
+
+p {
+	text-align: justify;
+}
+
+.emptyNotice {
+	color: var(--color-txt-discrete);
+}
+
+.danger {
+	color: var(--color-danger);
+}
+
+a.danger:hover{
+	color: var(--color-danger-highlight);
+}
+
+section.homePage {
+	text-align: center;
+}
+
+nav.pageList {
+	text-align: center;
+}
+
+
+/***************/
+/* ## Socials  */
+/***************/
+
+.extlinkslist li {
+	--link-favicon: url("/resources/link.png");
+	list-style: none;
+}
+
+/* Only god knows why this doesn't work on ::marker */
+.iconLink::before,
+.extlinkslist li::before {
+	content: '';
+	display: inline-block;
+	background-image: var(--link-favicon);
+	background-size: contain;
+	width: 16px;
+	height: 16px;
+	vertical-align: sub;
+	margin-right: 2px;
+}
+
+
+/******************************************************************************/
+/* # Header                                                                   */
+/******************************************************************************/
+
+header {
+	border-bottom: solid var(--color-hr) var(--hr-width);
+}
+
+img#MainLogo {
+	float: left;
+	width: 80px;
+	height: auto;
+	margin-right: 8px;
+}
+
+/***********/
+/* ## RSS  */
+/***********/
+
+#Feeds{
+	float: right;
+	text-align: right;
+}
+
+a.largeSocial{
+	text-decoration: none;
+}
+
+a.largeSocial:hover div * {
+	text-decoration: underline;
+}
+a.largeSocial img {
+	height: 20px;
+	width: 20px;
+}
+.largeSocial * {
+	vertical-align: middle;
+}
+
+/******************/
+/* ## Navigation  */
+/******************/
+
+header ul.extlinkslist {
+	margin: 5px;
+	padding: 0;
+}
+header .extlinkslist li {
+	display: inline-block;
+	margin-right: 4px;
+}
+
+header nav {
+	margin: 8px 0;
+}
+
+.iconLink.home   { --link-favicon: url("/resources/icon/home-black.png") }
+.iconLink.info   { --link-favicon: url("/resources/icon/info-black.png") }
+.iconLink.search { --link-favicon: url("/resources/icon/magglass-black.png") }
+.iconLink.tags   { --link-favicon: url("/resources/icon/tag-black.png") }
+
+
+/******************************************************************************/
+/* # Footer                                                                   */
+/******************************************************************************/
+
+footer {
+	text-align: center;
+	border-top: solid var(--color-hr) var(--hr-width);
+}
+footer p {
+	margin: 5px;
+	text-align : center;
+}
+
+
+/******************************************************************************/
+/* # Main Body                                                                */
+/******************************************************************************/
+
+main {
+	padding: 8px 0;
+}

@@ -51,18 +51,25 @@ foreach($allTags as $key=>$tag)
 
 $page = new PageBuilder("Search");
 $page->StartPage();
-	if (isset($arts)){
-		if (!empty($invalidSlugs))
-			print("The following tags do not exist and were ignored : \n".implode(", ", $invalidSlugs));
-
-		print("<h2>Results : </h2>");
-		if (sizeof($arts) <= 0)
-			print("This search did not yield any results. :(");
-		else
-			$page->ArtCardList($arts);
-		$page->PageList(URL::Search($_GET["tags"], "%d"), $pageNo, $pageAmount, 11);
-	}
 	?>
+	<section class='searchResults'>
+		<?php
+		if (isset($arts)){
+			if (!empty($invalidSlugs))
+				print("The following tags do not exist and were ignored : \n".implode(", ", $invalidSlugs));
+
+				
+			?><h2>Results : </h2><?php
+
+			if (sizeof($arts) <= 0){
+				?><p><i class='emptyNotice'>This search did not yield any results. :(</i></p><?php
+			}
+			else
+				$page->ArtCardList($arts);
+			$page->PageList(URL::Search($_GET["tags"], "%d"), $pageNo, $pageAmount, 10);
+		}
+		?>
+	</section>
 	<form method="POST">
 		<?php
 		$page->TagSelectionForm($allTags, $allCats, false);

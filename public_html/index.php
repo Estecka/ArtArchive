@@ -28,15 +28,15 @@ $page = new PageBuilder();
 $page->StartPage();
 
 	?>
-	<div class="homePage">
+	<section class="homePage">
 		<?=Markdown::MarkdownToHtml($homePage)?>
-	</div>
+	</section>
 	<?php
 
 	$page->ArtCardList($artworks);
 	if ($total > 10){
 		$pageAmount = (int)ceil($total /$rpp);
-		$page->PageList(URL::Home()."?page=%d", $pageNo, $pageAmount, 11);
+		$page->PageList(URL::Home()."?page=%d", $pageNo, $pageAmount, 10);
 	}
 
 $page->EndPage();

@@ -8,10 +8,8 @@ if (!empty($_POST)) {
 	try {
 		$bdd->StartTransaction();
 		$bdd->SetSettings($_POST['settings']);
-		$bdd->SetPage("about", $_POST['pages']['about']);
-		$bdd->SetPage("home",  $_POST['pages']['home']);
-		$bdd->SetPage("socialLinks", $_POST['socialLinks']);
-		$bdd->SetPage("socialIcons", $_POST['socialFavicon']);
+		$bdd->SetConfigs ($_POST['configs']);
+		$bdd->SetPages   ($_POST['pages']);
 		$bdd->CommitTransaction();
 	} catch (PDOException $e){
 		$bdd->Rollback();
@@ -23,10 +21,10 @@ if (!empty($_POST)) {
 }
 
 require_once __ROOT__."/templates/SocialIcon.php";
-$favicons = $bdd->GetPage("socialIcons");
-$socials = $bdd->GetPage("socialLinks");
 
 $settings = &ArtArchive::$settings;
+$pages    = ArtArchive::$database->GetPages(); // TODO: Default values
+$configs  = &$pages;
 
 try {
 	$settings = $bdd->GetSettings($settings);
@@ -56,19 +54,19 @@ $page->StartPage();
 		<br/>
 
 		<label for=socialLinks>Social Links</label>
-		<textarea id="socialLinks" name="socialLinks"
+		<textarea id="socialLinks" name="configs[socialLinks]"
 			placeholder="[My Tumblr](https://my.tumblr.com)"
-		><?=$socials?></textarea>
+		><?=$configs['socialLinks']?></textarea>
 
 		<br/>
 
 		<label for="home">Home page</label>
 		<br/>
-		<textarea name="pages[home]" id="home" placeholder="Write HTML here"><?=htmlspecialchars($home)?></textarea>
+		<textarea name="pages[home]" id="home" placeholder="Write HTML here"><?=htmlspecialchars($pages['home'])?></textarea>
 
 		<label for="about">About page</label>
 		<br/>
-		<textarea name="pages[about]" id="about" placeholder="Write HTML here"><?=htmlspecialchars($about)?></textarea>
+		<textarea name="pages[about]" id="about" placeholder="Write HTML here"><?=htmlspecialchars($pages['about'])?></textarea>
 
 		<br/>
 
@@ -82,12 +80,22 @@ $page->StartPage();
 			<i>Author infos are used in the RSS feeds, and thus are made public. Both are optional.</i>
 		</p>
 
-		<h2>External Link Icons</h2>
-		<textarea id="socialFavicon" name="socialFavicon"
-			placeholder="<?=htmlspecialchars(SocialIcon::GetFormPlaceholder())?>"
-		><?=$favicons?></textarea>
 
 		<h2>Site layout</h2>
+
+		<label for=stylesheets>Stylesheet:</label>
+		<input id="stylesheets" type=text name="settings[stylesheet]" 
+			placeholder="<?=htmlspecialchars("/css/stylesheet.css")?>"
+			value="<?=htmlspecialchars($settings['stylesheet'])?>"
+		/>
+
+		<br/>
+
+		<label for=socialFavicons>External Link Icons</label>
+		<textarea id="socialFavicons" name="configs[socialFavicons]"
+			placeholder="<?=htmlspecialchars(SocialIcon::GetFormPlaceholder())?>"
+		><?=value($configs['socialFavicons'])?></textarea>
+
 		<label for="rpp">Results per page</label>
 		<input id="rpp" type=number name="settings[ResultsPerPage]" placeholder=20 value="<?=(int)$settings["ResultsPerPage"]?>" />
 

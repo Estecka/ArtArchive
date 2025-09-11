@@ -28,25 +28,35 @@ $page->StartPage();
 	if (ArtArchive::$isWebmaster)
 	{
 		?>
-		<a href="<?=URL::EditCategory($slug)?>">Edit</a>
-		 |
-		<a href="<?=URL::DeleteCategory($slug)?>">Delete</a>
+		<nav class='webmaster categoryControls'>
+			<a href="<?=URL::EditCategory($slug)?>">Edit</a>
+			 |
+			<a href="<?=URL::DeleteCategory($slug)?>" class=danger>Delete</a>
+		</nav>
 		<?php
 	}
 	?>
-	<h1 id=CategoryName <?=$style?>><?=$name?></h1>
-	<?php
-	print(Markdown::MarkdownToHtml($cat->description ?? "This category has no description."));
-
-	?>
-	<!-- <h3>Tags:</h3> -->
-	<ul class=extendedTagList style="--cat-color:<?=$cat->color?>">
+	<article>
+		<h1 id=CategoryName <?=$style?>><?=$name?></h1>
 		<?php
-		foreach($tags as $t){
-			?><li><?php $page->TagPreview($t) ?></li><?php
+		if ($cat->description) {
+			print(Markdown::MarkdownToHtml($cat->description));
 		}
+		else if (!$tags)
+		{
+			?><p class='emptyNotice'><i>This category is empty.</i></p><?php
+		}
+
 		?>
-	</ul>
+		<!-- <h3>Tags:</h3> -->
+		<ul class='tagList extendedTagList' style="--cat-color:<?=$cat->color?>">
+			<?php
+			foreach($tags as $t){
+				?><li class='tagName'><?php $page->TagPreview($t) ?></li><?php
+			}
+			?>
+		</ul>
+	</article>
 	<?php
 
 $page->EndPage();
