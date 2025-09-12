@@ -15,12 +15,12 @@ try {
 	$artworks = $bdd->GetArtworksBySlug($list);
 }
 catch (PDOException $e){
-	PageBuilder::ErrorDocument(500);
+	PageBuilder::ErrorDocumentDebug(500, $e->getMessage());
 	die;
 }
 
 if (!$artworks){
-	PageBuilder::ErrorDocument(404, "<p><i class=emptyNotice>This list is empty</i></p>");
+	PageBuilder::ErrorDocument(404, "Empty list", "<i class=emptyNotice>No artworks were found</i>");
 	die;
 }
 

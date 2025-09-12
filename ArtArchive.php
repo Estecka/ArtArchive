@@ -24,7 +24,7 @@ class ArtArchive {
 	static public function RequireWebmaster() {
 		if (!self::$isWebmaster) {
 			self::$authenticator->ForceLogin();
-			PageBuilder::ErrorDocument(401);
+			PageBuilder::ErrorDocument(401, "Unauthenticated");
 			die;
 		}
 	}

@@ -55,3 +55,4 @@
 
 ## 0.9-indev
 - Added hotlist.php
+- Expanded the Error Document a little

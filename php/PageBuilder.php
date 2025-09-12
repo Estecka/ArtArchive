@@ -64,15 +64,34 @@ class PageBuilder{
 	<?php
 	}
 
-	/**
-	 * TODO: Support title and debug info for webmaster
-	 */
-	static public function ErrorDocument(int $code, string $message = null){
+	static public function ErrorDocumentDebug(int $code, $debugInfo = null){
+		return self::ErrorDocument($code, null, null, $debugInfo);
+	}
+
+	static public function ErrorDocument(int $code, string $title = null, string $message = null, string $debugInfo = null){
 		http_response_code($code);
-		$page = new PageBuilder($code);
+
+		if (!empty($title))
+			$title = "$code - $title";
+		else
+			$title = $code;
+
+		$page = new PageBuilder($title);
 		$page->StartPage();
-			print("<h1>$code</h1>");
-			print($message);
+		?><article>
+			<h1><?=$title?></h1>
+			<p><?=$message?></p>
+
+			<?php
+			if (ArtArchive::$isWebmaster && !empty($debugInfo)) {
+				?>
+				<h2>Debug Info :</h2>
+				<p><?=$debugInfo?></p>
+				<?php
+			}
+			?>
+		</article>
+		<?php
 		$page->EndPage();
 	}
 

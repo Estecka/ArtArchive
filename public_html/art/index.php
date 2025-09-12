@@ -5,7 +5,7 @@ require_once __ROOT__."/php/Markdown.php";
 $slug = value($_GET['art']);
 
 if (empty($slug)){
-	PageBuilder::ErrorDocument(400);
+	PageBuilder::ErrorDocument(400, "Bad request");
 	die;
 }
 $bdd = &ArtArchive::$database;
@@ -13,7 +13,7 @@ $bdd = &ArtArchive::$database;
 $art = $bdd->GetArtwork($slug);
 
 if ($art == null){
-	PageBuilder::ErrorDocument(404);
+	PageBuilder::ErrorDocument(404, "Artwork not found");
 	die;
 }
 

@@ -5,7 +5,7 @@ require_once __ROOT__."/php/Markdown.php";
 $slug = value($_GET['tag']);
 
 if (empty($slug)){
-	PageBuilder::ErrorDocument(400);
+	PageBuilder::ErrorDocument(400, "Bad request");
 	die;
 }
 
@@ -13,7 +13,7 @@ $bdd = &ArtArchive::$database;
 /** @var TagDTO **/
 $tag = $bdd->GetTag($slug);
 if ($tag == null){
-	PageBuilder::ErrorDocument(404);
+	PageBuilder::ErrorDocument(404, "Tag not found");
 	die;
 }
 

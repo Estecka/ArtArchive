@@ -6,7 +6,7 @@ $slug = value($_GET['tag']);
 $confirmation = value($_POST['slug']);
 
 if ($slug == null){
-	PageBuilder::ErrorDocument(400, "No slug");
+	PageBuilder::ErrorDocument(400, "Bad request");
 	die;
 } else if (empty($confirmation)){
 	?>
@@ -17,7 +17,7 @@ if ($slug == null){
 	</form>
 	<?php
 } else if ($confirmation != $slug) {
-	PageBuilder::ErrorDocument(400, "Wrong slug");
+	PageBuilder::ErrorDocument(400, "Bad confirmation");
 	die;
 } else {
 	$page = new PageBuilder();

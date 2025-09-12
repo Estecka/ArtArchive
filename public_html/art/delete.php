@@ -6,8 +6,7 @@ $slug = value($_GET['art']);
 $confirmation = value($_POST['slug']);
 
 if ($slug == null){
-	http_response_code(400);
-	print("400 - No slug");
+	PageBuilder::ErrorDocument(400, "Bad request");
 	die;
 } else if (empty($confirmation)){
 	?>
@@ -18,9 +17,8 @@ if ($slug == null){
 	</form>
 	<?php
 } else if ($confirmation != $slug) {
-	http_response_code(400);
-	print("400 - Wrong slug");
-	exit;
+	PageBuilder::ErrorDocument(400, "Bad confirmation");
+	die;
 } else {
 	$page = new PageBuilder();
 	$bdd = &ArtArchive::$database;
@@ -31,8 +29,7 @@ if ($slug == null){
 		$page->EndPage();
 	}
 	else {
-		http_response_code(404);
-		print (404);
+		PageBuilder::ErrorDocument(404);
 		die;
 	}
 }
