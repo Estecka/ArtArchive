@@ -64,6 +64,9 @@ class PageBuilder{
 	<?php
 	}
 
+	/**
+	 * TODO: Support title and debug info for webmaster
+	 */
 	static public function ErrorDocument(int $code, string $message = null){
 		http_response_code($code);
 		$page = new PageBuilder($code);

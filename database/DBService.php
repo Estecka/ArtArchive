@@ -230,7 +230,22 @@ class DBService {
 		return $result;
 	}
 
-	public function GetArtwork($slug)/*: ?ArtworkDTO*/ {
+	public function GetArtworksBySlug(array $slugs)
+	{
+		self::PrepareSQLArray($slugs, $slugSQL, $slugValues);
+		$query = $this->pdo->prepare("SELECT * FROM artworks WHERE slug IN ($slugSQL);");
+		$query->execute($slugValues);
+		$result = $query->fetchAll();
+
+		$mappedResult = array();
+		foreach($result as $key=>$art){
+			$art = ArtworkDTO::CreateFrom($art);
+			$mappedResult[$art->slug] = $art;
+		}
+		return $mappedResult;
+	}
+
+	public function GetArtwork($slug) : ?ArtworkDTO {
 		$query = $this->pdo->prepare("SELECT * FROM artworks WHERE slug = ? LIMIT 1");
 		$query->execute(array($slug));
 		$result = $query->fetch();

@@ -52,3 +52,6 @@
 ## 0.8
 - Added configurable stylesheet
 - Added Chrome theme
+
+## 0.9-indev
+- Added hotlist.php
