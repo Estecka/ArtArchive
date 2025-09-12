@@ -27,7 +27,7 @@ class URL {
 		return "?login";
 	}
 	static public function SiteSettings() : string {
-		return "/webmaster/settings.php";
+		return "/webmaster/settings/";
 	}
 
 	static public function Wizard() : string {

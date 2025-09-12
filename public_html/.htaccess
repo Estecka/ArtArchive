@@ -1,6 +1,9 @@
 # Prevent directory browsing
 Options All -Indexes
 
+# Forbid access to any dot file
+RewriteRule ^(.*/)?\..+ - [R=404,L]
+
 # Protect htaccess
 <Files ~ "^.*\.([Hh][Tt][AaPp])">
 order allow,deny

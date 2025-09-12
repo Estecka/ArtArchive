@@ -52,17 +52,22 @@ if (isset($_GET["login"]))
 	ArtArchive::RequireWebmaster();
 
 
-ArtArchive::$settings = ArtArchive::$database->GetSettings(
-	array(
-		"SiteName" => "ArtArchive",
-		"SiteLogo" => "/resources/logo.png",
-		"stylesheet" => "/css/millenial.css",
-		"ResultsPerPage" => 20,
-		"AuthorName" => null,
-		"AuthorEmail" => null,
+ArtArchive::$settings = array(
+	"SiteName" => "ArtArchive",
+	"SiteLogo" => "/resources/logo.png",
+	"stylesheet" => "/css/millenial.css",
+	"ResultsPerPage" => 20,
+	"AuthorName" => null,
+	"AuthorEmail" => null,
 
-		"tagMasonry" => 0,
-		"tagLiquidity" => 16,
-	)
+	"tagMasonry" => 0,
+	"tagLiquidity" => 16,
 );
+
+try {
+	ArtArchive::$settings = ArtArchive::$database->GetSettings(ArtArchive::$settings);
+} catch (PDOException $e) {
+	PageBuilder::ErrorDocumentDebug(500, $e->getMessage());
+	die;
+}
 ?>
