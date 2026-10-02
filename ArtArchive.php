@@ -1,14 +1,14 @@
 <?php
 define("__ROOT__", __DIR__);
-require_once("shorthands.php");
-require_once("Url.php");
-require_once("MediaType.php");
+require_once("php/shorthands.php");
+require_once("php/Url.php");
+require_once("php/MediaType.php");
 require_once("database/DBService.php");
-require_once("templates/PageBuilder.php");
-require_once "auth/authenticator.php";
+require_once("php/PageBuilder.php");
+require_once("auth/authenticator.php");
 
 class ArtArchive {
-	static $version = "0.8.0";
+	static $version = "0.9.0";
 
 	/** @var array */
 	static $settings;
@@ -24,7 +24,7 @@ class ArtArchive {
 	static public function RequireWebmaster() {
 		if (!self::$isWebmaster) {
 			self::$authenticator->ForceLogin();
-			PageBuilder::ErrorDocument(401);
+			PageBuilder::ErrorDocument(401, "Unauthenticated");
 			die;
 		}
 	}
@@ -52,17 +52,23 @@ if (isset($_GET["login"]))
 	ArtArchive::RequireWebmaster();
 
 
-ArtArchive::$settings = ArtArchive::$database->GetSettings(
-	array(
-		"SiteName" => "ArtArchive",
-		"SiteLogo" => "/resources/logo.png",
-		"stylesheet" => "/css/millenial.css",
-		"ResultsPerPage" => 20,
-		"AuthorName" => null,
-		"AuthorEmail" => null,
+ArtArchive::$settings = array(
+	"SiteName" => "ArtArchive",
+	"SiteLogo" => "/resources/logo.png",
+	"stylesheet" => "/css/millenial.css",
+	"ResultsPerPage" => 20,
+	"AuthorName" => null,
+	"AuthorEmail" => null,
 
-		"tagMasonry" => 0,
-		"tagLiquidity" => 16,
-	)
+	"showTagNames" => true,
+	"tagMasonry" => 0,
+	"tagLiquidity" => 16,
 );
+
+try {
+	ArtArchive::$settings = ArtArchive::$database->GetSettings(ArtArchive::$settings);
+} catch (PDOException $e) {
+	PageBuilder::ErrorDocumentDebug(500, $e->getMessage());
+	die;
+}
 ?>

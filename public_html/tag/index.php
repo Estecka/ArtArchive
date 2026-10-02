@@ -1,11 +1,11 @@
 <?php
 require("../../ArtArchive.php");
-require_once __ROOT__."/templates/Markdown.php";
+require_once __ROOT__."/php/Markdown.php";
 
 $slug = value($_GET['tag']);
 
 if (empty($slug)){
-	PageBuilder::ErrorDocument(400);
+	PageBuilder::ErrorDocument(400, "Bad request");
 	die;
 }
 
@@ -13,7 +13,7 @@ $bdd = &ArtArchive::$database;
 /** @var TagDTO **/
 $tag = $bdd->GetTag($slug);
 if ($tag == null){
-	PageBuilder::ErrorDocument(404);
+	PageBuilder::ErrorDocument(404, "Tag not found");
 	die;
 }
 
@@ -31,10 +31,10 @@ $name = $tag->GetName();
 
 $rpp = ArtArchive::$settings["ResultsPerPage"];
 $currentPage = either($_GET['page'], 0);
-$artworks = $bdd->SearchArtworks(array($tag->id), $rpp, $currentPage, $total);
+$artworks = $bdd->GetArtworksByTagId($tag->id, $rpp, $currentPage, $total);
 
 if (isset($_GET['feed_xml'])){
-	require ("../../templates/RSSBuilder.php");
+	require (__ROOT__."/php/RSSBuilder.php");
 	$rss = new RSSBuilder();
 	$rss->title = "Tag : ".$name;
 	$rss->link = URL::Tag($slug);

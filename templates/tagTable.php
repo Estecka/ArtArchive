@@ -44,7 +44,7 @@ foreach($cats as $cat) {
 	if ($isempty && $cat->id < 0)
 		continue;
 	else {
-		$page->TagLiquid($cat, $cat->tags, $printCat, $printTag);
+		$page->LiquidCategory($cat, $cat->tags, $printCat, $printTag);
 	}
 }
 print "</div>";

@@ -4,7 +4,7 @@
 	--color-hr: #06f;
 	--color-txt-main: black;
 	--color-txt-soft: dimgrey;
-	--color-txt-discrete: grey;
+	--color-txt-discrete: silver;
 
 	--hr-width: 3px
 }
@@ -70,6 +70,18 @@ section.homePage {
 
 nav.pageList {
 	text-align: center;
+}
+
+span.maskedImg {
+	--color: var(--color-txt-main);
+	display: inline-block;
+	background-color: var(--color);
+	line-height: 0;
+	mask: var(--mask);
+	-webkit-mask: var(--mask);
+}
+span.maskedImg img {
+	opacity: 0%;
 }
 
 

@@ -5,6 +5,7 @@ header("Content-Type: text/css");
 include "millenial/common.css";
 include "millenial/tags.css";
 include "millenial/artPage.css";
+include "millenial/searchPage.css";
 
 include "chrome/common.css";
 include "chrome/tags.css";

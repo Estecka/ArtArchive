@@ -1,5 +1,6 @@
 <?php
 require("../../../ArtArchive.php");
+require_once __ROOT__."/templates/artworkForm.php";
 ArtArchive::RequireWebmaster();
 
 if (!empty($_POST)){
@@ -17,7 +18,7 @@ $page = new PageBuilder("Submit Artwork");
 $page->StartPage();
 
 	$art = ArtworkDTO::CreateFrom($_POST);
-	$page->ArtForm($art, $tags, $cats, array());
+	template_artworkForm($page, $art, $tags, $cats, array());
 	
 $page->EndPage();
 ?>

@@ -11,8 +11,17 @@ class ArtworkDTO {
 	public $date;
 	/** @var string */
 	public $description;
+
+	/** @var string */
+	public $thumbUrl;
+	/** @var int */
+	public $thumbFocusX;
+	/** @var int */
+	public $thumbFocusY;
+
 	/** @var string */
 	public $links;
+
 
 	static public function CreateFrom($object) : ArtworkDTO {
 		foreach($object as $key => $value)
@@ -25,6 +34,9 @@ class ArtworkDTO {
 		$art->date 	= value($object['date']);
 		$art->slug 	= value($object['slug']);
 		$art->description = value($object['description']);
+		$art->thumbUrl    = value($object['thumbUrl']);
+		$art->thumbFocusX = value($object['thumbFocusX']);
+		$art->thumbFocusY = value($object['thumbFocusY']);
 		$art->links = value($object['links']);
 		return $art;
 	}

@@ -15,6 +15,21 @@ As files are renamed or moved around, some files in your website may become unus
 
 The guide below will tell you exactly what needs to be done for each version upgrade.
 
+## 0.9.0
+From [`0.8.0`](#080) :  
+Delete the following files:
+- `/templates/ArtCard.php`
+- `/templates/Markdown.php`
+- `/templates/OpenGraphBuilder.php`
+- `/templates/PageBuilder.php`
+- `/templates/RSSBuilder.php`
+- `/templates/SocialIcon.php`
+- `/templates/tagLiquid.php`
+- `/templates/tagSelectionForm.php`
+
+**Then** unzip patch  
+Make sure not to overwrite [`/auth/config.php`](/auth/config.php) in the process.  
+
 ## 0.8.0
 From [`0.2.1`](#021) or above :  
 Delete everything in `public_html/css/`  

@@ -1,6 +1,6 @@
 <?php
 require("../ArtArchive.php");
-require_once __ROOT__."/templates/Markdown.php";
+require_once __ROOT__."/php/Markdown.php";
 $bdd = &ArtArchive::$database;
 
 $rpp = ArtArchive::$settings['ResultsPerPage'];
@@ -9,7 +9,7 @@ $artworks = $bdd->GetArtworks($rpp, $pageNo, $total);
 $homePage = $bdd->GetPage("home");
 
 if (isset($_GET["feed_xml"])){
-	require __ROOT__."/templates/RSSBuilder.php";
+	require __ROOT__."/php/RSSBuilder.php";
 	$rss = new RSSBuilder();
 	$rss->title = "All Artworks";
 	$rss->link = URL::Home();

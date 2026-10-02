@@ -1,5 +1,8 @@
 <?php
 /**
+ * Manages the printing of ONE category in a tag form.
+ * See: tagCheckboxForm.php
+ * 
  * @var CategoryDTO $cat
  * @var TagDTO[] $tags
  * @var function $printCat function(CategoryDTO) 

@@ -17,6 +17,8 @@
 }
 .artPage .margin li:hover {
 	overflow: visible;
+	position: relative;
+	z-index: 999;
 }
 
 .taglist h4 {

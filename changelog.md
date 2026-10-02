@@ -52,3 +52,16 @@
 ## 0.8
 - Added configurable stylesheet
 - Added Chrome theme
+
+## 0.9
+- Added hotlist.php
+- Added video file support
+- Added option to override thumbnail file and position
+- Reorganized setting page into multiple pages
+- Prettyfied the artwork form a bit
+- Search page can now search for "any of" and "none of"
+- Fixed artwork pictures overflowing in low-width windows
+- Fixed hovered links overflowing behind artworks
+- Expanded the Error Document a little
+- Added option to switch between tag slug and name display
+- Added default vgen favicon

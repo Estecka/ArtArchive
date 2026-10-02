@@ -1,7 +1,6 @@
 <?php
 /** 
  * @var ArtWorkDTO $art
- * @var string $art->thumbnail
  */
 
 $name = $art->title ?? $art->slug;
@@ -10,9 +9,15 @@ $name = $art->title ?? $art->slug;
 <a href="<?=URL::Artwork($art->slug)?>" title="<?=htmlspecialchars($name)?>"><div class="card">
 	<div class=viewport>
 		<?php
-		if ($art->thumbnail) {
+		$thumbX = either($art->thumbFocusX, 50);
+		$thumbY = either($art->thumbFocusY, 30);
+
+		if ($art->thumbUrl) {
 			?>
-			<img src="<?=URL::Thumb($art->thumbnail)?>"/>
+			<img
+				src="<?=URL::Thumb($art->thumbUrl)?>"
+				style="object-position: <?=$thumbX?>% <?=$thumbY?>%"
+			/>
 			<?php
 		}
 		?>

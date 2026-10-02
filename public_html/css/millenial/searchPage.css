@@ -1,0 +1,111 @@
+/**********************/
+/* ## Radio Buttons   */
+/**********************/
+.searchForm .iconLabel {
+	--radio-disabled: var(--color-txt-discrete);
+	--radio-enabled:  var(--color-txt-main);
+	--radio-pressed:  var(--radio-disabled);
+	--radio-hover:    darkgrey;
+}
+
+.searchForm .iconLabel.exclude {
+	--radio-enabled: var(--color-danger);
+}
+.searchForm .iconLabel.range {
+	--radio-enabled: var(--cat-color);
+}
+
+.searchForm .iconLabel.disabled {
+	--radio-color: var(--radio-disabled);
+}
+.searchForm .iconLabel.enabled {
+	--radio-color: var(--radio-enabled);
+	--radio-hover: var(--radio-color);
+}
+
+.searchForm .iconLabel {
+	display: inline-block;
+	vertical-align: sub;
+	width: 16px;
+	height: 16px;
+	background-color: var(--radio-color);
+	margin: 0 1px;
+	mask: var(--radio-icon);
+	-webkit-mask: var(--radio-icon);
+}
+.searchForm .iconLabel:hover {
+	background-color: var(--radio-hover);
+}
+.searchForm .iconLabel:hover:active {
+	background-color: var(--radio-pressed)
+}
+
+/* Hide the actual radio inputs */
+.searchForm input.searchGroup {
+	display: none;
+}
+
+
+/*********************/
+/* ## Advanced Mod   */
+/*********************/
+/* Show only one label per radio */
+.searchForm input:checked + .disabled {
+	display: none;
+}
+.searchForm input:not(:checked) + .disabled + .enabled {
+	display: none;
+}
+
+/**
+ * ## Hover Behaviour
+ * Can be either ul.tagList or li.tagName depending on how specific the hover 
+ * behaviour needs to be.
+ */
+
+/* Hide disabled radios unless hovered */
+.searchForm ul.tagList:not(:hover) .iconLabel.advanced.disabled {
+	display: none;
+}
+
+/* Dim the color of ignore when not hovered */
+.searchForm ul.tagList:not(:hover) .iconLabel.ignore {
+	--radio-color: var(--radio-disabled);
+}
+/* Hide the ignore label when hovered ? */
+/* .searchForm ul.tagList:hover .iconLabel.ignore {
+	display: none;
+} */
+
+
+/********************/
+/* ## Simple Mode   */
+/********************/
+
+/* Hide description */
+.searchForm input#FormType:not(:checked) ~ .advanced,
+.searchForm input#FormType:not(:checked) ~ * .advanced:not(.enabled) {
+	display: none;
+}
+.searchForm input#FormType:checked ~ * .simple {
+	display: none;
+}
+
+/* Hide advanced Labels */
+.searchForm input#FormType:not(:checked) ~ form .iconLabel.advanced.disabled,
+.searchForm input#FormType:not(:checked) ~ form .iconLabel.advanced.range,
+.searchForm input#FormType:not(:checked) ~ form .iconLabel.advanced.ignore
+{
+	display: none;
+}
+
+/* Show Simple labels */
+.searchForm input:not(.ignore):checked ~ .iconLabel.simple.disabled {
+	display: none;
+}
+.searchForm input:not(.range):checked ~ label.simple.enabled {
+	display: none;
+}
+.searchForm input.range:checked ~ label.simple.disabled {
+	display: none;
+}
