@@ -67,7 +67,7 @@ div.masonry {
 	display: var(--masonry-display);
 	break-inside: avoid;
 	vertical-align: top;
-	width: 175px;
+	min-width: 175px;
 	margin: 5px;
 }
 
@@ -96,12 +96,12 @@ label.tagName:hover{
 	font-weight: bold;
 	/* text-decoration: underline; */
 }
+
 input:checked + label.tagName {
 	font-weight: bolder;
 	color: white;
 	background-color: var(--cat-color);
 }
-
 
 /******************************************************************************/
 /* # Tag Page                                                                 */

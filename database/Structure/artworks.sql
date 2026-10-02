@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 26, 2021 at 10:33 PM
+-- Generation Time: Jan 27, 2026 at 09:35 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -26,6 +26,9 @@ CREATE TABLE `artworks` (
   `title` varchar(128) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `description` text,
+  `thumbUrl` varchar(512) DEFAULT NULL,
+  `thumbFocusX` tinyint(4) DEFAULT '50',
+  `thumbFocusY` tinyint(4) DEFAULT '20',
   `links` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

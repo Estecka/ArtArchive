@@ -1,6 +1,6 @@
 <?php
 require_once("../ArtArchive.php");
-require_once __ROOT__."/templates/Markdown.php";
+require_once __ROOT__."/php/Markdown.php";
 
 $bdd = &ArtArchive::$database;
 

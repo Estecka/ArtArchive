@@ -1,11 +1,31 @@
 <?php
-require_once "../../ArtArchive.php";
+require_once "../../../ArtArchive.php";
 ArtArchive::RequireWebmaster();
 
 $bdd = &ArtArchive::$database;
 
 if (!empty($_POST)) {
+
+	function SanitizeInt(&$value){
+		if (isset($value))
+			$value = intval($value);
+	}
+
+	function SanitizeBool(&$value){
+		if (isset($value)){
+			if (!empty($value))
+				$value = 1;
+			else
+				$value = 0;
+		}
+	}
+
 	try {
+		SanitizeInt($_POST['settings']['ResultsPerPage']);
+		SanitizeInt($_POST['settings']['tagMasonry']);
+		SanitizeInt($_POST['settings']['tagLiquidity']);
+		SanitizeBool($_POST['settings']['showTagNames']);
+
 		$bdd->StartTransaction();
 		$bdd->SetSettings($_POST['settings']);
 		$bdd->SetConfigs ($_POST['configs']);
@@ -20,7 +40,7 @@ if (!empty($_POST)) {
 	}
 }
 
-require_once __ROOT__."/templates/SocialIcon.php";
+require_once __ROOT__."/php/SocialIcon.php";
 
 $settings = &ArtArchive::$settings;
 $pages    = ArtArchive::$database->GetPages(); // TODO: Default values
@@ -96,8 +116,14 @@ $page->StartPage();
 			placeholder="<?=htmlspecialchars(SocialIcon::GetFormPlaceholder())?>"
 		><?=value($configs['socialFavicons'])?></textarea>
 
-		<label for="rpp">Results per page</label>
+		<label for="rpp">Artworks per page</label>
 		<input id="rpp" type=number name="settings[ResultsPerPage]" placeholder=20 value="<?=(int)$settings["ResultsPerPage"]?>" />
+
+		<br/>
+
+		<input name="settings[showTagNames]" type=number value=0 readonly style="display:none" />
+		<input name="settings[showTagNames]" id="showTagNames" type=checkbox <?=$settings['showTagNames']?"checked":""?> />
+		<label for="showTagNames">Show tag full names in lists</label>
 
 		<br/>
 

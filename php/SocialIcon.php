@@ -11,6 +11,7 @@ class SocialIcon
 	static public function DefaultValues() : array {
 		return array(
 			"artfight.net"   => "https://artfight.net/favicon.svg",
+			"artistree.io"   => "https://message-images-qa.s3.amazonaws.com/icon-48.png",
 			"artstation.com" => "https://artstation.com/favicon.ico",
 			"bsky.app"       => "https://web-cdn.bsky.app/static/favicon-16x16.png",
 			"deviantart.com" => "https://deviantart.com/favicon.ico",
@@ -22,6 +23,7 @@ class SocialIcon
 			"modrinth.com"   => "https://modrinth.com/favicon.ico",
 			"tumblr.com"     => "https://tumblr.com/favicon.ico",
 			"twitter.com"    => "https://twitter.com/favicon.ico",
+			"vgen.co"        => "https://vgen.co/img/favicon-16x16.png",
 			"x.com"          => "https://twitter.com/favicon.ico",
 			"soundcloud.com" => "https://soundcloud.com/favicon.ico",
 			"youtu.be"       => "https://youtube.com/favicon.ico",

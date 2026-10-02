@@ -10,7 +10,7 @@ class DBService {
 	 * @var int The expected version for the database's structure.
 	 * This may vary from the actual database's version if it's not up to date.
 	 */
-	static public $version = 2;
+	static public $version = 3;
 
 	/** @var PDO **/
 	public $pdo;
@@ -44,14 +44,19 @@ class DBService {
 	}
 
 	/** 
-	 * Formats an array to be used into a prepared SQL query. 
-	 * In order to prevent SQL injection, make sure the array's keys do not originate from user input; thus it is best used with non-associative arrays.
+	 * Formats an array to be used into a prepared  SQL query.
+	 * Array keys are ignored, parameters will be named after their position in 
+	 * the array.
 	 * 
-	 * @param array $array 	The array that must be prepared.
-	 * @param string $sql 	Outputs the prepared SQL representation of the array. Will be null if $array is empty.
-	 * @param array $params	Outputs the array of parameters that must be bound to the prepared query. It will be similar to &array, but with ':' prepended to each key.
-	 * @param string $prefix If this value is set paramater's name will be formated as ":prefix_key" instead of ":key". Use this if you need to bind multiple arrays with the same key names.
-	*/
+	 * @param array $array The array that must be prepared.
+	 * @param string $sql Outputs the prepared  SQL representation of the array.
+	 * Parenthesis are not included. Will be null if $array is empty.
+	 * @param array $params Outputs the array  of parameters  that must be bound
+	 * to the  prepared  query. It  will be  similar  to  &array,  but with  ':'
+	 * prepended to each key. The existing array will be overwritten.
+	 * @param string $prefix Parameters names will be prefixed  with this value.
+	 * Use this if you need to bind multiple arrays to the same query.
+	 */
 	static private function PrepareSQLArray(array $array, &$sql, &$params, string $prefix=null) {
 		if (sizeof($array) <= 0)
 		{
@@ -61,8 +66,8 @@ class DBService {
 		else 
 		{
 			$params = array();
-			foreach($array as $key=>$value){
-				$name = $prefix ? ":$prefix"."_$key" : ":$key";
+			foreach (array_values($array) as $i=>$value){
+				$name = $prefix ? ":$prefix"."_$i" : ":$i";
 				$params[$name] = $value;
 			}
 
@@ -230,7 +235,22 @@ class DBService {
 		return $result;
 	}
 
-	public function GetArtwork($slug)/*: ?ArtworkDTO*/ {
+	public function GetArtworksBySlug(array $slugs)
+	{
+		self::PrepareSQLArray($slugs, $slugSQL, $slugValues);
+		$query = $this->pdo->prepare("SELECT * FROM artworks WHERE slug IN ($slugSQL);");
+		$query->execute($slugValues);
+		$result = $query->fetchAll();
+
+		$mappedResult = array();
+		foreach($result as $key=>$art){
+			$art = ArtworkDTO::CreateFrom($art);
+			$mappedResult[$art->slug] = $art;
+		}
+		return $mappedResult;
+	}
+
+	public function GetArtwork($slug) : ?ArtworkDTO {
 		$query = $this->pdo->prepare("SELECT * FROM artworks WHERE slug = ? LIMIT 1");
 		$query->execute(array($slug));
 		$result = $query->fetch();
@@ -238,104 +258,77 @@ class DBService {
 		return $result ? ArtworkDTO::CreateFrom($result) : null;
 	}
 
-	/**
-	 * @deprecated Use `SearchArtworks` instead
-	 * 
-	 * This method require excessive privileges ("CREATE TEMPORARY TABLE")
-	 * This method will be removed.
-	 * Seeks artworks that are assigned all of the provided tags.
-	 * @param int[] $tags The Id of the required tags
-	 * @param int $amount
-	 * @param int $page
-	 * @param int $total Outputs the total number of results.
-	 * @return ArtworkDTO[]
-	 */
-	public function GetArtworksByTags(array $tags, int $amount, int $page, int &$total = null){
-		
-		// #1 Save all matching artworks id into a temporary table
-		self::PrepareSQLArray($tags, $sql, $params);
-		$paramNames = array_keys($params);
-
-		$INNER_JOIN_tags = "\n";
-		for ($i=0; $i<sizeof($tags); $i++){
-			$tag = $paramNames[$i];
-			$INNER_JOIN_tags .= 
-				"INNER JOIN \n"
-				."	(SELECT artId as id FROM `art-tag` WHERE tagId = $tag) as `arts$i` \n"
-				."	ON `arts$i`.id = `artworks`.id \n";
-		}
-
-		$query = 
-			"CREATE TEMPORARY TABLE `foundArts` \n"
-			."SELECT `artworks`.id FROM `artworks` \n"
-			."$INNER_JOIN_tags;";
-		$query = $this->pdo->prepare($query);
-		$query->execute($params);
-
-		// #2 Count them.
-		$total = $this->pdo->query("SELECT count(id) FROM `foundArts`")->fetchColumn();
-
-		// #3 Return a limited set of result.
-		$query = $this->pdo->prepare(
-			"SELECT `artworks`.* FROM `artworks` 
-			INNER JOIN `foundArts` ON `foundArts`.id = `artworks`.id
-			LIMIT :offset, :amount;"
-		);
-		$query->bindValue(":offset", $amount*$page, PDO::PARAM_INT);
-		$query->bindValue(":amount", $amount,       PDO::PARAM_INT);
-		$query->execute();
-
-		$result = $query->fetchAll();
-		foreach($result as $key=>$art)
-			$result[$key] = ArtworkDTO::CreateFrom($art);
-		return $result;
+	public function GetArtworksByTagId(int $tagId, int $amount, int $page, int &$total = null) {
+		return $this->SearchArtworks(array($tagId), array(), array(), $amount, $page, $total);
 	}
 
 	/**
-	 * An improved and hopefully more performant version of `GetArtworksByTag`.
-	 * Seeks artworks that are assigned all of the desired tags, and none of the blacklisted ones.
-	 * @param int[] $required The Id of the required tags
-	 * @param int[] $blacklist The Id of the blacklisted tags
+	 * Search artworks by various flavours of whitelists and blackists.
+	 * 
+	 * @param int[] $required A list of tag IDs. Artworks must have ALL  of these tags.
+	 * @param int[] $excluded A list of tag IDs. Artworks must have NONE of these tags.
+	 * @param int[][] $included Multiple lists of tag IDs. Artworks must have at least ONE tag FROM EACH list.
 	 * @param int $amount The maximum amount of result to return
 	 * @param int $page
 	 * @param int $total Outputs the total number of results.
 	 * @return ArtworkDTO[]
 	 */
-	public function SearchArtworks(array $required, int $amount, int $page, int &$total = null, array $blacklist = null){
-		$required = array_unique($required);
-		if (empty($blacklist))
-			$blacklist = array(-1);
-		if (empty($required))
-			$required = array(-1);
+	public function SearchArtworks(array $required, array $excluded, array $includeGroups, int $amount, int $page, int &$total = null){
+		// Generate the SQL query and its parameters.
+		// Main SQL is ready to be queried. Sub SQL is ready to be included into
+		// another SQL's "where" statement
+		$params = array();
+		$SQL_MAIN = null;
+		$AND_SUBSQL = "";
 
-		// #1 Determine artwork ids to exclude.
-		self::PrepareSQLArray($blacklist, $BLACKLIST, $BL_params, "black");
-		$BLACKLIST = "SELECT artId FROM `art-tag` WHERE tagId IN ($BLACKLIST)";
-		
-		// #2 Find the list (by id) of all matching artworks
-		self::PrepareSQLArray($required, $REQUIRED, $WL_params, "white");
-		$query = 
-			"SELECT DISTINCT(artId), COUNT(tagId) as score FROM `art-tag` 
-				WHERE artId NOT IN ($BLACKLIST)
-				AND tagId IN ($REQUIRED)
-			GROUP BY artId
-			HAVING score = :score"
-			;
+		if (!empty($excluded)) {
+			self::PrepareSQLArray(array_unique($excluded), $TAGLIST_SQL, $localParams, 'exclude_');
+			$negative_SQL = "SELECT DISTINCT(artId) FROM `art-tag` WHERE tagId IN ($TAGLIST_SQL)";
+			$SQL_MAIN  ="SELECT id FROM artworks WHERE id NOT IN ($negative_SQL)";
+			$AND_SUBSQL = "AND artId NOT IN ($negative_SQL)";
+			$params = array_merge($params, $localParams);
+		}
 
-		$params = array_merge($WL_params, $BL_params);
-		$params[':score'] = sizeof($required);
-		$query = $this->pdo->prepare($query);
+		foreach(array_values($includeGroups) as $grpIndex=>$included)
+		if (!empty($included)) {
+			self::PrepareSQLArray(array_unique($included), $TAGLIST_SQL, $localParams, 'include'.$grpIndex.'_');
+			$SQL_MAIN = "SELECT DISTINCT(artId) FROM `art-tag` WHERE tagId IN ($TAGLIST_SQL) $AND_SUBSQL";
+			$AND_SUBSQL = "AND artId IN ($SQL_MAIN)";
+			$params = array_merge($params, $localParams);
+		}
+
+		if (!empty($required)) {
+			self::PrepareSQLArray(array_unique($required), $TAGLIST_SQL, $localParams, "require_");
+			$SQL_MAIN = 
+				"SELECT DISTINCT(artId), COUNT(tagId) as score FROM `art-tag` 
+					WHERE tagId IN ($TAGLIST_SQL)
+					$AND_SUBSQL
+				GROUP BY artId
+				HAVING score = :score"
+				;
+
+			$params = array_merge($params, $localParams);
+			$params[':score'] = sizeof($required);
+		}
+
+		unset ($AND_SUBSQL);
+		if (empty($SQL_MAIN)){
+			throw new InvalidArgumentException("Searched artwork with no parameters.");
+		}
+
+
+		// Get the final list of artwork IDs
+		$query = $this->pdo->prepare($SQL_MAIN);
 		$query->execute($params);
 		$results = $query->fetchAll(PDO::FETCH_COLUMN);
 		$query->closeCursor();
-	
-		// #3 Count the results
+
 		$total = sizeof($results);
 
 		if (sizeof($results) <= 0)
 			return array();
 
-		// #4 Get the artworks
+		// Get the artworks
 		self::PrepareSQLArray($results, $RESULTS, $resultParams);
 		$query = 
 			"SELECT * FROM `artworks` 
@@ -360,12 +353,18 @@ class DBService {
 
 	public function AddArtwork(ArtworkDTO $art) : bool {
 		self::CheckSlug($art->slug, true);
-		$query = $this->pdo->prepare("INSERT INTO artworks (slug, title, date, description, links) VALUES (?,?,?,?,?)");
+		$query = $this->pdo->prepare("INSERT INTO artworks
+			(slug, title, date, description, thumbUrl, thumbFocusX, thumbFocusY, links)
+			VALUES (?,?,?,?,?,?,?,?)"
+		);
 		$result = $query->execute(array(
 			$art->slug,
 			$art->title,
 			$art->date,
 			$art->description,
+			$art->thumbUrl,
+			$art->thumbFocusX,
+			$art->thumbFocusY,
 			$art->links,
 		));
 		return $result;
@@ -387,12 +386,18 @@ class DBService {
 
 		// Perform the change
 		self::CheckSlug($art->slug, true);
-		$query = $this->pdo->prepare("UPDATE artworks SET slug = ?, title = ?, date = ?, description = ?, links = ? WHERE slug = ?");
+		$query = $this->pdo->prepare("UPDATE artworks
+			SET slug = ?, title = ?, date = ?, description = ?, thumbUrl = ?, thumbFocusX = ?, thumbFocusY = ?, links = ?
+			WHERE slug = ?"
+		);
 		$query->execute(array(
 			$art->slug,
 			$art->title,
 			$art->date,
 			$art->description,
+			$art->thumbUrl,
+			$art->thumbFocusX,
+			$art->thumbFocusY,
 			$art->links,
 			$slug,
 		));
@@ -633,11 +638,13 @@ class DBService {
 
 		$artIds = array();
 		foreach($artworks as $art)
-			$artIds[] = $art->id;
+			if (empty($art->thumbUrl))
+				$artIds[] = $art->id;
 		
 		$thumbs = $this->GetMainFiles($artIds, $extensions);
-		foreach($artworks as $key=>$art)
-			$artworks[$key]->thumbnail = value($thumbs[$art->id]);
+		foreach($artworks as $art)
+			if (empty($art->thumbUrl))
+				$art->thumbUrl = value($thumbs[$art->id]);
 
 		return $artworks;
 	}
@@ -649,7 +656,10 @@ class DBService {
 	 * @return string[] Associative array that associates artwork Ids with file pathes.
 	 */
 	public function GetMainFiles(array $artIds, array $extensions) : array {
-		
+		// Shortcircuit error 500 when no thumbnail in a set is the main file.
+		if (empty($artIds))
+			return array();
+
 		// [[:space:]] is the metacaracter \s (whitespace) for sql regex
 		// \\\\. <- escaped caracters needs to be escaped twice in sql regex
 		$extensions = implode("|", $extensions);

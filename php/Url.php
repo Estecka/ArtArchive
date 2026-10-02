@@ -27,7 +27,7 @@ class URL {
 		return "?login";
 	}
 	static public function SiteSettings() : string {
-		return "/webmaster/settings.php";
+		return "/webmaster/settings/";
 	}
 
 	static public function Wizard() : string {
@@ -52,13 +52,43 @@ class URL {
 	static public function DeleteArt(string $slug) : string {
 		return "/art/$slug/delete.php";
 	}
-	static public function Search(string $tags = null, $page = 0) : string {
+
+	/** @deprecated */
+	static public function SearchLegacy(string $tags = null, $page = 0) : string {
 		$url = "/search.php";
 		if ($tags){
-			$url .= "?tags=$tags";
+			$url .= "?require=$tags";
 			if ($page)
 				$url .= "&page=$page";
 		}
+		return $url;
+	}
+
+	/**
+	 * @param string[]|string[][] $searchGroups
+	 */
+	static public function Search(array $searchGroups=array(), $page=0) : string {
+		$url = "/search.php";
+
+		$params=array();
+		foreach ($searchGroups as $name=>$value)
+		if (!empty($value))
+		{
+			$params[$name] = is_array($value) ? 
+				implode('+', $value):
+				$value;
+		}
+
+		if (!empty($params)){
+			if ($page) $params['page'] = $page;
+
+			$glue='?';
+			foreach ($params as $key=>$value){
+				$url .= "$glue$key=$value";
+				$glue = "&";
+			}
+		}
+
 		return $url;
 	}
 

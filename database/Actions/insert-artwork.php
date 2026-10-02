@@ -32,7 +32,7 @@ try {
 	$response = $bdd->AddArtwork($artwork);
 	if (!$response){
 		$bdd->Rollback();
-		PageBuilder::ErrorDocument(500, "Unknown database error");
+		PageBuilder::ErrorDocumentDebug(500, "Unknown database error: $response");
 		die;
 	} else {
 		$bdd->AddFiles($artwork->slug, $files);

@@ -11,23 +11,31 @@ function	GetMediaType(string $filename) : string {
 			return EMedia_undefined;
 
 		case "bmp" :
+		case "gif" :
 		case "jpeg" :
 		case "jpg" :
 		case "png" :
-		case "gif" :
 		case "webp" :
 			return EMedia_image;
 		
 		case "mp3":
-		case "wav":
-		case "ogg":
 		case "m4a":
+		case "ogg":
+		case "wav":
 			return EMedia_audio;
 		
-		case "txt":
-		case "pdf":
+		case "avi":
+		case "mp4":
+		case "mkv":
+		case "ogv":
+		case "webm":
+		case "wmv":
+			return EMedia_video;
+		
+		case "htm":
 		case "html":
-		case "htm":	
+		case "pdf":
+		case "txt":
 			return EMedia_iframe;
 	}
 }

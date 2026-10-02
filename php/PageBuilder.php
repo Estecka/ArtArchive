@@ -1,6 +1,9 @@
 <?php
 require_once(__ROOT__."/database/ArtworkDTO.php");
-require_once(__ROOT__."/templates/OpenGraphBuilder.php");
+require_once(__ROOT__."/database/CategoryDTO.php");
+require_once(__ROOT__."/database/TagDTO.php");
+require_once(__ROOT__."/php/OpenGraphBuilder.php");
+require_once(__ROOT__."/php/Url.php");
 
 class PageBuilder{
 	private $title = "ArtArchive";
@@ -51,27 +54,59 @@ class PageBuilder{
 		</head>
 		<body>
 			<?php
-			include("header.php");
+			include(__ROOT__."/templates/header.php");
 			?><main><?php
 	}
 
 	public function EndPage(){
 		?></main><?php
-		include ("footer.php");
+		include (__ROOT__."/templates/footer.php");
 		?>
 		</body>
 		</html>
 	<?php
 	}
 
-	static public function ErrorDocument(int $code, string $message = null){
+
+/******************************************************************************/
+/* # Error Documents                                                          */
+/******************************************************************************/
+
+	static public function ErrorDocumentDebug(int $code, $debugInfo = null){
+		return self::ErrorDocument($code, null, null, $debugInfo);
+	}
+
+	static public function ErrorDocument(int $code, string $title = null, string $message = null, string $debugInfo = null){
 		http_response_code($code);
-		$page = new PageBuilder($code);
+
+		if (!empty($title))
+			$title = "$code - $title";
+		else
+			$title = $code;
+
+		$page = new PageBuilder($title);
 		$page->StartPage();
-			print("<h1>$code</h1>");
-			print($message);
+		?><article>
+			<h1><?=$title?></h1>
+			<p><?=$message?></p>
+
+			<?php
+			if (ArtArchive::$isWebmaster && !empty($debugInfo)) {
+				?>
+				<h2>Debug Info :</h2>
+				<p><?=$debugInfo?></p>
+				<?php
+			}
+			?>
+		</article>
+		<?php
 		$page->EndPage();
 	}
+
+
+/******************************************************************************/
+/* # Misc Widgets                                                             */
+/******************************************************************************/
 
 	/**
 	 * @param string $urlFormat Url where %d represents the page number. E.g: "http://url?page=%d"
@@ -92,20 +127,29 @@ class PageBuilder{
 	}
 
 	/**
-	 * @param ArtWorkDTO $art
-	 * @param TagDTO[] $tags List of all available tags. Each tag should provide an additional `enabled`  property.
-	 * @param CategoryDTO[] $cats List of all available categories.
-	 * @param string[] $files The urls this artwork's files.
+	 * @param string $links	The list of link, with one link per line.
 	 */
-	public function ArtForm(ArtworkDTO $art, array $tags, array $cats, array $files, $action = null){
-		$page = &$this;
-		include(__ROOT__."/templates/artworkForm.php");
+	public function	MaskedImage(string $src){
+		?><span
+			class=maskedImg
+			style="--mask:url(<?=$src?>)"
+		><img
+			src="<?=$src?>"
+		/></span><?php
 	}
 
+
+/******************************************************************************/
+/* # Artworks                                                                 */
+/******************************************************************************/
+
 	public function ArtCard(ArtworkDTO $art){
-		include(__ROOT__."/templates/ArtCard.php");
+		include(__ROOT__."/templates/artCard.php");
 	}
 	/**
+	 * TODO: Automatic thumbnail fetching. Optional parameter to manually pass
+	 * the thumbnails if ever required.
+	 * 
 	 * @param ArtworkDTO[] $arts
 	 */
 	public function ArtCardList(array $arts){
@@ -131,13 +175,18 @@ class PageBuilder{
 		include(__ROOT__."/templates/artPage.php");
 	}
 
+
+/******************************************************************************/
+/* # Tags & Categories                                                        */
+/******************************************************************************/
+
 	/**
 	 * A link to a single tag.
-	 * @param $color Override  for the  category color  to use. This is  usually
-	 * defined in the  html parents, in which case it doesn't need to be defined
-	 * here.
+	 * @param $color The color code  or name  for the  category's color. This is
+	 * usually defined in the  html parents, in which case it doesn't need to be
+	 * defined here.
 	 */
-	public function TagLink(TagDTO $tag, $color=null){
+	public function TagLink(TagDTO $tag, string $color=null){
 		if ($color != null)
 			$color = "style='--cat-color:$color'";
 		?>
@@ -146,10 +195,7 @@ class PageBuilder{
 			href="<?=URL::Tag($tag->slug)?>" 
 			title="<?=$tag->slug?>"
 			<?=$color?>
-		>
-			<?=$tag->GetName()?>
-		</a>
-		<?php
+		><?=$tag->GetName()?></a><?php
 	}
 
 	/**
@@ -186,13 +232,28 @@ class PageBuilder{
 	}
 
 	/**
-	 * @param TagDTO[] $tags
+	 * Form used when assigning tags to an artwork.
+	 * Also formerly used by the search form.
+	 * @param TagDTO[] $tags Each tag is provided with an additional property `enabled`.
 	 * @param CategoryDTO[] $cats
 	 * @param bool $allowInserts If true, the user will be able to freely enter any tags into the categories of this form.
 	 */
 	public function TagSelectionForm(array $tags, array $cats, bool $allowInserts){
 		$page = $this;
-		include(__ROOT__."/templates/tagSelectionForm.php");
+		$showEmptyCats = $allowInserts;
+		include(__ROOT__."/templates/tagCheckboxForm.php");
+	}
+
+	/**
+	 * Form used for searching artworks by various flavors of whitelisted and 
+	 * blacklisted tags.
+	 * @var TagDTO[] $tags
+	 * @var CategoryDTO[] $cats
+	 * @var string[] $tagToStatus maps tag slugs to their initial status.
+	 */
+	public function SearchForm(array $tags, array $cats, array $tagToStatus){
+		$page = $this;
+		include(__ROOT__."/templates/tagRadioForm.php");
 	}
 
 	/**
@@ -215,6 +276,20 @@ class PageBuilder{
 	}
 
 	/**
+	 * Display multiple tags and categories in a liquid fashion.
+	 * @var TagDTO[] $tags
+	 * @var CategoryDTO[] $cats
+	 * @var callable $printTag
+	 * @var callable $printCat
+	 * @var string $nullCatName
+	 * @var bool $showEmptyCats
+	 */
+	public function LiquidTable(array $tags, array $cats, callable $printCat, callable $printTag, string $nullCatName = "Others", bool $showEmptyCats = false){
+		$page = $this;
+		include(__ROOT__."/templates/liquidTable.php");
+	}
+
+	/**
 	 * Display a single category and its tags in a liquid fashion.
 	 * @param CategoryDTO $cat
 	 * @param TagDTO[] $tags
@@ -222,15 +297,19 @@ class PageBuilder{
 	 * @param callable $printCat function(CategoryDTO) => Formats and prints the name of the Category.
 	 * @param callable $printTag function(TagDTO) => Formats and prints the name of the tag.
 	 */
-	public function TagLiquid(CategoryDTO $cat, array $tags, callable $printCat, callable $printTag){
-		include(__ROOT__."/templates/tagLiquid.php");
+	public function LiquidCategory(CategoryDTO $cat, array $tags, callable $printCat, callable $printTag){
+		include(__ROOT__."/templates/liquidCategory.php");
 	}
 
 	public function CategoryForm(CategoryDTO $cat, $action = null){
 		include(__ROOT__."/templates/categoryForm.php");
 	}
 
-	/** REGION MEDIA */
+
+/******************************************************************************/
+/* # Media                                                                    */
+/******************************************************************************/
+
 	public function Media (string $path) {
 		$url = URL::Media($path);
 		$name = $path;
@@ -247,6 +326,10 @@ class PageBuilder{
 			
 			case EMedia_audio:
 				include(__ROOT__."/templates/media/audio.php");
+				break;
+			
+			case EMedia_video:
+				include(__ROOT__."/templates/media/video.php");
 				break;
 			
 			case EMedia_iframe:

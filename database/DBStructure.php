@@ -10,10 +10,10 @@ class DBStructure {
 	 * @var int The expected version for the database's structure.
 	 * This may vary from the actual database's version if it's not up to date.
 	 */
-	static public $version = 2;
+	static public $version = 3;
 
-	
-	
+
+
 	static $procedures = array(
 		// "Check_Slug",
 	);

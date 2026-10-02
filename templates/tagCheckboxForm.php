@@ -3,25 +3,15 @@
  * @var PageBuilder $page
  * @var TagDTO[] $tags Each tag is provided with an additional property `enabled`.
  * @var CategoryDTO[] $cats
- * @var bool $allowInserts
+ * @var bool $showEmptyCats
  */
 
-$cats[null] = CategoryDTO::Empty();
-$cats[null]->name = "Others";
-
-foreach($cats as $key=>$cat){
-	$cats[$key]->tags = array();
-}
-foreach($tags as $tag){
-	$cats[$tag->categoryId]->tags[] = $tag;
-}
-
-$printCat = function(CategoryDTO $c) use ($allowInserts){
+$printCat = function(CategoryDTO $c) use ($showEmptyCats){
 	$name = $c->GetName();
 	$style = $c->color ? "style=\"color: $c->color\"" : null;
 	$createId = empty($c->slug) ? "createNULL" : "create[$c->slug]";
 	print("<h4 $style>$name</h4>");
-	if ($allowInserts) {
+	if ($showEmptyCats) {
 		?>
 		<textarea 
 			id="<?=$createId?>" 
@@ -44,12 +34,10 @@ $printTag = function(CategoryDTO $c, TagDTO $t){
 	<?php
 };
 
-print "<div class='masonry tagForm'>";
-foreach($cats as $cat){
-	if (empty($cat->tags) && !$allowInserts)
-		continue;
-	else
-		$page->TagLiquid($cat, $cat->tags, $printCat, $printTag);
-}
-print "</div>"
+$page->LiquidTable(
+	$tags, $cats,
+	$printTag, $printCat,
+	"Others",
+	$showEmptyCats
+);
 ?>

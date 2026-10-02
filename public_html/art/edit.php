@@ -1,5 +1,6 @@
 <?php
 require("../../ArtArchive.php");
+require_once __ROOT__."/templates/artworkForm.php";
 ArtArchive::RequireWebmaster();
 
 if (!empty($_POST)){
@@ -31,7 +32,7 @@ $name = $art->GetName();
 $page = new PageBuilder("Edit : $name");
 $page->StartPage();
 		print("<h2>Submit artwork</h2>");
-		$page->ArtForm($art, $tags, $cats, $files);
+		template_artworkForm($page, $art, $tags, $cats, $files);
 $page->EndPage();
 
 ?>

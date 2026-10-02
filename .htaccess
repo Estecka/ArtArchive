@@ -1,10 +1,10 @@
-####
-# This .htaccess is only useful in case you web host do not offer the functionality of the public_html folder,
-# or does not allow you to place files outside of it.
-####
-
 RewriteEngine on
 RewriteBase /
+
+# Maintenance mode
+# RewriteCond %{REQUEST_URI} ^/maintenancePage.php
+# RewriteRule .* - [L]
+# RewriteRule .* /maintenancePage.php [L]
 
 # Forbid access to any dot file
 RewriteRule ^(.*/)?\..+ - [R=404,L]
